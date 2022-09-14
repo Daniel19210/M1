@@ -110,3 +110,19 @@ Les intérêts de l'injection de dépendance
                 //methodes de test
             }
         }
+
+# Exercice 3
+
+![img](./Exo3.png)
+
+
+## Partie 2
+
+        public void traitement(){
+            LireDonnees();
+            traiterDonnees();
+            ecrireDonneesXML();
+        }
+
+
+![img](./Exo3_2.png)
