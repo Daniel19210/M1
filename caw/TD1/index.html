@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="main">
+            <label>login</label><br>
+            <input v-model="login" placeholder="login" /><br>
+            <label>Mot de passe</label><br>
+            <input v-if="afficher" type="password" v-model="password" placeholder="Mot de passe"/>
+            <input v-else v-model="password" placeholder="Mot de passe" /><br>
+            <button type="password" @click="afficher = !afficher">Afficher le mot de passe</button><br>
+    </div>
+    <script>
+        const { createApp } = Vue
+        createApp({
+            data() {
+                return {
+                    login: "",
+                    password: "",
+                    afficher: true
+                }
+            }
+        }).mount('#main')
+    </script>
+
+
+
+</body>
+</html>
