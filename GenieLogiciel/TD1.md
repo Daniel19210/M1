@@ -113,7 +113,7 @@ Les intérêts de l'injection de dépendance
 
 # Exercice 3
 
-![img](./Exo3.png)
+![img](./imgRessources/Exo3.png)
 
 
 ## Partie 2
@@ -125,7 +125,11 @@ Les intérêts de l'injection de dépendance
         }
 
 
-![img](./Exo3_2.png)
+![img](./imgRessources/Exo3_2.png)
 
 ## Partie 3
 
+![img](./imgRessources/Exo3_3.png)
+
+        void armer(TechniqueCombat c){this.tech = c;}
+        void combattre(){tech.utiliserArme();}
