@@ -55,9 +55,10 @@ class CompteFactoryImpl extends UnicastRemoteObject implements CompteFactory {
     }
 
     public void createCompte() throws RemoteException {
-        int id;
-        while (listCompte.containsKey(id = (int) (Math.random() * 10000)));
-        listCompte.put(id, new CompteImpl(101));
+        int id = 0;
+        while (listCompte.containsKey(id += 1))
+            ;
+        listCompte.put(id, new CompteImpl(100));
     }
 
     public CompteImpl getCompte(int id) throws RemoteException {
@@ -67,5 +68,9 @@ class CompteFactoryImpl extends UnicastRemoteObject implements CompteFactory {
     public void afficherCompte() throws RemoteException {
         for (Map.Entry<Integer, CompteImpl> compte : listCompte.entrySet())
             System.out.println("Solde: " + compte.getValue().afficherSolde() + "\tId: " + compte.getKey());
+    }
+
+    public void afficherCompte(Integer id) throws RemoteException {
+        System.out.println("Solde: " + this.listCompte.get(id).afficherSolde() + "\tId: " + id);
     }
 }

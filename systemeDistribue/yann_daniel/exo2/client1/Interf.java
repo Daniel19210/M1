@@ -14,4 +14,6 @@ interface CompteFactory extends Remote {
     public Compte getCompte(int id) throws RemoteException;
 
     public void afficherCompte() throws RemoteException;
+
+    public void afficherCompte(Integer id) throws RemoteException;
 }
