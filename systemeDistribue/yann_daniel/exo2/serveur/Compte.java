@@ -61,7 +61,7 @@ class CompteFactoryImpl extends UnicastRemoteObject implements CompteFactory {
         listCompte.put(id, new CompteImpl(100));
     }
 
-    public CompteImpl getCompte(int id) throws RemoteException {
+    public Compte getCompte(int id) throws RemoteException {
         return this.listCompte.get(id);
     }
 
