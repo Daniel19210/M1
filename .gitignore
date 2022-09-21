@@ -1,2 +1,4 @@
 gl/*/
 *.binary
+.vscode/*
+*.class
