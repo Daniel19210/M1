@@ -1,6 +1,6 @@
 a:
-	mpicc -o anneaux anneaux.c
-	mpirun -hostfile cluster.txt -np 70 ./anneaux
+	mpicc -o anneaux.binary anneaux.c
+	mpirun -hostfile cluster.txt -np 70 ./anneaux.binary
 
 clean:
-	rm anneaux
+	rm *.binary

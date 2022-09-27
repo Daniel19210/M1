@@ -1,3 +1,6 @@
 c:
-	mpicc -o pingpong pingpong.c
-	mpirun -hostfile cluster.txt -np 70 ./pingpong
+	mpicc -o pingpong.binary pingpong.c
+	mpirun -hostfile cluster.txt -np 70 ./pingpong.binary
+
+clean:
+	rm *.;binary

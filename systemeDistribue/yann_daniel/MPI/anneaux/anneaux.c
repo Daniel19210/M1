@@ -1,7 +1,7 @@
 #include "mpi.h"
 #include <stdio.h>
 #include <stdlib.h>
-#define NBPASSAGEANNEAUX 10000
+#define NBPASSAGEANNEAUX 100
 #define TRUE 1
 #define FALSE 0
 
