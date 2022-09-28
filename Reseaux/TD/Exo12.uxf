@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>410</x>
+      <y>20</y>
+      <w>30</w>
+      <h>940</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;10.0;920.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1030</x>
+      <y>20</y>
+      <w>30</w>
+      <h>940</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;10.0;920.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>370</x>
+      <y>0</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>A</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>990</x>
+      <y>0</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>B</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>410</x>
+      <y>50</y>
+      <w>650</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+
+Seg1                    SN = SNA SYN</panel_attributes>
+    <additional_attributes>630.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>410</x>
+      <y>110</y>
+      <w>650</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Seg 2       SN = SNB    AN = SNA +1
+
+ACK + SYN</panel_attributes>
+    <additional_attributes>10.0;90.0;630.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>410</x>
+      <y>250</y>
+      <w>650</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Seg 3         SN = SNA +1      AN = SNB +1 
+
+ACK</panel_attributes>
+    <additional_attributes>630.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>410</x>
+      <y>350</y>
+      <w>650</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+
+Seg4       SN = SNB +1           AN = SNA +1
+
+ACK + PUSH  data = 31 33</panel_attributes>
+    <additional_attributes>10.0;60.0;630.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>410</x>
+      <y>460</y>
+      <w>650</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+
+Seg 5              SN = SNA +1           AN = SNB+3
+
+ACK</panel_attributes>
+    <additional_attributes>630.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>410</x>
+      <y>600</y>
+      <w>650</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+
+Seg 6              SN = SNB+3                   AN = SNA +1
+
+ACK + PUSH              data = 32 37 33 32</panel_attributes>
+    <additional_attributes>10.0;50.0;630.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>410</x>
+      <y>700</y>
+      <w>650</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+
+Seg 7                  SN = SNA +1           AN = SNB +7</panel_attributes>
+    <additional_attributes>630.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>410</x>
+      <y>840</y>
+      <w>650</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+
+Seg 8            SN = SNB +7              AN = SNA +2
+
+ACK</panel_attributes>
+    <additional_attributes>10.0;50.0;630.0;10.0</additional_attributes>
+  </element>
+</diagram>
