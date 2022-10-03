@@ -1,0 +1,17 @@
+#ifndef __VERTEX
+#define __VERTEX
+
+#include "halfEdge.h"
+
+//#include <GL/glut.h>
+
+class Vertex 
+{
+double x,y,z;
+//HalfEdge* oneHe ;
+int* oneHe ;
+//VertexAttribut attribut ;
+Vertex();
+};
+
+#endif

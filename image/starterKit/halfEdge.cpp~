@@ -1,0 +1,22 @@
+#include "halfEdge.h"
+#include <GL/glut.h>
+#include <iostream>
+// #include "../armadillo/include/armadillo"
+
+
+using namespace arma;
+using namespace std;
+
+//=========================================
+HalfEdge::HalfEdge(void)
+{
+
+
+}
+//------------------------------------------
+HalfEdge::~HalfEdge(void)
+{
+}
+
+
+

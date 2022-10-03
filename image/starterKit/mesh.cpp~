@@ -1,0 +1,14 @@
+#include "mesh.h"
+#include <GL/glut.h>
+#include <iostream>
+// #include "../armadillo/include/armadillo"
+
+
+//using namespace arma;
+using namespace std;
+
+	
+//=========================================	
+Mesh::Mesh()	
+{
+}

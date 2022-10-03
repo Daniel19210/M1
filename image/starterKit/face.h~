@@ -1,0 +1,19 @@
+#ifndef __FACE
+#define __FACE
+#include "halfEdge.h"
+
+//#include <GL/glut.h>
+
+class HalfEdge ;
+
+class Face 
+{
+HalfEdge* oneHe ;
+int* oneHe ;
+//FaceAttribut attributs ;
+Face() ;
+};
+
+
+
+#endif

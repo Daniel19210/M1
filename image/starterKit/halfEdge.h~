@@ -1,0 +1,27 @@
+#ifndef __HALFEGDE
+#define __HALFEGDE
+
+#include "vertex.h"
+#include "face.h"
+#include "./armadillo/include/armadillo"
+
+//#include <GL/glut.h>
+
+using namespace std ;
+class Vertex ; 
+class Face ; 
+class Vertex ; 
+
+class HalfEdge 
+{
+Vertex* vertex ;	
+HalfEdge* heNext ;
+HalfEdge* hePrev ;
+HalfEdge* Twin ;
+Face* face ;
+HalfEdge(void);
+~HalfEdge(void);
+};
+
+
+#endif

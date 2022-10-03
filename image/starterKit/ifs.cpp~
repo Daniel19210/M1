@@ -1,0 +1,175 @@
+#include "ifs.h"
+#include <GL/glut.h>
+#include <iostream>
+// #include "../armadillo/include/armadillo"
+
+
+using namespace arma;
+using namespace std;
+
+Ifs::Ifs()
+{
+/*
+mat T0;
+T0       << 1 << .5<< .25<<endr
+			<< 0 << .5 << .5 <<endr
+			<< 0 << 0 << .25 ;	
+mIfs.push_back(T0);
+mat T1;
+T1 		<< .25 << 0<< 0 <<endr
+			<< .5 << .5 << 0 <<endr
+			<< .25 << 0.5 << 1 ;	
+mIfs.push_back(T1);
+
+
+mPrimitive << 1  << 0   <<endr
+				<< 0 << 0  <<endr
+				<< 0 << 1  ;
+mTypePrimitiveOpengl = GL_LINES ;				
+	mControlPoints << 1 << 0 << 0<< endr
+						<< 0 << 1 << 0 << endr
+						<< 0 << 0 << 1 ;
+	*/					
+
+mat T0;
+T0       << 1 << .5<< .25<<endr
+			<< 0 << .5 << .5 <<endr
+			<< 0 << 0 << .25 ;	
+mat T1;
+T1 		<< .25 << 0<< 0 <<endr
+			<< .5 << .5 << 0 <<endr
+			<< .25 << 0.5 << 1 ;	
+
+
+mIfs.push_back(kron(T0,T0));
+mIfs.push_back(kron(T0,T1));
+mIfs.push_back(kron(T1,T0));
+mIfs.push_back(kron(T1,T1));
+
+
+	mPrimitive  << 1 << 0 << 0 << 1 << 0 << 0  << endr
+					<< 0 << 0 << 0 << 0 << 0 << 0  <<endr
+					<< 0 << 1 << 0 << 0 << 0 << 0  <<endr
+					<< 0 << 0 << 0 << 0 << 0 << 0  <<endr
+					<< 0 << 0 << 0 << 0 << 0 << 0 <<endr
+					<< 0 << 0 << 0 << 0 << 0 << 0 <<endr
+					<< 0 << 0 << 0 << 0 << 0 << 1 <<endr
+ 					<< 0 << 0 << 0 << 0 << 0 << 0  <<endr
+					<< 0 << 0 << 1 << 0 << 1 << 0  ;
+
+mTypePrimitiveOpengl = GL_TRIANGLES ;				
+	mControlPoints << 0 << 1 << 2 << 0 << 1  << 2 << 0 << 1 << 2 << endr
+						<< 0 << 1 << 0 << 1 << 2  << 1 << 0 << 1 << 0 << endr
+						<< 0 << 0 << 0 << 1 << 1  << 1 << 2 << 2 << 2 ;
+							
+/*
+mat T0;
+T0       << 1 << .5<< .5<<endr
+			<< 0 << .5 << 0 <<endr
+			<< 0 << 0 << .5 ;		
+mIfs.push_back(T0);
+mat T1;
+T1 		<< .5 << 0<< 0 <<endr
+			<< .5 << 1 << .5 <<endr
+			<< 0 << 0 << .5 ;	
+mIfs.push_back(T1);
+mat T2;
+T2  		<<.5 << 0<< 0<<endr
+			<< 0 << .5 << 0 <<endr
+			<< 0.5 << 0.5 << 1. ;	
+mIfs.push_back(T2);
+
+
+mPrimitive << 1  << 0  << 0 <<endr
+				<< 0 << 1 << 0 <<endr
+				<< 0 << 0 << 1 ;
+
+mTypePrimitiveOpengl = GL_TRIANGLES ;	
+
+mControlPoints << 1 << 0 << 1<< endr
+					<< 0 << 1 << 1 << endr
+					<< 0 << 0 << 0 ;
+*/
+/*
+float s =.5;
+mat T0;
+
+T0 <<s << 0<< 0<<endr
+			<< 0 << s << 0 <<endr
+			<<0<< 0 << 1 ;	
+mIfs.push_back(T0);
+mat T1;
+T1 <<s << 0<< s<<endr
+			<< 0 << s << 0 <<endr
+			<<0 << 0 << 1 ;	
+mIfs.push_back(T1);
+mat T2;
+T2  <<s << 0<< 0<<endr
+			<< 0 << s << s <<endr
+			<<0 << 0 << 1 ;	
+mIfs.push_back(T2);
+
+
+mat T3;
+T3  <<s << .2<< 0<<endr
+			<< .1 << s << s <<endr
+			<<0 << 0 << 1 ;
+mIfs.push_back(T3);
+
+mPrimitive << 0  << 1  << 0 <<endr
+				<< 0 << 0 << 1 <<endr
+				<< 1 << 1 << 1 ;
+*/	
+// pour la couleur
+
+}
+
+Ifs::~Ifs(void)
+{
+}
+
+void Ifs::display(int level)
+{
+	if (level != mCurrentLevel)
+	{	
+	mat ID= eye(mIfs[0].n_rows,mIfs[0].n_cols);	
+	mApproximation.clear();
+	ComputeApproximation(level,ID); // si level est > mCurrentLevel on pourrait reprendre les czalcul a mCurrentLevel
+	mCurrentLevel=level;
+	}
+	
+mat primitive, cprimitive ;
+	glLineWidth(2);
+
+glBegin(mTypePrimitiveOpengl);
+			glColor3f(1.0,0.0,0.0);
+	for(int i =0;i<mApproximation.size();i++)
+	for(int j =0;j<mApproximation[i].n_cols;j++)
+{
+	primitive	= mApproximation[i];
+
+// on part du principe que s'il y a des points de conrole tout est defini dans R3
+   if (mControlPoints.size() != 0)
+		{	
+		primitive = mControlPoints *primitive ;
+		glVertex3f(primitive(0,j),primitive(1,j),primitive(2,j));
+		}
+	else // s'il n'y a pas de point de controle on est en coordonnées homogènes
+		{	
+		float x = primitive(0,j)/primitive(2,j);
+		float y = primitive(1,j)/primitive(2,j);
+		glVertex2f(x,y);
+		}	
+}
+	glEnd();
+
+}
+
+void Ifs::ComputeApproximation(int level, mat T)
+{
+if (level==0)
+ mApproximation.push_back(T*mPrimitive) ;
+else
+for (int i=0;i<mIfs.size();i++)
+ComputeApproximation(level-1,mIfs[i]*T);
+}
