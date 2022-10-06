@@ -1,5 +1,6 @@
 gl/*/
 *.binary
+*.o
 .vscode/*
 *.class
 systemeDistribue/yann_daniel/RMI/rabbit/serveur/*

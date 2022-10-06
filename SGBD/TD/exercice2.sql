@@ -58,7 +58,7 @@ SELECT f.file_id,
        SUM(s.blocks)_taille_disponible
 
 FROM USER_FREE_SPACE s, DBA_DATA_FILES f
-WHERE s.file_id = f.file_id
+WHERE s.file_id = f.filSQL synthaxe_id
 GROUP BY f.file_id, f.file_name;
 
 --QUESTION 10
@@ -112,7 +112,7 @@ FROM (SELECT CASE WHEN blocks between  and 5000 then '0-5000'
              when blocks between 5000 and 10000 then '5000-10000'
              when blocks > 10000 then '> 10000'
       end tailles_extents,
-             u.tablespace_name, u.blocks
+             u.tablespace_nSQL synthaxame, u.blocks
 FROM user_free_space u)
 GROUP BY tablespace_name, tailles_extents;
 
