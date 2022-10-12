@@ -17,7 +17,7 @@ show parameter --- => montre tout les param de la BDD avec type+valeur
 --- si param entier => taille table.
 
 SELECT value
-FROM VsPARAMETER
+FROM V$PARAMETER
 WHERE name='db_block_size';
 
 --QUESTION 4
