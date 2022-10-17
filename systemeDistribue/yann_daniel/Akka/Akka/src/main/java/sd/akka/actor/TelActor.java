@@ -3,10 +3,17 @@ package sd.akka.actor;
 import java.util.Random;
 
 import akka.actor.AbstractActor;
+import akka.actor.ActorRef;
 import akka.actor.Props;
 
 public class TelActor extends AbstractActor {
-    private TelActor() {
+    public ActorRef acteurFils;
+
+    private TelActor(int n) {
+        if (n == 0)
+            this.acteurFils = null;
+        else
+            this.acteurFils = getContext().actorOf(props(n - 1));
     }
 
     @Override
@@ -17,11 +24,14 @@ public class TelActor extends AbstractActor {
     }
 
     private void changeString(final ChangeString message) {
-        System.out.println(message.execute());
+        String modifiedString = message.execute();
+        //if (this.acteurFils == null)
+            System.out.println(modifiedString);
+            //this.tell(new TelActor.ChangeString(modifiedString), this.acteurFils);
     }
 
-    public static Props props() {
-        return Props.create(TelActor.class);
+    public static Props props(int n) {
+        return Props.create(TelActor.class, n);
     }
 
     public interface Message {
