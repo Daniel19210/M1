@@ -23,5 +23,7 @@ HalfEdge::~HalfEdge(void)
 {
 }
 
-
+string HalfEdge::toString(){
+    return string("Vertex :") + to_string(vertex->x) + ", " + to_string(vertex->y) + ", " + to_string(vertex->z) + "\tnom: " + name;
+}
 

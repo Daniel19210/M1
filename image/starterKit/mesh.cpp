@@ -8,7 +8,6 @@
 //using namespace arma;
 using namespace std;
 
-	
 //=========================================	
 Mesh::Mesh()	
 {

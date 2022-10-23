@@ -24,6 +24,7 @@ Face* face ;
 string name ;
 HalfEdge(void);
 HalfEdge(Vertex* InitVertex, string initName);
+string toString();
 ~HalfEdge(void);
 
 };
