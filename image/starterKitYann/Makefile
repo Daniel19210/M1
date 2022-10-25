@@ -2,7 +2,7 @@ CCC=g++
 CFLAGS=-Wall -I/urs/local/include
 CFLAGS=
 #LDFLAGS= -lGL -lGLEW -lGLU -lglut  -lm  -llapack -lblas
-LDFLAGS= -lGL -lGLU -lglut -lm
+LDFLAGS= -lGL -lGLU -lglut  -lm
 
 SRC=face.cpp  halfEdge.cpp   mesh.cpp  objfile.cpp  vertex.cpp main.cpp 
 DEBUBFLAG=-g
@@ -12,7 +12,6 @@ BIN=./
 EXEC=main
 
 all: $(EXEC)
-	./main
 
 main: $(OBJ)
 		$(CCC) -g -o $(BIN)$@ $^ $(LDFLAGS)
