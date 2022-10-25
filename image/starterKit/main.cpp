@@ -82,49 +82,37 @@ void initMesh()
   vector<Vertex> vertex = {};
   vector<HalfEdge> he = {};
   vector<Face> faces = {};
-  string nomVertex = "v";
   // Création de tous les éléments sans remplir leurs attributs
+  string nomVertex;
   for (int i = 0; i < NBVERTICES; i++)
   {
+    nomVertex = "v";
     nomVertex.append(std::to_string(i + 1));
-    vertex.push_back(Vertex(tabVertex[i][0], tabVertex[i][1], tabVertex[i][2], nomVertex));
+    ExMesh->vertices.push_back(Vertex(tabVertex[i][0], tabVertex[i][1], tabVertex[i][2], nomVertex));
   }
   for (int i = 0; i < NBHALFEDGES; i++)
   {
-    he.push_back(HalfEdge(&vertex[tabHe[i][0]], std::to_string(i)));
+    ExMesh->hedges.push_back(HalfEdge(&ExMesh->vertices[tabHe[i][0]], std::to_string(i)));
   }
   for (int i = 0; i < NBFACES; i++)
   {
-    faces.push_back(Face(&he[tabFace[i]], std::to_string(i)));
+    ExMesh->faces.push_back(Face(&ExMesh->hedges[tabFace[i]], std::to_string(i)));
   }
 
   // Remplissage des attributs des différents attributs des objets dans les vecteurs
   for (int i = 0; i < NBVERTICES; i++){
-    vertex[i].oneHe = &he[tabVertex[i][3]];
+    ExMesh->vertices[i].oneHe = &he[tabVertex[i][3]];
   }
   for (int i = 0; i < NBHALFEDGES; i++)
   {
-    he[i].heTwin = &he[tabHe[i][1]];
-    he[i].heNext = &he[tabHe[i][3]];
-    he[i].hePrev = &he[tabHe[i][4]];
+    ExMesh->hedges[i].heTwin = &he[tabHe[i][1]];
+    ExMesh->hedges[i].heNext = &he[tabHe[i][3]];
+    ExMesh->hedges[i].hePrev = &he[tabHe[i][4]];
+    ExMesh->hedges[i].vertex = &vertex[tabHe[i][0]-1];
   }
-  for (int i = 0; i < NBFACES; i++)
-  {
-    he[i].face = &faces[tabHe[i][2]];
+  for (int i = 0; i < NBHALFEDGES; i++){
+    ExMesh->hedges[i].face = &faces[tabHe[i][2]];
   }
-  /* Affichage des informations
-  for (int i = 0; i < NBHALFEDGES; i++)
-  {
-    std::cout << "Vertex" << i << " :" << he[i].vertex->x << ", " << he[i].vertex->y << ", " << he[i].vertex->z << std::endl;
-    std::cout << " Prev: "<< &he[i].hePrev;
-    std::cout << " Next: "<< &he[i].heNext;
-    std::cout << " Face: "<< &he[i].face;
-    std::cout << " Twin: "<< &he[i].heTwin << std::endl;
-  }
-  */
-  ExMesh->faces = faces;
-  ExMesh->hedges = he;
-  ExMesh->vertices = vertex;
   //***********************************************
 }
 
@@ -167,18 +155,9 @@ void displayHalfEdge(void)
   //**********************************************************************
   // AFAIRE
   // Écrire la visualisation du maillage "ExMesh
-  // std::cout << ExMesh->faces.size() << std::endl;
-  for (auto face : ExMesh->faces)
-  {
-    // std::cout << &face << std::endl;
-    glBegin(GL_LINES);
-    glColor3ub(255, 255, 0);
-    glVertex3d(face.oneHe->hePrev->vertex->x, face.oneHe->hePrev->vertex->y, face.oneHe->hePrev->vertex->z);
-    glVertex3d(face.oneHe->vertex->x, face.oneHe->vertex->y, face.oneHe->vertex->z);
-    glVertex3d(face.oneHe->vertex->x, face.oneHe->vertex->y, face.oneHe->vertex->z);
-    glVertex3d(face.oneHe->heNext->vertex->x, face.oneHe->heNext->vertex->y, face.oneHe->heNext->vertex->z);
-    glVertex3d(face.oneHe->heNext->vertex->x, face.oneHe->heNext->vertex->y, face.oneHe->heNext->vertex->z);
-    glVertex3d(face.oneHe->hePrev->vertex->x, face.oneHe->hePrev->vertex->y, face.oneHe->hePrev->vertex->z);
+  for (int i = 0; i < NBFACES; i++){
+    glBegin(GL_LINE_LOOP);
+      glVertex3d(ExMesh->hedges[i*3].vertex.x, )
     glEnd();
   }
   //**********************************************************************
