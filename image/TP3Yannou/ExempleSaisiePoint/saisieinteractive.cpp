@@ -2,6 +2,7 @@
 #include <new>
 #include <math.h>
 #include <GL/glut.h>
+#include <vector>
 
 const float PI = 3.1415926535;
 
@@ -31,64 +32,53 @@ void Trace()
 	glEnd();
 }
 
-void DrawLines(Point p1, Point p2){
-	glBegin(GL_LINE_STRIP);
-		glColor3f(1.,0.,0.);
-		glVertex2d(p1.x, p1.y);
-		glVertex2d(p2.x, p2.y);
-	glEnd();
-}
-
-void drawLines(Point p[]){
-	glBegin(GL_LINE_STRIP);
-		glColor3f(1.,0.,0.);
-
-		for(int i=0; i<N; i++){
-
-			glVertex2f(p[i].x, p[i].y);
-		}
-	glEnd();
-}
 /**********************************************IMPLEMENTATION DE BEZIER************************************************************/
 
+Point calculBezier(float t){
 
-int fact(int n){
-	return n == 1 || n==0 ? 1 : fact(n-1) * n;
-}
-
-double coeffBinomial(int n, int k){
-	return (fact(n) / (fact(k)*fact(n-k)));
-}
-
-double Bernstein(double u, int n, int k){
-	return coeffBinomial(n,k) * pow(u, k) * pow((1-u),(n-k));
-}
-
-Point Bezier(){
-	Point p;
-	p.x = 0;
-	p.y = 0;
+	/*CALCUL DU TRIANGLE DE PASCAL*/
+	int p = 1;
+	int a[N][N];
 
 	for(int i=0; i<N; i++){
 
-		p.set(Bernstein(i/N, N, i) * P[i].x, Bernstein(i/N, N, i) * P[i].y);
+		for(int j=0; j<=i; j++){
+
+			i==0 || j==0 ? p=1 : p = p*(i-j+1)/j;
+
+			a[i][j] = p;
+		}
 	}
 
-	return p;
+	Point pt;
+	/*TRAITEMENT BEZIER*/
+	for(int i=0; i<N; i++){
+		pt.x += pow((1-t),N-(i+1)) * pow(t, i) * a[N-1][i] * P[i].x;
+		pt.y += pow((1-t),N-(i+1)) * pow(t, i) * a[N-1][i] * P[i].y;
+	}
+
+	return pt;
 }
 
 void drawBezier(){
+
 	glColor3f(1.,0.,0.);
 
-	Point p[N];
+	vector<Point> trace = vector<Point>();
 
-	for(int i=0; i<N; i++){
-		p[i] = Bezier();
+	for(float i=0; i<1.0; i+=0.01){
+
+		trace.push_back(calculBezier((float)i));
 	}
-	if(N>1){
-		drawLines(p);
-	}
+
+	glBegin(GL_LINE_STRIP);
+		
+		for(int i=0; i<trace.size(); i++){
+			glVertex2d(trace[i].x, trace[i].y);
+		}
+	glEnd();
 }
+
 /************************************************FIN DE BEZIER*************************************************************************/
 
 /***************************************PARAMETRE DE GLUT***************************************************************/
@@ -117,6 +107,7 @@ main_display(void)
 	glPushName(1);
 	
 	Trace();
+
 	drawBezier();
 
 	glutPostRedisplay();
