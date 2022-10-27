@@ -45,29 +45,29 @@ void initMesh()
 //----------------------------------------------------------------------------------
 {
     int tabHe[NBHALFEDGES][5]={  // sommet, he, face, next, prev pour chaque demi-arete
-        { 1,18, 0, 1, 2},
-        { 3,11, 0, 2, 0},
-        { 4,3 , 0, 0, 1},
-        { 1, 2, 1, 4, 5},
-        { 4, 6, 1, 5, 3},
-        { 2,19, 1, 3, 4},
-        { 2, 4, 2, 7, 8},
-        { 4,17, 2, 8, 6},
-        { 5,20, 2, 6, 7},
-        { 3,21, 3,10,11},
-        { 6,12, 3,11, 9},
-        { 4, 1, 3, 9,10},
-        { 4,10, 4,13,14},
-        { 6,22, 4,14,12},
-        { 7,15, 4,12,13},
-        { 4,14, 5,16,17},
-        { 7,23, 5,17,15},
-        { 5, 7, 5,15,16},
-        { 3, 0,-1,19,21},
-        { 1, 5,-1,20,18},
-        { 2, 8,-1,23,19},
-        { 6, 9,-1,18,22},
-        { 7,13,-1,21,23},
+        { 1,18, 0, 1, 2},//e0
+        { 3,11, 0, 2, 0},//e1
+        { 4,3 , 0, 0, 1},//e2
+        { 1, 2, 1, 4, 5},//e3
+        { 4, 6, 1, 5, 3},//e4
+        { 2,19, 1, 3, 4},//e5
+        { 2, 4, 2, 7, 8},//e6
+        { 4,17, 2, 8, 6},//e7
+        { 5,20, 2, 6, 7},//e8
+        { 3,21, 3,10,11},//e9
+        { 6,12, 3,11, 9},//e10
+        { 4, 1, 3, 9,10},//e11
+        { 4,10, 4,13,14},//e12
+        { 6,22, 4,14,12},//e13
+        { 7,15, 4,12,13},//e14
+        { 4,14, 5,16,17},//e15
+        { 7,23, 5,17,15},//e16
+        { 5, 7, 5,15,16},//e17
+        { 3, 0,-1,19,21},//e18
+        { 1, 5,-1,20,18},//e19
+        { 2, 8,-1,23,19},//e20
+        { 6, 9,-1,18,22},//e21
+        { 7,13,-1,21,23},//e22
         { 5,16,-1,22,20}   };
     int tabFace[NBFACES] ={0,3,6,9,12,15}; // he pour chaque face
     int tabVertex[NBVERTICES][4] ={          // x,y,z, he pour chaque sommet
@@ -104,6 +104,11 @@ void initMesh()
       ExMesh->hedges[i].heNext = &(ExMesh->hedges[tabHe[i][3]]);
       ExMesh->hedges[i].hePrev = &(ExMesh->hedges[tabHe[i][4]]);
       ExMesh->hedges[i].heTwin = &(ExMesh->hedges[tabHe[i][1]]);
+    }
+
+    for(int i=0; i<NBVERTICES; i++){
+
+      ExMesh->vertices[i].oneHe = &(ExMesh->hedges[tabVertex[i][3]]);
     }
 
     //***********************************************
@@ -171,6 +176,27 @@ void displayHalfEdge(void)
     //**********************************************************************
 
 }
+
+/***********VALENCE**************/
+void calculValence(){
+
+  for(int i=0; i<NBVERTICES; i++){
+    Vertex v = ExMesh->vertices[i];
+    HalfEdge* init = v.oneHe;
+    HalfEdge* next = init->heTwin->heNext;
+    int valence = 1;
+
+    do{
+
+      valence++;
+      next = next->heTwin->heNext;
+
+    }while(next != init);
+
+    cout << "valence de " << v.name << ": " << valence << endl;
+  }
+}
+
 int main(int argc,char **argv)
 {
 
@@ -196,6 +222,7 @@ int main(int argc,char **argv)
 initOpenGl() ;
 
 /* Entree dans la boucle principale glut */
+  calculValence();
   glutMainLoop();
   return 0;
 }
