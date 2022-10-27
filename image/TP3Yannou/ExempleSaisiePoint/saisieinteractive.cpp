@@ -34,30 +34,22 @@ void Trace()
 
 /**********************************************IMPLEMENTATION DE BEZIER************************************************************/
 
+int trianglePascalRecursif(int i, int j){
+
+	if(j == 0) return 1;
+	if(i == 0) return j;
+	return (i * trianglePascalRecursif(i-1, j-1)) / j;
+}
+
 Point calculBezier(float t){
+	 Point pt;
 
-	/*CALCUL DU TRIANGLE DE PASCAL*/
-	int p = 1;
-	int a[N][N];
+	 for(int i=0; i<N; i++){
+		pt.x += pow((1-t),N-(i+1)) * pow(t, i) * trianglePascalRecursif(N-1, i) * P[i].x;
+		pt.y += pow((1-t),N-(i+1)) * pow(t, i) * trianglePascalRecursif(N-1, i) * P[i].y;
+	 }
 
-	for(int i=0; i<N; i++){
-
-		for(int j=0; j<=i; j++){
-
-			i==0 || j==0 ? p=1 : p = p*(i-j+1)/j;
-
-			a[i][j] = p;
-		}
-	}
-
-	Point pt;
-	/*TRAITEMENT BEZIER*/
-	for(int i=0; i<N; i++){
-		pt.x += pow((1-t),N-(i+1)) * pow(t, i) * a[N-1][i] * P[i].x;
-		pt.y += pow((1-t),N-(i+1)) * pow(t, i) * a[N-1][i] * P[i].y;
-	}
-
-	return pt;
+	 return pt;
 }
 
 void drawBezier(){
@@ -109,7 +101,7 @@ main_display(void)
 	Trace();
 
 	drawBezier();
-
+	
 	glutPostRedisplay();
 	
     glutSwapBuffers();
@@ -226,6 +218,7 @@ int main (int argc, char** argv)
 
 	glutPostRedisplay();  
     glutMainLoop();
+
     
     return 0;
 }
