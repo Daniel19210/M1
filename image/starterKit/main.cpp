@@ -78,40 +78,31 @@ void initMesh()
   //***********************************************
   // AFAIRE
   // ici construire le maillage haldEdge "ExMesh" à partir des tableaux d'incides tabHe, tabFace, tabVertex
-  // Création des vecteurs contenant toutes nos données
-  vector<Vertex> vertex = {};
-  vector<HalfEdge> he = {};
-  vector<Face> faces = {};
   // Création de tous les éléments sans remplir leurs attributs
-  string nomVertex;
   for (int i = 0; i < NBVERTICES; i++)
   {
-    nomVertex = "v";
-    nomVertex.append(std::to_string(i + 1));
-    ExMesh->vertices.push_back(Vertex(tabVertex[i][0], tabVertex[i][1], tabVertex[i][2], nomVertex));
+    ExMesh->vertices.push_back(Vertex(tabVertex[i][0], tabVertex[i][1], tabVertex[i][2], "v" + std::to_string(i + 1)));
   }
   for (int i = 0; i < NBHALFEDGES; i++)
   {
-    ExMesh->hedges.push_back(HalfEdge(&ExMesh->vertices[tabHe[i][0]], std::to_string(i)));
+    ExMesh->hedges.push_back(HalfEdge(&ExMesh->vertices[tabHe[i][0]-1], "e" + std::to_string(i)));
   }
   for (int i = 0; i < NBFACES; i++)
   {
-    ExMesh->faces.push_back(Face(&ExMesh->hedges[tabFace[i]], std::to_string(i)));
+    ExMesh->faces.push_back(Face(&ExMesh->hedges[tabFace[i]], "f" + std::to_string(i)));
   }
 
   // Remplissage des attributs des différents attributs des objets dans les vecteurs
-  for (int i = 0; i < NBVERTICES; i++){
-    ExMesh->vertices[i].oneHe = &he[tabVertex[i][3]];
-  }
+  //for (int i = 0; i < NBVERTICES; i++)
+  //{
+  //  ExMesh->vertices[i].oneHe = &ExMesh->hedges[tabVertex[i][3]];
+  //}
   for (int i = 0; i < NBHALFEDGES; i++)
   {
-    ExMesh->hedges[i].heTwin = &he[tabHe[i][1]];
-    ExMesh->hedges[i].heNext = &he[tabHe[i][3]];
-    ExMesh->hedges[i].hePrev = &he[tabHe[i][4]];
-    ExMesh->hedges[i].vertex = &vertex[tabHe[i][0]-1];
-  }
-  for (int i = 0; i < NBHALFEDGES; i++){
-    ExMesh->hedges[i].face = &faces[tabHe[i][2]];
+    ExMesh->hedges[i].face = &ExMesh->faces[tabHe[i][2]];
+    ExMesh->hedges[i].heTwin = &ExMesh->hedges[tabHe[i][1]];
+    ExMesh->hedges[i].heNext = &ExMesh->hedges[tabHe[i][3]];
+    ExMesh->hedges[i].hePrev = &ExMesh->hedges[tabHe[i][4]];
   }
   //***********************************************
 }
@@ -145,7 +136,7 @@ void initOpenGl()
   // glLoadIdentity();
   //	glScalef(.7,.7,.7);
   gluLookAt(0., 0., 4., 0., 0., 0., 0., 1., 0.);
-  //  glTranslatef(0.0,0.0,-5.0);
+  glTranslatef(-2.0,-2.0,-5.0);
 }
 
 //------------------------------------------------------
@@ -155,9 +146,24 @@ void displayHalfEdge(void)
   //**********************************************************************
   // AFAIRE
   // Écrire la visualisation du maillage "ExMesh
-  for (int i = 0; i < NBFACES; i++){
+  for (int i = 0; i < NBFACES; i++)
+  {
+
     glBegin(GL_LINE_LOOP);
-      glVertex3d(ExMesh->hedges[i*3].vertex.x, )
+
+    glVertex3d(ExMesh->hedges[i * 3].vertex->x, ExMesh->hedges[i * 3].vertex->y, ExMesh->hedges[i * 3].vertex->z);
+    glVertex3d(ExMesh->hedges[i * 3 + 1].vertex->x, ExMesh->hedges[i * 3 + 1].vertex->y, ExMesh->hedges[i * 3 + 1].vertex->z);
+    glVertex3d(ExMesh->hedges[i * 3 + 2].vertex->x, ExMesh->hedges[i * 3 + 2].vertex->y, ExMesh->hedges[i * 3 + 2].vertex->z);
+    glEnd();
+  }
+
+  for (int i = 0; i < NBFACES; i++)
+  {
+
+    glBegin(GL_LINES);
+    glColor3f(1.0, 0., 0.);
+    glVertex3d(ExMesh->hedges[NBHALFEDGES - 1 - i].vertex->x, ExMesh->hedges[NBHALFEDGES - 1 - i].vertex->y, ExMesh->hedges[NBHALFEDGES - 1 - i].vertex->z);
+    glVertex3d(ExMesh->hedges[NBHALFEDGES - 1 - i].heNext->vertex->x, ExMesh->hedges[NBHALFEDGES - 1 - i].heNext->vertex->y, ExMesh->hedges[NBHALFEDGES - 1 - i].heNext->vertex->z);
     glEnd();
   }
   //**********************************************************************
