@@ -19,33 +19,33 @@ typedef struct {
         GLfloat z;
 } Sommet ;
 //vector pour stocker les sommets du cube et leur couleur
-std::vector<Sommet> Cube ={
+std::vector<GLfloat> Cube ={
 //AFAIRE 2 définir un cube entre (-.5,-.5,-.5) et (.5, .5 ,.5)
-    {-0.5, -0.5, 0.5},
-    {0.5, -0.5, 0.5},
-    {0.5, 0.5, 0.5},
-    {-0.5, 0.5, 0.5},
-    {0.5, -0.5, -0.5},
-    {0.5, 0.5, -0.5},
-    {-0.5, 0.5, -0.5},
-    {-0.5, -0.5, -0.5},
+    -0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f,
+    0.5f, -0.5f, 0.5f, 0.0f, 1.0f, 0.0f,
+    0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
+    -0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 0.0f,
+    0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
+    0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 1.0f,
+    -0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f
 };
 
 //Tableau pour stocker les indices des sommets par face pour le cube
 std::vector<GLuint> indexFaceCube={
     //AFAIRE 3 définir les 6 faces quadrangulaires
     0, 1, 2,
-    0, 2, 3,
-    1, 4, 5,
-    1, 5, 2,
-    4, 6, 5,
-    4, 7, 6,
-    0, 3, 7,
-    3, 6, 7,
-    0, 4, 1,
-    0, 7, 4,
-    2, 5, 3,
-    3, 5, 6,
+    2, 3, 0,
+    //1, 4, 5,
+    //5, 2, 1,
+    //4, 7, 6,
+    //6, 5, 4,
+    //7, 0, 3,
+    //3, 6, 7,
+    //0, 1, 4,
+    //4, 7, 0,
+    //3, 2, 5,
+    //5, 6, 3
 };
 
 // initialise à 0 = pas d’indice
@@ -62,21 +62,23 @@ void genererVBOVAO(void)
     // VBO
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, Cube.size()*3*sizeof(GLuint), &Cube[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, Cube.size()*sizeof(GLfloat), &Cube[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     // IBO
     glGenBuffers(1, &ibo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indexFaceCube), indexFaceCube, GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexFaceCube.size()*sizeof(GLuint), &indexFaceCube[0], GL_STATIC_DRAW);
+    //glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     // VAO
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_INT, GL_FALSE, 0, nullptr);
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(GL_FLOAT)*6, 0);
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 3, GL_FLOAT, false, sizeof(GL_FLOAT)*6, (void*)(3*sizeof(GL_FLOAT)));
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -92,8 +94,9 @@ void dessinerCube(void)
 {
     glUseProgram(IdProgram);
     glBindVertexArray(vao);
-    glDrawElements(GL_TRIANGLES, sizeof(indexFaceCube), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, indexFaceCube.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+    glUseProgram(0);
 }
 
 char presse;

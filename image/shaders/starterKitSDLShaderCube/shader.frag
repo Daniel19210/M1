@@ -2,12 +2,9 @@
 
 
 out vec4 finalColor;
+in vec3 pos;
+in vec3 col;
 
 void main() {
-
-   
-   finalColor = vec4(0.2,0.7,0.1,1.);
- 
-      
-
+   finalColor = vec4(pos, 1.);
 }
