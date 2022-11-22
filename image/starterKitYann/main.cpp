@@ -343,7 +343,7 @@ void mouse(int button, int state, int x, int y)
 
 void mouseMotion(int x, int y)
 {
-    if(mouseLeftDown)
+    if(mouseMiddleDown)
     {
         cameraAngleY += (x - mouseX);
         cameraAngleX += (y - mouseY);

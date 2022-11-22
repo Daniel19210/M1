@@ -18,17 +18,23 @@ typedef struct {
         GLfloat y;
         GLfloat z;
 } Sommet ;
+
+//variables couleurs
+std::vector<GLfloat> colors={
+  .5, .5, .5
+};
+
 //vector pour stocker les sommets du cube et leur couleur
 std::vector<GLfloat> Cube ={
 //AFAIRE 2 définir un cube entre (-.5,-.5,-.5) et (.5, .5 ,.5)
-    -0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f,
-    0.5f, -0.5f, 0.5f, 0.0f, 1.0f, 0.0f,
-    0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
-    -0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 0.0f,
-    0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
-    0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 1.0f,
-    -0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f
+    -0.5f, -0.5f, 0.5f, colors[0], colors[1], colors[2],
+    0.5f, -0.5f, 0.5f, colors[0], colors[1], colors[2],
+    0.5f, 0.5f, 0.5f, colors[0], colors[1], colors[2],
+    -0.5f, 0.5f, 0.5f, colors[0], colors[1], colors[2],
+    0.5f, -0.5f, -0.5f, colors[0], colors[1], colors[2],
+    0.5f, 0.5f, -0.5f, colors[0], colors[1], colors[2],
+    -0.5f, 0.5f, -0.5f, colors[0], colors[1], colors[2],
+    -0.5f, -0.5f, -0.5f, colors[0], colors[1], colors[2]
 };
 
 //Tableau pour stocker les indices des sommets par face pour le cube
@@ -36,23 +42,25 @@ std::vector<GLuint> indexFaceCube={
     //AFAIRE 3 définir les 6 faces quadrangulaires
     0, 1, 2,
     2, 3, 0,
-    //1, 4, 5,
-    //5, 2, 1,
-    //4, 7, 6,
-    //6, 5, 4,
-    //7, 0, 3,
-    //3, 6, 7,
-    //0, 1, 4,
-    //4, 7, 0,
-    //3, 2, 5,
-    //5, 6, 3
+    1, 4, 5,
+    5, 2, 1,
+    4, 7, 6,
+    6, 5, 4,
+    7, 0, 3,
+    3, 6, 7,
+    0, 1, 4,
+    4, 7, 0,
+    3, 2, 5,
+    5, 6, 3
 };
+
 
 // initialise à 0 = pas d’indice
 GLuint vbo=0 ;
 GLuint ibo = 0;
 GLuint vao = 0;
 GLuint IdProgram = 0;
+GLuint idVarLocal = 0;
 GLuint VShader = 0;
 GLuint FShader = 0;
 
@@ -76,9 +84,9 @@ void genererVBOVAO(void)
     glBindVertexArray(vao);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(GL_FLOAT)*6, 0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(GL_FLOAT)*6, (void*) 0);
         glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 3, GL_FLOAT, false, sizeof(GL_FLOAT)*6, (void*)(3*sizeof(GL_FLOAT)));
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GL_FLOAT)*6, (void*)(3*sizeof(GL_FLOAT)));
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -88,11 +96,13 @@ void prepareProgammeShader(void)
 {
 // vous avez de la chance ce n'est pas AFAIRE 6
      IdProgram = LoadShaders( "shader.vert", "shader.frag");
+     idVarLocal = glGetUniformLocation(IdProgram, "colors");
 }
 
 void dessinerCube(void)
 {
     glUseProgram(IdProgram);
+    glUniform3f(idVarLocal, colors[0], colors[1], colors[2]);
     glBindVertexArray(vao);
     glDrawElements(GL_TRIANGLES, indexFaceCube.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
@@ -132,7 +142,6 @@ int main ( int argc, char** argv )
         printf("Unable to set 640x480 video: %s\n", SDL_GetError());
         return 1;
     }
-
     
     glEnable(GL_DEPTH_TEST);
 
@@ -150,6 +159,7 @@ int main ( int argc, char** argv )
 
     // program main loop
     bool done = false;
+    SDL_EnableUNICODE(SDL_ENABLE);
     while (!done)
     {
         // message processing loop
@@ -166,11 +176,41 @@ int main ( int argc, char** argv )
 
                 // check for keypresses
             case SDL_KEYDOWN:
-
                     // exit if ESCAPE is pressed
                     if (event.key.keysym.sym == SDLK_ESCAPE)
                         done = true;
+
+                    //changer couleur rouge
+                    if (event.key.keysym.unicode == 'r' && colors[0] < 1.0){
+                      colors[0] += 0.1;
+                      std::cout << "rouge : " << colors[0] << std::endl;
+                    }
+                    if(event.key.keysym.unicode == 'R' && colors[0]>=0.1){
+                      colors[0] -= 0.1;
+                      std::cout << "rouge : " << colors[0] << std::endl;
+                    }
+
+                    //changer couleur vert
+                    if (event.key.keysym.unicode == 'v' && colors[1] < 1.0){
+                      colors[1] += 0.1;
+                      std::cout << "vert : " << colors[1] << std::endl;
+                    }
+                    if(event.key.keysym.unicode == 'V' && colors[1]>=0.1){
+                      colors[1] -= 0.1;
+                      std::cout << "vert : " << colors[1] << std::endl;
+                    }
+
+                    //changer couleur bleu
+                    if (event.key.keysym.unicode == 'b' && colors[2] < 1.0){
+                      colors[2] += 0.1;
+                      std::cout << "bleu : " << colors[2] << std::endl;
+                    }
+                    if(event.key.keysym.unicode == 'B' && colors[2]>=0.1){
+                      colors[2] -= 0.1;
+                      std::cout << "bleu : " << colors[2] << std::endl;
+                    }
                     break;
+
                 // check for keypresses
             case SDL_MOUSEBUTTONDOWN:
                         mouse(event.button.button,SDL_MOUSEBUTTONDOWN, event.button.x,event.button.y) ;
@@ -200,6 +240,7 @@ int main ( int argc, char** argv )
 void affichage()
 {
   int i,j;
+
   /* effacement de l'image avec la couleur de fond */
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -225,7 +266,6 @@ void affichage()
         glVertex3f(0, 0,0.0);
         glVertex3f(0, 0,1.0);
     glEnd();
-
 
   //On echange les buffers
     SDL_GL_SwapBuffers( );

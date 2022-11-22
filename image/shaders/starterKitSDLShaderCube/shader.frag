@@ -2,9 +2,8 @@
 
 
 out vec4 finalColor;
-in vec3 pos;
-in vec3 col;
+uniform vec3 colors;
 
 void main() {
-   finalColor = vec4(pos, 1.);
+   finalColor = vec4(colors, 1.);
 }
