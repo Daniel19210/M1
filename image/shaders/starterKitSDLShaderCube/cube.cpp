@@ -10,6 +10,11 @@
 #include <vector>
 #include "shader.hpp"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+using namespace glm;
+
 //************************************************
 
 typedef struct {
@@ -23,6 +28,7 @@ typedef struct {
 std::vector<GLfloat> colors={
   .5, .5, .5
 };
+
 
 //vector pour stocker les sommets du cube et leur couleur
 std::vector<GLfloat> Cube ={
@@ -63,6 +69,15 @@ GLuint IdProgram = 0;
 GLuint idVarLocal = 0;
 GLuint VShader = 0;
 GLuint FShader = 0;
+GLuint MatriceID = 0;
+
+mat<4, 4, float, packed_highp> projection;
+mat<4, 4, float, packed_highp> view;
+mat<4, 4, float, packed_highp> model;
+mat<4, 4, float, packed_highp> MVP;
+
+char presse;
+int anglex,angley,x,y,xold,yold;
 
 void genererVBOVAO(void)
 {
@@ -97,20 +112,33 @@ void prepareProgammeShader(void)
 // vous avez de la chance ce n'est pas AFAIRE 6
      IdProgram = LoadShaders( "shader.vert", "shader.frag");
      idVarLocal = glGetUniformLocation(IdProgram, "colors");
+     MatriceID = glGetUniformLocation(IdProgram, "MVP");
 }
 
 void dessinerCube(void)
 {
+    projection = perspective(45.f, 1.f, .1f, 100.f);
+    view = lookAt(vec3(0, 0, 3),
+                           vec3(0, 0, 0),
+                           vec3(0, 1, 0)
+                          );
+    model = mat4(1.f);
+//    model = translate(model, vec3(-0.f, 0.f, 0.0f));
+    model = rotate(model, radians(float(anglex)), vec3(0.0f, 1.0f, 0.0f));
+    model = rotate(model, radians(float(angley)), vec3(1.0f, 0.0f, 0.0f));
+    model = scale(model, vec3(1.f, 1.f, 1.f));
+
+    MVP = projection * view * model;
+
     glUseProgram(IdProgram);
     glUniform3f(idVarLocal, colors[0], colors[1], colors[2]);
+    glUniformMatrix4fv(MatriceID, 1, GL_FALSE, &MVP[0][0]);
     glBindVertexArray(vao);
     glDrawElements(GL_TRIANGLES, indexFaceCube.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
     glUseProgram(0);
 }
 
-char presse;
-int anglex,angley,x,y,xold,yold;
 
 /* Prototype des fonctions */
 void affichage();
