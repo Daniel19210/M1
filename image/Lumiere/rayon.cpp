@@ -1,13 +1,28 @@
-
 #include "rayon.hpp"
 
-Rayon::Rayon(Point o, Vec v){
+Rayon::Rayon(Point o, Vect v){
     this->origine = o;
     this->directeur = v;
 }
 
-Point Rayon::pointVec(float t){
-    return Point(this->origine.x + t * directeur[0], this->origine.y + t * directeur[1], this->origine.z + t * directeur[2]);
+Point Rayon::getOrigine(){
+	return this->origine;
+}
+
+Vect Rayon::getDirecteur(){
+	return this->directeur;
+}
+
+void Rayon::setOrigine(Point o){
+	this->origine = o;
+}
+
+void Rayon::setDirecteur(Vect v){
+	this->directeur = v;
+}
+
+Point Rayon::pointVect(float t){
+    return this->getOrigine() + this->getDirecteur() * t;
 }
 
 Rayon::~Rayon(){}

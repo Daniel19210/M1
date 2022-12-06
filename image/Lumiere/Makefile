@@ -1,3 +1,4 @@
+SRC=sphere.cpp point.cpp rayon.cpp vect.cpp main.cpp
 all:
-	g++ sphere.cpp -o main
+	g++ $(SRC) -o main
 	./main

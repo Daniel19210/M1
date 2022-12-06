@@ -1,18 +1,20 @@
 #ifndef RAYON_HPP
 #define RAYON_HPP
+
 #include "point.hpp"
+#include "vect.hpp"
 
 class Rayon{
     private:
         Point origine;
-        Vec directeur;
+        Vect directeur;
     public:
-        Rayon(Point, Vec);
+        Rayon(Point, Vect);
         ~Rayon();
         Point getOrigine();
         void setOrigine(Point);
-        Vec getDirecteur();
-        void setDirecteur(Vec);
-        Point pointVec(float);
+        Vect getDirecteur();
+        void setDirecteur(Vect);
+        Point pointVect(float);
 };
 #endif
