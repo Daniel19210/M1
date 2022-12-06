@@ -16,7 +16,14 @@ class Vect{
         float getY();
         float getZ();
 
+        float norm();
+        Vect normalisation();
+        Vect produitVectoriel(Vect);
+        float produitScalaire(Vect);
+
         Vect operator*(const float);
+        Vect operator+(Vect);
+        Vect operator-(Vect);
 };
 
 #endif

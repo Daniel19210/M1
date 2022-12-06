@@ -1,5 +1,6 @@
 #include "sphere.hpp"
 #include <cmath>
+#include <iostream>
 
 Sphere::Sphere(Point c, float r){
     this->centre = c;
@@ -29,13 +30,13 @@ bool Sphere::appartient(Point c){
 
 Point Sphere::intersect(Rayon r){
     float a = pow(r.getDirecteur().getX(), 2) + pow(r.getDirecteur().getY(), 2) + pow(r.getDirecteur().getZ(), 2);
-    float b = r.getOrigine().getX() * r.getDirecteur().getX() + r.getOrigine().getY() * r.getDirecteur().getY() + r.getOrigine().getZ() * r.getDirecteur().getZ();
+    float b = 2 * (r.getOrigine().getX() * r.getDirecteur().getX() + r.getOrigine().getY() * r.getDirecteur().getY() + r.getOrigine().getZ() * r.getDirecteur().getZ());
     float c = pow(r.getOrigine().getX(), 2) + pow(r.getOrigine().getY(), 2) + pow(r.getOrigine().getZ(), 2) - pow(this->getRayon(), 2);
     float delta = pow(b, 2) - (4 * a * c);
     if (delta >= 0){ // Plusieurs solution
         float racine1 = ( -b - sqrt(delta)) / (2 * a);
-        float racine2 = ( -b - sqrt(delta)) / (2 * a);
-        return r.pointVect( racine1 < racine2 ? racine1 : racine2 );
+        float racine2 = ( -b + sqrt(delta)) / (2 * a);
+        return r.pointVect(abs(racine1) < abs(racine2) ? racine1 : racine2 );
     }
     return Point(INFINITY, INFINITY, INFINITY);
 }

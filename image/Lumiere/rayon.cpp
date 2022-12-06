@@ -22,7 +22,7 @@ void Rayon::setDirecteur(Vect v){
 }
 
 Point Rayon::pointVect(float t){
-    return this->getOrigine() + this->getDirecteur() * t;
+    return this->getOrigine() + (this->getDirecteur() * t);
 }
 
 Rayon::~Rayon(){}
