@@ -5,6 +5,8 @@ Rayon::Rayon(Point o, Vect v){
     this->directeur = v;
 }
 
+Rayon::~Rayon(){}
+
 Point Rayon::getOrigine(){
 	return this->origine;
 }
@@ -24,5 +26,3 @@ void Rayon::setDirecteur(Vect v){
 Point Rayon::pointVect(float t){
     return this->getOrigine() + (this->getDirecteur() * t);
 }
-
-Rayon::~Rayon(){}

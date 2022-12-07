@@ -2,6 +2,7 @@
 #define POINT_HPP
 
 #include "vect.hpp"
+#include <iostream>
 
 class Point{
     private:
@@ -17,6 +18,8 @@ class Point{
         float getZ();
 
         Point operator+(Vect);
+        bool operator==(Point);
+        friend std::ostream& operator <<(std::ostream&, Point);
 };
 
 #endif

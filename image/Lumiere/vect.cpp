@@ -7,6 +7,8 @@ Vect::Vect(){
     this->z = 0;
 }
 
+Vect::~Vect(){}
+
 Vect::Vect(float a, float b, float c){
     this->x = a;
     this->y = b;
@@ -50,8 +52,6 @@ Vect Vect::produitVectoriel(Vect v){
 float Vect::produitScalaire(Vect v){
     return this->getX() * v.getX() + this->getY() * v.getY() + this->getZ() * v.getZ();
 }
-
-Vect::~Vect(){}
 
 Vect Vect::operator*(const float t){
     return Vect(t*this->getX(), t*this->getY(), t*this->getZ());
