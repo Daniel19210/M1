@@ -1,4 +1,6 @@
 gl/*/
+GenieLogiciel/tp1/*
+caw/
 *.binary
 *.o
 **/.vscode/*
