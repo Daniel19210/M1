@@ -10,14 +10,14 @@ public class Panneau extends JPanel{
     public Panneau(){
 
         this.setBackground(Color.white);
-        this.points.add(new Point());
+        this.points.add(new Point(20, 300));
 
     }
     
     public void paintComponent(Graphics g){
-        g.setColor(Color.red);
+        g.setColor(Color.black);
         for(Point p:points){
-            g.fillOval(p.getX(), p.getY(), 20, 20);
+            g.drawLine(p.getX(), p.getY(), p.getX(), p.getY());
         }
     }
 }
