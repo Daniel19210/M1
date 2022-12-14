@@ -2,18 +2,39 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
+import java.awt.event.*;
 
 public class Fenetre extends JFrame{
 
     private JPanel container = new JPanel();
     private Panneau panel = new Panneau();
 
-    public Fenetre(){
+    public Fenetre(int x, int y){
+
+        Point pressed = new Point();
+        Point released = new Point();
 
         this.setTitle("Mandelbroot");
-        this.setSize(600,400);
+        this.setSize(x,y);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e){
+                System.out.println("clic souris : " + e.getX() + ";" + e.getY());
+                pressed.setX(e.getX());
+                pressed.setY(e.getY());
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e){
+
+                System.out.println("clic souris : " + e.getX() + ";" + e.getY());
+                released.setX(e.getX());
+                released.setY(e.getY());
+            }
+        });
 
         container.setLayout(new BorderLayout());
         container.add(panel, BorderLayout.CENTER);
@@ -22,4 +43,6 @@ public class Fenetre extends JFrame{
 
         this.setVisible(true);
     }
+
+    public Panneau getPanelDessin(){return this.panel;}
 }

@@ -1,6 +1,5 @@
 all:
-	rm -f *.class
-	javac index.java
+	javac *.java
 	java index
 
 clean:
