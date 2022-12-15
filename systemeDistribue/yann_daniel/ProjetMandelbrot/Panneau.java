@@ -13,6 +13,7 @@ public class Panneau extends JPanel{
     }
     
     public void paintComponent(Graphics g){
+        g.clearRect(0,0,600,400);
         g.setColor(Color.black);
         for(Point p : listePointMandelbrot){
             g.drawLine(p.getX(), p.getY(), p.getX(), p.getY());
