@@ -7,10 +7,13 @@ public class ImpMandelbrot implements Mandelbrot{
     public Fenetre fenetre;
     public Complexe widthComplexe, heightComplexe;
     public float width, height;
+    public int nbtache;
 
     public ImpMandelbrot(Fenetre fen, float w, float h){
         
         this.fenetre = fen;
+
+        this.nbtache=0;
 
         this.width = w;
         this.height = h;
@@ -23,26 +26,29 @@ public class ImpMandelbrot implements Mandelbrot{
         }
     }
 
-    //Vérification qu'un point donnée appartient à l'ensemble de Mandelbrot
-    public boolean traitementPoint(){
-        
-        if(pointsATraiter.isEmpty()){return false;}
+    public synchronized int getNbTache(){
+        nbtache++;
+        return nbtache-1;
+    }
 
-        Complexe z = new Complexe(0, 0);
-        Complexe c = convert(pointsATraiter.get(0));
+    //Vérification qu'un point donnée appartient à l'ensemble de Mandelbrot
+    public boolean traitementPoint(int tache){
         
-        for(int i=0; i<100 ; i++){
+        if(tache >= pointsATraiter.size()){return false;}
+
+        System.out.println("calcul en cours : " + ((float)nbtache/(float)pointsATraiter.size()*100) + "%");
+        Complexe z = new Complexe(0, 0);
+        Complexe c = convert(pointsATraiter.get(tache));
+        
+        for(int i=0; i<50 ; i++){
             if(z.module() > 2){
-                pointsATraiter.remove(0);
                 return true;
             }
             z = z.multiply(z);
             z = z.add(c);
         }
-        fenetre.getPanelDessin().listePointMandelbrot.add(pointsATraiter.get(0));
-        pointsATraiter.remove(0);
+        fenetre.getPanelDessin().listePointMandelbrot.add(pointsATraiter.get(tache));
 
-        fenetre.getPanelDessin().repaint();
         return true;
     }
 
@@ -55,5 +61,9 @@ public class ImpMandelbrot implements Mandelbrot{
         float decalImageY = Math.min(widthComplexe.getB(), heightComplexe.getB());
 
         return new Complexe((float)(p.getX()*(intervalleFenetreWidth/width) + decalImageX), (float)(p.getY()*(intervalleFenetreHeight/height) + decalImageY)); 
+    }
+
+    public void paint(){
+        fenetre.getPanelDessin().repaint();
     }
 }

@@ -13,7 +13,12 @@ public class Client{
 
             Mandelbrot stub = (Mandelbrot) reg.lookup("Mandelbrot");
 
-            while(stub.traitementPoint()){}
+            //System.out.prinln(stub.getNbTache());
+            while(stub.traitementPoint(stub.getNbTache())){}
+            if(stub.getNbTache()==2400){
+                stub.paint();
+            }
+            System.out.println("CLIENT FINI");
         }catch(Exception e){
             System.err.println(e.toString());
             e.printStackTrace();
