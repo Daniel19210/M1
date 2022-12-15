@@ -9,14 +9,22 @@ public class index{
     private static Complexe widthComplexe, heightComplexe;
     private static Fenetre fenetre;
 
-    public static Complexe convert(Point p, Complexe za, Complexe zb){
-        return new Complexe((float)(p.getX()*((Math.max(za.getA(), zb.getA()) - Math.min(za.getA(), zb.getA()))/width) + Math.min(za.getA(), zb.getA())), (float)(p.getY()*((Math.max(za.getB(), zb.getB()) - Math.min(za.getB(), zb.getB()))/height) + Math.min(za.getB(), zb.getB()))); 
+    //Convertit un pixel (ou point) de l'image en coordonnée complexe pour dessin mandelbrot
+    public static Complexe convert(Point p){
+
+        float intervalleFenetreWidth = (Math.max(widthComplexe.getA(), heightComplexe.getA()) - Math.min(widthComplexe.getA(), heightComplexe.getA()));
+        float intervalleFenetreHeight = (Math.max(widthComplexe.getB(), heightComplexe.getB()) - Math.min(widthComplexe.getB(), heightComplexe.getB()));
+
+        float decalImageX = Math.min(widthComplexe.getA(), heightComplexe.getA());
+        float decalImageY = Math.min(widthComplexe.getB(), heightComplexe.getB());
+
+        return new Complexe((float)(p.getX()*(intervalleFenetreWidth/width) + decalImageX), (float)(p.getY()*(intervalleFenetreHeight/height) + decalImageY)); 
     }
 
     public static void main(String[] args){
 
-        width = 600;
-        height = 400;
+        width = 400;
+        height = 200;
         widthComplexe = new Complexe(-2, 1);
         heightComplexe = new Complexe(1,-1);
         fenetre = new Fenetre((int)width, (int)height); 
@@ -25,9 +33,10 @@ public class index{
 
     }
 
+    //Gere le zoom sur interface graphique manelbrot
     public static void zoom(){
-        Complexe a = convert(Fenetre.pressed, widthComplexe, heightComplexe);
-        Complexe b = convert(Fenetre.released, widthComplexe, heightComplexe);
+        Complexe a = convert(Fenetre.pressed);
+        Complexe b = convert(Fenetre.released);
 
         widthComplexe = a;
         heightComplexe = b;
@@ -37,6 +46,7 @@ public class index{
         drawMandelbrot();
     }
 
+    //appel la methode pour verifier si un point c appartient à l'ensemble de mandelbrot puis appel la methode de dessin
     public static void drawMandelbrot(){
 
         fenetre.getPanelDessin().removeAll();
@@ -45,8 +55,9 @@ public class index{
             for(int j=0; j<=height; j++){
 
                 Point pointsImage = new Point(i, j);
-                System.out.println(pointsImage.getX() + ";" + pointsImage.getY());
-                if(Mandelbrot.traitementPoint(convert(pointsImage, widthComplexe, heightComplexe))){
+                int pourcentageAvance = (int)(i/width*100);
+                System.out.println(pourcentageAvance + "%");
+                if(Mandelbrot.traitementPoint(convert(pointsImage))){
 
                     fenetre.getPanelDessin().listePointMandelbrot.add(pointsImage);
                 }
@@ -54,5 +65,17 @@ public class index{
             }
         }
         fenetre.getPanelDessin().repaint();
+    }
+
+    //Dezoom l'image au maximum
+    public static void resetFenetre(){
+        widthComplexe.setA(-2);
+        widthComplexe.setB(1);
+        heightComplexe.setA(1);
+        heightComplexe.setB(-1);
+
+        fenetre.getPanelDessin().listePointMandelbrot.clear();
+
+        drawMandelbrot();
     }
 }

@@ -12,6 +12,7 @@ public class Panneau extends JPanel{
         this.setBackground(Color.white);
     }
     
+    //Methode de dessin de awt dessine les points appartenant a l'ensemble de Mandelbrot
     public void paintComponent(Graphics g){
         g.clearRect(0,0,600,400);
         g.setColor(Color.black);

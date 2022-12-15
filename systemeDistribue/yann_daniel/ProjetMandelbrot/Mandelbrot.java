@@ -2,12 +2,13 @@ import java.util.ArrayList;
 
 public class Mandelbrot{
 
-    private static int limite = 50;
+    private static int limite = 1000;
 
     public Mandelbrot(){
 
     }
 
+    //Vérification qu'un point donnée appartient à l'ensemble de Mandelbrot
     public static boolean traitementPoint(Complexe c){
         Complexe z = new Complexe(0, 0);
         

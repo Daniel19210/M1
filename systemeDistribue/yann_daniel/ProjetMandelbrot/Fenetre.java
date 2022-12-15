@@ -14,25 +14,33 @@ public class Fenetre extends JFrame{
     public Fenetre(int x, int y){
 
         this.setTitle("Mandelbroot");
-        this.setSize(x,y);
+        this.setSize(x,y+50);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        //Gestion clic souris
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e){
-                System.out.println("clic souris : " + e.getX() + ";" + e.getY());
-                pressed.setX(e.getX());
-                pressed.setY(e.getY());
+                if(e.getButton()==1){
+                    System.out.println("clic souris : " + e.getX() + ";" + e.getY());
+                    pressed.setX(e.getX());
+                    pressed.setY(e.getY());
+                }
             }
 
             @Override
             public void mouseReleased(MouseEvent e){
 
-                System.out.println("clic souris : " + e.getX() + ";" + e.getY());
-                released.setX(e.getX());
-                released.setY(e.getY());
-                index.zoom();
+                if(e.getButton() == 1){
+                    System.out.println("clic souris : " + e.getX() + ";" + e.getY());
+                    released.setX(e.getX());
+                    released.setY(e.getY());
+                    index.zoom();
+                }
+                else if(e.getButton() == 3){
+                    index.resetFenetre();
+                }
             }
         });
 
