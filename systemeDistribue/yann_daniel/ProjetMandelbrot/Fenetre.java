@@ -8,8 +8,8 @@ public class Fenetre extends JFrame{
 
     private JPanel container = new JPanel();
     private Panneau panel = new Panneau();
-    public static Point pressed = new Point();
-    public static Point released = new Point();
+    public Point pressed = new Point();
+    public Point released = new Point();
 
     public Fenetre(int x, int y){
 
@@ -36,10 +36,10 @@ public class Fenetre extends JFrame{
                     System.out.println("clic souris : " + e.getX() + ";" + e.getY());
                     released.setX(e.getX());
                     released.setY(e.getY());
-                    index.zoom();
+                    //index.zoom();
                 }
                 else if(e.getButton() == 3){
-                    index.resetFenetre();
+                    //index.resetFenetre();
                 }
             }
         });
