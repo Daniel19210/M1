@@ -16,6 +16,11 @@ public class Complexe{
         this.b = newB;
     }
 
+    public Complexe(Complexe c){
+        this.a = c.getA();
+        this.b = c.getB();
+    }
+
     public float getA(){return this.a;}
     public float getB(){return this.b;}
 
@@ -28,12 +33,7 @@ public class Complexe{
 
         return new Complexe(newA, newB);
     }
-    /*public Complexe multiply(float a){
-        float newA = this.getA() * a;
-        float newB = this.getB() * b;
-
-        return new Complexe(newA, newB);
-    }*/
+    
     public Complexe add(Complexe c){
         float newA = this.getA() + c.getA();
         float newB = this.getB() + c.getB();

@@ -1,8 +1,44 @@
 import java.util.ArrayList;
+import java.rmi.server.UnicastRemoteObject;
+import java.rmi.RemoteException;
 
 
-public class ImpMandelbrot implements Mandelbrot{
+public class ImpMandelbrot extends UnicastRemoteObject implements Mandelbrot{
 
+    public ArrayList<Point> data_a_traiter;
+    public ArrayList<Task> taches_complete;
+
+    public ImpMandelbrot() throws RemoteException{
+
+        super();
+
+        data_a_traiter = new ArrayList<Point>();
+        taches_complete = new ArrayList<Task>();
+    }
+
+    public void addTask(Point p) throws RemoteException{
+
+        data_a_traiter.add(p);
+    }
+
+    public Task getTask() throws RemoteException{
+
+        return (Task) new ImpTask(data_a_traiter.remove(0));
+    }
+
+    public void addResult(Task t) throws RemoteException{
+        taches_complete.add(t);
+    }
+
+
+
+
+
+
+
+
+
+/*
     public ArrayList<Point> pointsATraiter = new ArrayList<Point>();
     public Fenetre fenetre;
     public Complexe widthComplexe, heightComplexe;
@@ -66,4 +102,5 @@ public class ImpMandelbrot implements Mandelbrot{
     public void paint(){
         fenetre.getPanelDessin().repaint();
     }
+    */
 }

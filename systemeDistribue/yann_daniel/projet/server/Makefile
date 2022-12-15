@@ -1,5 +1,5 @@
 all:
-	kill -9 $$(pidof rmiregistry)
+#kill -9 $$(pidof rmiregistry)
 	javac *.java
 	rmiregistry &
 	java Server
