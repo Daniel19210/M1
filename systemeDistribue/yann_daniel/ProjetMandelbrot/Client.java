@@ -13,7 +13,6 @@ public class Client{
 
             Mandelbrot stub = (Mandelbrot) reg.lookup("Mandelbrot");
 
-            System.out.println("Début traitement des points");
             while(stub.traitementPoint()){}
         }catch(Exception e){
             System.err.println(e.toString());

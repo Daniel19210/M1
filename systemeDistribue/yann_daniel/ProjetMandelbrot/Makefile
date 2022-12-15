@@ -2,16 +2,18 @@ SRC=Server.java ImpMandelbrot.java Complexe.java Fenetre.java Mandelbrot.java Pa
 
 all:
 	javac $(SRC)
-	rmiregist
+	rmiregistry &
 	java Server
+
+kill:
+	kill -9 $$(pidof rmiregistry)
 
 client:
 	javac Client.java
-	java client &
-	java client &
-	java client &
-	java client &
-	java client &
+	java Client &
+	java Client &
+	java Client &
+	java Client &
 
 
 clean:

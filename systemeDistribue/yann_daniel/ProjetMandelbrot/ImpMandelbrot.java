@@ -23,14 +23,14 @@ public class ImpMandelbrot implements Mandelbrot{
     }
 
     //Vérification qu'un point donnée appartient à l'ensemble de Mandelbrot
-    public boolean traitementPoint(){
+    public synchronized boolean traitementPoint(){
         
         if(pointsATraiter.isEmpty()){return false;}
 
         Complexe z = new Complexe(0, 0);
         Complexe c = convert(pointsATraiter.get(0));
         
-        for(int i=0; i<100 ; i++){
+        for(int i=0; i<1000 ; i++){
             if(z.module() > 2){
                 pointsATraiter.remove(0);
                 return true;

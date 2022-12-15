@@ -8,12 +8,13 @@ public class Server{
     public Server() {}
 
     public static void main(String args[]){
-        float width = 600;
-        float height = 400;
+        float width = 1080;
+        float height = 800;
         Fenetre fenetre = new Fenetre((int) width, (int) height);
-
+        
         try{
             ImpMandelbrot obj = new ImpMandelbrot(fenetre, width, height);
+
 
             Mandelbrot stub = (Mandelbrot) UnicastRemoteObject.exportObject(obj, 0);
 
