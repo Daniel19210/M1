@@ -3,13 +3,14 @@ import java.rmi.registry.Registry;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 
+
 public class Server{
 
     public Server() {}
 
     public static void main(String args[]){
-        float width = 1080;
-        float height = 800;
+        float width = 600;
+        float height = 400;
         Fenetre fenetre = new Fenetre((int) width, (int) height);
         
         try{

@@ -7,7 +7,7 @@ import java.util.*;
 
 import java.rmi.server .*;
 import java.net .*;
-import java.rmi .*;
+import java.rmi .*
 
 public class ImplBagOfTasks extends UnicastRemoteObject implements BagOfTasks {
     private Queue<Task> listTask;
