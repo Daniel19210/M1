@@ -23,7 +23,10 @@ public class ImpMandelbrot extends UnicastRemoteObject implements Mandelbrot{
 
     public Task getTask() throws RemoteException{
 
-        return (Task) new ImpTask(data_a_traiter.remove(0));
+        if(data_a_traiter.size() != 0){
+            return (Task) new ImpTask(data_a_traiter.remove(0));
+        }
+        return null;
     }
 
     public void addResult(Task t) throws RemoteException{

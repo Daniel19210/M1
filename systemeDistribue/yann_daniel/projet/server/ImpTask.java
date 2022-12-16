@@ -16,15 +16,18 @@ public class ImpTask extends UnicastRemoteObject implements Task{
 
         Complexe z = new Complexe(0, 0);
         Complexe c = convert(point_a_traiter);
+        System.out.println("Point en traitement : " + point_a_traiter);
         
         for(int i=0; i<50 ; i++){
             if(z.module() > 2){
+                System.out.println("Point traite");
                 return;
             }
             z = z.multiply(z);
             z = z.add(c);
         }
         appartient_mandelbrot = true;
+        System.out.println("Point traite");
     }
 
     public Complexe convert(Point p){

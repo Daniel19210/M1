@@ -9,17 +9,24 @@ public class Client{
 
         try{
 
-            Registry reg = LocateRegistry.getRegistry(null);
+            while(true){
+                Registry reg = LocateRegistry.getRegistry(null);
 
-            Mandelbrot bag = (Mandelbrot) reg.lookup("Mandelbrot");
+                Mandelbrot bag = (Mandelbrot) reg.lookup("Mandelbrot");
+                
+                Task t = bag.getTask();
 
-            Task t = bag.getTask();
+                if(t != null){
 
-            t.run();
+                    t.run();
 
-            bag.addResult(t);
+                    bag.addResult(t);
+                }else{
+                    Thread.sleep(500);
+                    System.out.println("Pause");
+                }
 
-            System.out.println("FINI CLIENT");
+            }
 
         }catch(Exception e){
             System.err.println(e.toString());

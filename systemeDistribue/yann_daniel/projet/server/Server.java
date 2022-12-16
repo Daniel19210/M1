@@ -26,6 +26,11 @@ public class Server{
             reg.bind("Mandelbrot", bag);
             System.out.println("Le Serveur est prêt...");
 
+            System.out.println(bag.data_a_traiter.size());
+            while(!bag.data_a_traiter.isEmpty()){
+                System.out.println(bag.data_a_traiter.size());
+            }
+
             if(bag.data_a_traiter.isEmpty()){
                 for(Task t: bag.taches_complete){
                     ImpTask t1 = (ImpTask)t;

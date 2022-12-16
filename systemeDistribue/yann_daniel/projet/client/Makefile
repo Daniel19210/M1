@@ -1,6 +1,7 @@
 all:
 	javac Client.java Mandelbrot.java Task.java Point.java
-	./clients.sh
+	java Client
+#./clients.sh
 
 clean:
 	rm *.class

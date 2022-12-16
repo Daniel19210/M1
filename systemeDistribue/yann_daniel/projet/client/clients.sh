@@ -1,5 +1,5 @@
 #!/bin/bash
-for i in {0. .5}
+for (( i=1; i<=240000; i++))
 do
-    echo "coucou $i"
+    java Client &
 done
