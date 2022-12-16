@@ -6,14 +6,18 @@ import java.util.ArrayList;
 
 public class Server{
 
+    public static Fenetre fenetre;
+    public static ImpMandelbrot bag;
+    public static Registry reg;
+
     public Server() {}
 
 
     public static void main(String args[]){
-        Fenetre fenetre = new Fenetre(Constantes.width, Constantes.height);
+        fenetre = new Fenetre(Constantes.width, Constantes.height);
         
         try{
-            ImpMandelbrot bag = new ImpMandelbrot();
+            bag = new ImpMandelbrot();
             System.out.println(bag.data_a_traiter.size());
             for(int i=0; i<=Constantes.width; i++){
                 for(int j=0; j<=Constantes.height; j++){
@@ -21,30 +25,39 @@ public class Server{
                 }
             }
 
-            Registry reg = LocateRegistry.getRegistry();
-
+            reg = LocateRegistry.getRegistry();
             reg.bind("Mandelbrot", bag);
-            System.out.println("Le Serveur est prêt...");
 
-            while(bag.data_a_traiter.size() != 0){
-                Thread.sleep(100);
-            };
-            
-        
-            System.out.println("dessin");
-            Thread.sleep(10);
-            for(Task t: bag.taches_complete){
-                System.out.println("tache: appartient " + t.getAppartient_mandelbrot() + " point " + t.getPoint_a_traiter());
-                if(t.getAppartient_mandelbrot()){
-                    fenetre.getPanelDessin().listePointMandelbrot.add(t.getPoint_a_traiter());
-                }
-            }
-            fenetre.getPanelDessin().repaint();
-            System.out.println("fin dessin");
+            draw();
 
         }catch(Exception e){
             System.out.println(e.toString());
             e.printStackTrace();
         }
+    }
+
+    public static void draw() throws Exception{
+
+        bag.nbTaskGiven = -1;
+        bag.taches_complete.clear();
+        fenetre.getPanelDessin().listePointMandelbrot.clear();
+        System.out.println("Les points sont a traiter !");
+
+        while(bag.data_a_traiter.size() > bag.nbTaskGiven){
+            Thread.sleep(100);
+        };
+        
+    
+        System.out.println("dessin");
+        Thread.sleep(10);
+        for(Task t: bag.taches_complete){
+            //System.out.println("tache: appartient " + t.getAppartient_mandelbrot() + " point " + t.getPoint_a_traiter());
+                
+            //System.out.println(t.getPoint_a_traiter().getColor());
+            fenetre.getPanelDessin().listePointMandelbrot.add(t.getPoint_a_traiter());
+            
+        }
+        fenetre.getPanelDessin().repaint();
+        System.out.println("fin dessin");
     }
 }

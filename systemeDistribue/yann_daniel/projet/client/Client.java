@@ -17,19 +17,16 @@ public class Client{
                 Task t = bag.getTask();
 
                 if(t != null){
-                    System.out.println("Calcul du point " + t.getPoint_a_traiter());
-                    if(t.getPoint_a_traiter().getX() == 50){
-                        Thread.sleep(10);
-                    }
+                    //System.out.println("Calcul du point " + t.getPoint_a_traiter());
+
 
                     t.run();
                     
                     bag.addResult(t);
                 }else{
-                    System.out.println("fin");
-                    return;
+                    //System.out.println("fin");
+                    Thread.sleep(1000);
                 }
-
             }
 
         }catch(Exception e){

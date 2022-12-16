@@ -2,7 +2,7 @@ import java.lang.Math;
 
 public class Complexe{
 
-    private float a, b;
+    private double a, b;
 
     public Complexe(){
 
@@ -10,7 +10,7 @@ public class Complexe{
         this.b = 0;
     }
 
-    public Complexe(float newA, float newB){
+    public Complexe(double newA, double newB){
 
         this.a = newA;
         this.b = newB;
@@ -21,27 +21,27 @@ public class Complexe{
         this.b = c.getB();
     }
 
-    public float getA(){return this.a;}
-    public float getB(){return this.b;}
+    public double getA(){return this.a;}
+    public double getB(){return this.b;}
 
-    public void setA(float newA){this.a = newA;}
-    public void setB(float newB){this.b = newB;}
+    public void setA(double newA){this.a = newA;}
+    public void setB(double newB){this.b = newB;}
 
     public Complexe multiply(Complexe c){
-        float newA = this.getA() * c.getA() - this.getB() * c.getB();
-        float newB = this.getA() * c.getB() + this.getB() * c.getA();
+        double newA = this.getA() * c.getA() - this.getB() * c.getB();
+        double newB = this.getA() * c.getB() + this.getB() * c.getA();
 
         return new Complexe(newA, newB);
     }
     
     public Complexe add(Complexe c){
-        float newA = this.getA() + c.getA();
-        float newB = this.getB() + c.getB();
+        double newA = this.getA() + c.getA();
+        double newB = this.getB() + c.getB();
 
         return new Complexe(newA, newB);
     }
 
-    public float module(){
-        return (float)(Math.sqrt(Math.pow(this.getA(), 2) + Math.pow(this.getB(), 2)));
+    public double module(){
+        return (double)(Math.sqrt(Math.pow(this.getA(), 2) + Math.pow(this.getB(), 2)));
     }
 }

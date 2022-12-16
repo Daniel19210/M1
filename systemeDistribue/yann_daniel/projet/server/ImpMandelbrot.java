@@ -7,6 +7,7 @@ public class ImpMandelbrot extends UnicastRemoteObject implements Mandelbrot{
 
     public ArrayList<Point> data_a_traiter;
     public ArrayList<Task> taches_complete;
+    public int nbTaskGiven;
 
     public ImpMandelbrot() throws RemoteException{
 
@@ -14,6 +15,7 @@ public class ImpMandelbrot extends UnicastRemoteObject implements Mandelbrot{
 
         data_a_traiter = new ArrayList<Point>();
         taches_complete = new ArrayList<Task>();
+        nbTaskGiven = -1;
     }
 
     public void addTask(Point p) throws RemoteException{
@@ -22,11 +24,8 @@ public class ImpMandelbrot extends UnicastRemoteObject implements Mandelbrot{
     }
 
     public Task getTask() throws RemoteException{
-        
-        if(data_a_traiter.size() != 0){
-            return (Task) new ImpTask(data_a_traiter.remove(0));
-        }
-        return null;
+        nbTaskGiven++;
+        return (data_a_traiter.size() > nbTaskGiven) ? (Task) new ImpTask(data_a_traiter.get(nbTaskGiven)) : null;
     }
 
     public void addResult(Task t) throws RemoteException{

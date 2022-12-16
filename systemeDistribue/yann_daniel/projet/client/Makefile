@@ -5,6 +5,11 @@ all:
 	java Client &
 	java Client &
 	java Client &
+	java Client &
+	java Client &
+	java Client &
+	java Client &
+	java Client &
 #./clients.sh
 
 clean:
