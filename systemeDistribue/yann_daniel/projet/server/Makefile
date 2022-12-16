@@ -1,7 +1,7 @@
 all:
 #kill -9 $$(pidof rmiregistry)
 	javac *.java
-	rmiregistry &
+	./rmi.sh
 	java Server
 
 

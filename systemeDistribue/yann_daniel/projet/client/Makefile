@@ -1,6 +1,10 @@
 all:
 	javac Client.java Mandelbrot.java Task.java Point.java
-	java Client
+	java Client &
+	java Client &
+	java Client &
+	java Client &
+	java Client &
 #./clients.sh
 
 clean:
