@@ -15,20 +15,31 @@ public class ImpTask extends UnicastRemoteObject implements Task{
     }
 
     public void run() throws RemoteException{
+        
         Complexe z = new Complexe(0, 0);
         Complexe c = convert(point_a_traiter);
-        for(int n=0; n<Constantes.limite ; n++){
-            if(z.module() > 2){
-                /*
-                 * Le cas où z0 a un module supérieur à 2 fait que le point c a une divergence de 0,
-                 * comme les points appartenant à Mandelbrot
-                 * Cependant, comme z0 vaut 0+0i le module ne peut pas être supérieur à 2
-                 */
-                divergence = n;
-                break; // inutile de calculer la suite des termes, on sait que la suite n'est pas bornée
+
+        //verification d'appartenance au disque de centre (-1,0)
+        double verif1 = Math.pow(c.getA()+1., 2) + Math.pow(c.getB(), 2);
+        //Verification d'appartenance à la cardioïde.
+        double p = Math.sqrt(Math.pow(c.getA()-(1./4.),2) + Math.pow(c.getB(), 2));
+        double verif2 = p - (2 * Math.pow(p, 2)) + (1./4.);
+
+        if(verif1 >= (1./16.) || c.getA() >= verif2){
+            for(int n=0; n<Constantes.limite ; n++){
+                
+                if(z.module() > 2){
+                    /*
+                     * Le cas où z0 a un module supérieur à 2 fait que le point c a une divergence de 0,
+                     * comme les points appartenant à Mandelbrot
+                     * Cependant, comme z0 vaut 0+0i le module ne peut pas être supérieur à 2
+                     */
+                    divergence = n;
+                    break; // inutile de calculer la suite des termes, on sait que la suite n'est pas bornée
+                }
+                z = z.multiply(z);
+                z = z.add(c);
             }
-            z = z.multiply(z);
-            z = z.add(c);
         }
         // On attribue une couleur en fonction de la divergence.
         if(divergence == 0)

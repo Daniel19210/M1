@@ -13,25 +13,29 @@ public class Server{
 
     public Server() {}
     public static void main(String args[]){
+        
         ArrayList<String> arrArgs = new ArrayList<>(Arrays.asList(args));
-        if(arrArgs.size() == 3){
+        System.out.println(arrArgs.size());
+        if(arrArgs.size() == 3 || arrArgs.size() == 7){
             Constantes.width = Integer.parseInt(args[0]);
             Constantes.height = Integer.parseInt(args[1]);
             Constantes.limite = Integer.parseInt(args[2]);
-        }else if(arrArgs.size() == 7){
-            Constantes.widthComplexe = new Complexe(Double.parseDouble(args[3]),Double.parseDouble(args[4]));
-            Constantes.heightComplexe = new Complexe(Double.parseDouble(args[5]),Double.parseDouble(args[6]));
+        }
+        if(arrArgs.size() == 7){
+            Constantes.widthComplexe = new Complexe(Double.parseDouble(args[3]),Double.parseDouble(args[6]));
+            Constantes.heightComplexe = new Complexe(Double.parseDouble(args[4]),Double.parseDouble(args[5]));
             Constantes.calculCoordPlan();
-        }else if (arrArgs.size() == 0){
+        }
+        if (arrArgs.size() == 0){
             System.out.println("Pas de paramètre donné en entrée");
-        } else {
+        }else if (arrArgs.size() != 3 && arrArgs.size() != 7) {
             System.out.println("Le nombre de paramètre est incorrect. Le programme accepte 3 ou 7 arguments en paramètres");
             return;
         }
         
         System.out.println("Résolution de la fenetre: " + Constantes.width + "x" + Constantes.height + "\nLimite de calcul: "+ Constantes.limite);
-        System.out.print("Les intervalles complexe sont: (" + Constantes.widthComplexe.getA() + ";" + Constantes.widthComplexe.getB() + ") sur l'axe des réels");
-        System.out.println(" et (" + Constantes.heightComplexe.getA() + ";" + Constantes.heightComplexe.getB() + ") sur l'axe des imaginaires");
+        System.out.print("Les intervalles complexe sont: (" + Constantes.widthComplexe.getA() + ";" + Constantes.heightComplexe.getA() + ") sur l'axe des réels");
+        System.out.println(" et (" + Constantes.heightComplexe.getB() + ";" + Constantes.widthComplexe.getB() + ") sur l'axe des imaginaires");
         
         fenetre = new Fenetre(Constantes.width, Constantes.height);
         
