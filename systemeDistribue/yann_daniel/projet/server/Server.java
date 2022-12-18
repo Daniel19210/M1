@@ -3,9 +3,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.Registry;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.server.UnicastRemoteObject;
+import java.util.Arrays;
 import java.util.ArrayList;
 
 public class Server{
@@ -14,9 +12,27 @@ public class Server{
     public static ImpMandelbrot bag;
 
     public Server() {}
-
-
     public static void main(String args[]){
+        ArrayList<String> arrArgs = new ArrayList<>(Arrays.asList(args));
+        if(arrArgs.size() == 3){
+            Constantes.width = Integer.parseInt(args[0]);
+            Constantes.height = Integer.parseInt(args[1]);
+            Constantes.limite = Integer.parseInt(args[2]);
+        }else if(arrArgs.size() == 7){
+            Constantes.widthComplexe = new Complexe(Double.parseDouble(args[3]),Double.parseDouble(args[4]));
+            Constantes.heightComplexe = new Complexe(Double.parseDouble(args[5]),Double.parseDouble(args[6]));
+            Constantes.calculCoordPlan();
+        }else if (arrArgs.size() == 0){
+            System.out.println("Pas de paramètre donné en entrée");
+        } else {
+            System.out.println("Le nombre de paramètre est incorrect. Le programme accepte 3 ou 7 arguments en paramètres");
+            return;
+        }
+        
+        System.out.println("Résolution de la fenetre: " + Constantes.width + "x" + Constantes.height + "\nLimite de calcul: "+ Constantes.limite);
+        System.out.print("Les intervalles complexe sont: (" + Constantes.widthComplexe.getA() + ";" + Constantes.widthComplexe.getB() + ") sur l'axe des réels");
+        System.out.println(" et (" + Constantes.heightComplexe.getA() + ";" + Constantes.heightComplexe.getB() + ") sur l'axe des imaginaires");
+        
         fenetre = new Fenetre(Constantes.width, Constantes.height);
         
         try{
@@ -24,7 +40,8 @@ public class Server{
             bag = new ImpMandelbrot();
             for(int i=0; i<=Constantes.width; i++){
                 for(int j=0; j<=Constantes.height; j++){
-                    bag.addTask(new Point(i,j));
+                    Point p = new Point(i,j);
+                    bag.addTask(p);
                 }
             }
             fenetre.getPanelDessin().listePointMandelbrot = bag.data_a_traiter;
@@ -47,9 +64,8 @@ public class Server{
         bag.taches_complete.clear();
         bag.nbTaskGiven = -1;
         System.out.println("Serveur prêt!");
-        System.out.println("Les points sont a traiter !");
 
-        //Le serveur attends que les clients aient traités tout les points
+        //Le serveur attends que les clients aient traités tout les points 
         while(bag.data_a_traiter.size() > bag.nbTaskGiven){
             Thread.sleep(1000);
         };
@@ -60,7 +76,7 @@ public class Server{
         Thread.sleep(10);
         fenetre.getPanelDessin().repaint();
         System.out.println("fin dessin");
-        calculComplexite();
+        //calculComplexite();
     }
 
     public static void calculComplexite() throws RemoteException, IOException{

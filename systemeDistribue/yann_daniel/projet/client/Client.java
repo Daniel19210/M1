@@ -1,6 +1,6 @@
 import java.rmi.Naming;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+//import java.rmi.registry.LocateRegistry;
+//import java.rmi.registry.Registry;
 public class Client{
 
     private Client() {}
@@ -10,7 +10,7 @@ public class Client{
         try{
             //On recupere la liste des données à traiter
             Mandelbrot bag = (Mandelbrot) Naming.lookup("rmi://localhost:1099/Mandelbrot");
-
+            System.out.println("Lancement du client");
             while(true){
 
                 //on recupere une tache
@@ -18,15 +18,15 @@ public class Client{
 
                 //Si il y a une tache a executer on la traite sinon, on attend
                 if(t != null){
-                    // System.out.println("Calcul du point " + t.getPoint_a_traiter());
+                    //System.out.println("Calcul du point: " + t.getPoint_a_traiter());
                     t.run();
                     bag.addResult(t);
                 }else{
-                    //System.out.println("fin");
                     Thread.sleep(1000);
                 }
             }
-
+        }catch(java.rmi.ConnectException c){
+            System.out.println("Le serveur a probablement mis fin à la connection, fin du programme");
         }catch(Exception e){
             System.err.println(e.toString());
             e.printStackTrace();

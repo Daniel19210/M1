@@ -44,4 +44,9 @@ public class Complexe{
     public double module(){
         return (double)(Math.sqrt(Math.pow(this.getA(), 2) + Math.pow(this.getB(), 2)));
     }
+
+    @Override
+    public String toString(){
+        return this.a+"+i"+this.b;
+    }
 }

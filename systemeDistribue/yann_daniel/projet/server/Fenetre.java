@@ -15,7 +15,7 @@ public class Fenetre extends JFrame{
 
     public Fenetre(int x, int y){
 
-        this.setTitle("Mandelbroot");
+        this.setTitle("Mandelbrot");
         this.setSize(x,y+50);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
