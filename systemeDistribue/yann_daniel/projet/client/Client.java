@@ -1,7 +1,6 @@
+import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.Random;
-
 public class Client{
 
     private Client() {}
@@ -9,19 +8,18 @@ public class Client{
     public static void main(String[] args){
 
         try{
-            Registry reg = LocateRegistry.getRegistry(null);
-    
-            Mandelbrot bag = (Mandelbrot) reg.lookup("Mandelbrot");
+            //On recupere la liste des données à traiter
+            Mandelbrot bag = (Mandelbrot) Naming.lookup("rmi://localhost:1099/Mandelbrot");
+
             while(true){
 
+                //on recupere une tache
                 Task t = bag.getTask();
 
+                //Si il y a une tache a executer on la traite sinon, on attend
                 if(t != null){
-                    //System.out.println("Calcul du point " + t.getPoint_a_traiter());
-
-
+                    // System.out.println("Calcul du point " + t.getPoint_a_traiter());
                     t.run();
-                    
                     bag.addResult(t);
                 }else{
                     //System.out.println("fin");
