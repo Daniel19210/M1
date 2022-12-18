@@ -26,7 +26,7 @@ public class Client{
                 }
             }
         }catch(java.rmi.ConnectException c){
-            System.out.println("Le serveur a probablement mis fin à la connection, fin du programme");
+            System.out.println("Le serveur a mis fin à la connection, fin du programme");
         }catch(Exception e){
             System.err.println(e.toString());
             e.printStackTrace();

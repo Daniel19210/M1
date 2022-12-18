@@ -18,6 +18,7 @@ public class Constantes{
     public static double decalImageX = Math.min(widthComplexe.getA(), heightComplexe.getA());
     public static double decalImageY = Math.min(widthComplexe.getB(), heightComplexe.getB());
 
+    //met à jour les variables ci-dessus
     public static void calculCoordPlan(){
         intervalleFenetreWidth = (Math.max(widthComplexe.getA(), heightComplexe.getA()) - Math.min(widthComplexe.getA(), heightComplexe.getA()));
         intervalleFenetreHeight = (Math.max(widthComplexe.getB(), heightComplexe.getB()) - Math.min(widthComplexe.getB(), heightComplexe.getB()));
