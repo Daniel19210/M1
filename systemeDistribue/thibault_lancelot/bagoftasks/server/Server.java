@@ -1,4 +1,3 @@
-
 package bagoftasks.server;
 
 import java.rmi.*;
