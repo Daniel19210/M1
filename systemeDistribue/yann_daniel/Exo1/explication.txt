@@ -1,2 +1,0 @@
-pour estimer f, on fait des exécutions en séquentielles et en parallèles
-pour trouver S(n) et ensuite on regarde à quelle courbe cela correspond

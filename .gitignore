@@ -6,4 +6,4 @@ caw/
 **/.vscode/*
 main
 *.class
-systemeDistribue/yann_daniel/RMI/rabbit/serveur/*
+s7/systemeDistribue/yann_daniel/rabbitMQ/*

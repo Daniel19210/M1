@@ -1,3 +1,0 @@
-div{margin:20px;}
-span{font-weight:bolder; color:red;}
-#dimension,#dimensionX,#dimensionY{width:35px;}

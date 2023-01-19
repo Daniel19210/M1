@@ -1,2 +1,0 @@
-Si on a que 1 coeur ou plus de 13 coeur inclus, on utilise 0.0005*log(n)
-Sinon on utilise 0,0001*n
