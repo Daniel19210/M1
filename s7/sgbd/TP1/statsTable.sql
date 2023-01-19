@@ -1,0 +1,1 @@
+SELECT DBMS_ROWID FROM film;

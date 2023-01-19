@@ -1,0 +1,386 @@
+var msg,msgCode,msgRecu,msgCorrige;
+
+
+msg="<form>";
+msg+="<select id=\"choixAlgo\" onchange=\"choix();\">";
+msg+="<option>Choix de l'algorithme</option>";
+msg+="<option>Contrôle de parité</option>";
+msg+="<option>LRC</option>";
+msg+="<option>Codage de Hamming</option>";
+msg+="<option>Délimitation des trames</option>";
+msg+="</select>";
+msg+="<div><h4>Côté émetteur</h4>";
+msg+="<p id=\"dimensionMsg\"></p>";
+msg+="<p id=\"codegenere\"></p>";
+msg+="<p id=\"msgCode\"></p>";
+msg+="<h4>Côté récepteur</h4>";
+msg+="<p id=\"msgTransmis\"></p>";
+msg+="<p id=\"msgCorrige\"></p>";
+msg+="</div></form>";
+
+document.body.innerHTML=txt;
+
+
+
+
+
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+function choix(){
+	var choix=document.getElementById("choixAlgo").selectedIndex;
+	
+	if(choix==1){
+		var txt="<label for=\"dimension\">Dimension : </label>";
+		txt+="<input type=\"number\" id=\"dimension\" value=\"10\" />";
+		txt+="<input type=\"button\" value=\"générer\" onclick=\"genererCode();\"/>";
+		document.getElementById("dimensionMsg").innerHTML=txt;
+	}
+	else if(choix==2){
+		var txt="Dimension :";
+		txt+="<input type=\"number\" id=\"dimensionX\" value=\"8\" />";
+		txt+="<input type=\"number\" id=\"dimensionY\" value=\"6\" />";
+		txt+="<input type=\"button\" value=\"générer\" onclick=\"genererCode();\"/>";
+		document.getElementById("dimensionMsg").innerHTML=txt;	
+	}
+	else if(choix==3){
+		var txt="<label for=\"dimension\">Dimension : </label>";
+		txt+="<input type=\"number\" id=\"dimension\" value=\"10\" />";
+		txt+="<input type=\"button\" value=\"générer\" onclick=\"genererCode();\"/>";
+		document.getElementById("dimensionMsg").innerHTML=txt;
+	}
+	else if(choix==4){
+		var txt="Trames à envoyer : <br> <input type=\"text\" id=\"trame1\" value=\"0100011000110101\" />" ;
+		txt+="<br> <input type=\"text\" id=\"trame2\" value=\"0100011111000110101\" />" ;
+		txt+="<br> <input type=\"text\" id=\"trame3\" value=\"010001111110101\"/>" ;
+		txt+="<br> <input type=\"checkbox\" id=\"bt\" checked/> avec bits de transparence";
+		txt+="<br> <input type=\"button\" value=\"générer\" onclick=\"HDLCsend();\"/>";
+		document.getElementById("dimensionMsg").innerHTML=txt;
+	}
+
+	
+	document.getElementById("codegenere").innerHTML="";
+	document.getElementById("msgCode").innerHTML="";
+	document.getElementById("msgTransmis").innerHTML="";
+	document.getElementById("msgCorrige").innerHTML="";
+}
+
+function genererCode(){
+	var choix=document.getElementById("choixAlgo").selectedIndex;
+	var dim ;	
+	if(choix==1||choix==3){
+		dim= document.getElementById("dimension").value ;
+	}
+	else if (choix==2){
+		dim = document.getElementById("dimensionX").value*document.getElementById("dimensionY").value ;
+	}
+	msg="";
+	for(var i=0;i<dim;i++)
+		msg+=getRandomInt(2)==0?"0":"1";
+	document.getElementById("codegenere").innerHTML="Le message à transmettre est : "+ msg + "<input type=\"button\" value=\"codage\" onclick=\"codage();\"/>";
+
+}
+
+function HDLCsend(){
+	var msg1=document.getElementById("trame1").value;
+	var msg2=document.getElementById("trame2").value;
+	var msg3=document.getElementById("trame3").value;
+	var transp = document.getElementById("bt").checked;
+	
+	if(transp){
+		msg1=ajouterBitTransparence(msg1) ;
+		msg2=ajouterBitTransparence(msg2) ;
+		msg3=ajouterBitTransparence(msg3) ;
+	}
+	
+	var fanion="01111110";
+	msg=fanion+msg1+fanion+msg2+fanion+msg3+fanion;
+	document.getElementById("codegenere").innerHTML="Le message envoyé est : "+msg ;	
+	
+	var i,debut=8,win,txt="Liste des trames reçues : <ul>" ;
+	for(i=8;i<msg.length;i++){
+		win=msg.substring(i,i+8);
+		if(win==fanion){
+			msg1=	msg.substring(debut,i);	
+			i=i+8;
+			debut=i;
+			if(transp){
+				msg1=supprimerBitTransparence(msg1) ;
+			}			
+			txt+="<li>"+msg1+"</li>" ;
+		//	alert(msg1) ;
+		}
+	}
+		
+	document.getElementById("msgTransmis").innerHTML=txt+"</ul>";
+	
+	//alert(supprimerBitTransparence(msg)) ;
+	
+	
+}
+
+function ajouterBitTransparence(trame){
+	var i,c,s=0;
+	var t="";
+	for(i=0;i<trame.length;i++){
+		c=trame.charAt(i) ;
+		t+=c;
+		s = c=='1' ? s+1 : 0 ;	
+		if(s==5)
+			t+="0" ;
+	}
+	return t;
+}
+
+function supprimerBitTransparence(trame){
+	var i,c,s=0;
+	var t="";
+	for(i=0;i<trame.length;i++){
+		c=trame.charAt(i) ;
+		if(s==5 && c=='0'){
+			s=0;
+		}
+		else{
+			t+=c;
+			s = c=='1' ? s+1 : 0 ;	
+		}
+	}
+	return t;
+}
+
+
+
+function longueurHamming(code){
+	var dist=0 ;
+	for(var i=0;i<code.length;i++){
+		if(code[i]=='1')
+			dist++ ;	
+	}
+	return dist ;	
+}
+
+function ch2int(ch) {	return ch=='0'?0:1;}
+
+function codage(){
+	var dim,lon,rend ;
+	var choix=document.getElementById("choixAlgo").selectedIndex;
+	if(choix==1){
+		var hamming=longueurHamming(msg) ;
+		dim=document.getElementById("dimension").value ;
+		lon=parseInt(dim)+1 ;
+		rend=(dim/lon).toFixed(2) ;
+		if(hamming%2==0){
+			msgCode=msg+"0";
+			document.getElementById("msgCode").innerHTML="Le message codé est : "+msg+"<span>0</span";
+		}
+		else{
+			msgCode=msg+"1";
+			document.getElementById("msgCode").innerHTML="Le message codé est : "+msg+"<span>1</span";
+		}	
+	}
+	else if(choix==2){
+		var dimX=parseInt(document.getElementById("dimensionX").value);
+		var dimY=parseInt(document.getElementById("dimensionY").value) ;
+		var dim=dimX*dimY;
+		var lon=(dimX+1)*(dimY+1) ;
+		rend=(dim/lon).toFixed(2) ;
+		var x,y,s,s2=0,txt="" ;
+		msgCode="";
+		for(y=0;y<dimY;y++){
+			s=0;
+			for(x=0;x<dimX;x++)
+				s+=ch2int(msg.charAt(y*dimX+x)) ;
+			txt+=msg.substring(y*dimX,(y+1)*dimX);
+			txt+="<span>"+(s%2==0?"0":"1")+"</span><br/>";
+			msgCode+=msg.substring(y*dimX,(y+1)*dimX)+(s%2==0?"0":"1");
+		}
+		for(x=0;x<dimX;x++){
+			s=0;
+			for(y=0;y<dimY;y++)
+				s+=ch2int(msg.charAt(y*dimX+x)) ;
+			txt+="<span>"+(s%2==0?"0":"1")+"</span>";
+			msgCode+=(s%2==0?"0":"1");
+			s2+=s%2;
+		}
+		txt+="<span>"+(s2%2==0?"0":"1")+"</span><br/>";
+		msgCode+=(s2%2==0?"0":"1") ;
+		
+		document.getElementById("msgCode").innerHTML=txt ;
+		document.getElementById("msgCode").innerHTML+="Le message codé est : "+msgCode ;
+	}
+	else if(choix==3){
+		dim=document.getElementById("dimension").value ;
+		lon=codageHamming(dim) ;	
+		rend=(dim/lon).toFixed(2) ;	
+		document.getElementById("msgCode").innerHTML+="Le message codé est : "+msgCode ;
+		msgCode=msgCode.split("<span>").join("");
+		msgCode=msgCode.split("</span>").join("");
+	}
+	
+	document.getElementById("msgCode").innerHTML+="<br/>Dimension="+ dim+"<br/>Longueur="+lon+ "<br/>Rendement="+rend+"<br/>";
+	document.getElementById("msgCode").innerHTML+="<input type=\"button\" value=\"transmettre\" onclick=\"transmettre();\"/>" ;	
+}
+
+function codageHamming(dim){
+	var pos=3,ind=2,pui=4,parite,i,j;
+	var msg1="00"
+	for(i=0;i<dim;i++){
+		if(pos==pui){
+			msg1+="0" ;
+			pui*=2;
+			ind++ ;
+			pos++ ;
+		}
+		msg1+=msg.charAt(i) ;	
+		pos++ ;
+	}
+//	alert(msg1);
+	ind=0; pui=1; msgCode="";
+	for(i=1;i<pos;i++){
+		if(i==pui){
+			parite=0;
+			for(j=1;j<pos;j++){
+				if(decompositionPuiss2(j,ind)==1){
+					parite+=ch2int(msg1.charAt(j-1));
+					//alert(j+" "+ind+" "+ch2int(msg1.charAt(j-1))+" "+parite) ;
+				}
+			}
+			//alert(parite+" "+ind);
+			msgCode += parite%2==1 ?"<span>1</span>":"<span>0</span>"  ;
+			pui*=2;
+			ind++;
+		}
+		else {
+			msgCode+=msg1.charAt(i-1) ;
+		}		
+	}	
+	return pos-1;
+}
+
+function decompositionPuiss2(position,p){
+	var i,pos=position;
+	for(i=0;i<p;i++)	pos=Math.floor(pos/2) ;
+	return pos%2;
+}
+
+
+function correction(pos){
+	msgCorrige=msgRecu.substring(0,pos);
+	msgCorrige+=msgRecu.charAt(pos)=='0'?"1":"0" ;
+	msgCorrige+=msgRecu.substring(pos+1,msgRecu.length);
+}
+
+function genererErreur(pos){
+	var Str=msgRecu.substring(0,pos);
+	Str+=msgRecu.charAt(pos)=='0'?"1":"0" ;
+	Str+=msgRecu.substring(pos+1,msgRecu.length);
+	msgRecu=Str;
+}
+
+function msgFinalLRC(msg,dimX,dimY){
+	var msgF="";
+	for(var y=0;y<dimY;y++){
+		msgF+=msg.substring(y*(dimX+1),y*(dimX+1)+dimX);
+	}
+	return msgF;	
+}
+
+function transmettre(){
+	var nbEr=parseInt(prompt("Donnez le nombre d'erreurs"));
+	var er ;
+	msgRecu=msgCode;
+	for(var i=0;i<nbEr;i++){
+		er=getRandomInt(msgCode.length) ;
+		genererErreur(er) ;
+	}
+	document.getElementById("msgTransmis").innerHTML="Le code reçu est "+msgRecu;
+	
+	var choix=document.getElementById("choixAlgo").selectedIndex;
+	var txtCorr="";
+	if(choix==1){
+		var distHam=longueurHamming(msgRecu) ;
+		txtCorr+="<br/>Le code reçu a une longueur de Hamming de "+distHam ;
+		if(distHam%2==0){
+			txtCorr+="<br/>Il n'y a aucune erreur détectée. <br/> Le message reçu est "+msgRecu.substring(0,msgRecu.length-1);
+		}
+		else {
+			txtCorr+="<br/>Une erreur a été détectée.";
+		}
+	}
+	else if(choix==2){
+		var dimX=parseInt(document.getElementById("dimensionX").value);
+		var dimY=parseInt(document.getElementById("dimensionY").value) ;
+		var line,s,temp="",erL=-2,erC=-2 ;
+		for(y=0;y<dimY+1;y++){
+			line=msgRecu.substring(y*(dimX+1),(y+1)*(dimX+1)) ;
+			txtCorr+=line+"<br>";
+			ham=longueurHamming(line);
+			if(ham%2==1){
+				temp+="Erreur sur la ligne "+(y+1)+"<br/>";
+				erL=(erL==-2)?y:-1;
+			}
+		}		
+		txtCorr+=temp;
+		for(x=0;x<dimX+1;x++){
+			s=0;
+			for(y=0;y<dimY+1;y++)
+				s+=ch2int(msgRecu.charAt(y*(dimX+1)+x)) ;
+			if(s%2==1){
+				txtCorr+="Erreur sur la colonne "+(x+1)+"<br/>";
+				erC=(erC==-2)?x:-1;
+			}
+		}
+
+		if(erL==-2 && erC==-2){
+			txtCorr+="Il n'y a aucune erreur détectée.<br/>";
+			txtCorr+="Le message reçu est : "+msgFinalLRC(msgRecu,dimX,dimY);
+		}
+		else if(erL>=0 && erC>=0){
+			txtCorr+="Il y a une erreur détectée.<br>";	
+			correction(erC*(dimX+1),erL*(dimX+1))
+			txtCorr+="Le code corrigé est : "+msgCorrige+"<br/>";
+			txtCorr+="Le message reçu est : "+msgFinalLRC(msgCorrige,dimX,dimY);
+		}
+		else{
+			txtCorr+="Une erreur est détectée mais ne peut pas être corrigée.";	
+		}
+	}
+	else if(choix==3){
+		var l=msgRecu.length ;
+		var ind=0,puis=1,p,i,parite,posErreur=0 ;
+		for(p=1;p<l;p*=2){
+			parite=0 ;
+			for(i=1;i<=l;i++){
+				if(decompositionPuiss2(i,ind)==1){
+					parite+=ch2int(msgRecu.charAt(i-1));
+				}
+			}
+			if(parite%2==1){
+				txtCorr+="Le bit de redondance à la position "+puis+" ne donne pas une parité paire<br>";		
+				posErreur+=puis ;
+			}			
+			ind++ ;
+			puis*=2;
+		}	
+		if(posErreur!=0){
+			txtCorr+="Une erreur est détectée à la position "+posErreur+"<br>";	
+			correction(posErreur) ;
+		}	
+		var msg1="";
+		i=2 ;
+		for(p=4;p<l;p*=2){
+			msg1+=msgRecu.substring(i,p-1) ;
+			i=p ;	
+		}
+		msg1+=msgRecu.substring(i,l) ;
+		txtCorr+="Le code corrigé est : "+msgRecu+"<br>";
+		txtCorr+="Le message reçu est : "+msg1;
+		
+	}
+	
+	document.getElementById("msgCorrige").innerHTML=txtCorr ;
+}
+
+

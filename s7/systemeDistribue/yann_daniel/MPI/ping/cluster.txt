@@ -1,0 +1,7 @@
+MI104-18 slots=10
+MI104-14 slots=10
+MI104-16 slots=10
+MI104-17 slots=10
+MI104-15 slots=10
+MI104-19 slots=10
+MI104-20 slots=10

@@ -1,0 +1,63 @@
+Exercice 1 : Controle de qualité
+1) Le code avec 8 dimension possède 8 bits et a un rendement de 8/9 donc 0,89.
+2) Pour le message à 8 dimension, 00010010, une erreur est détectée avec le code reçu de 000101110, mais pas corrigé. 3)
+On remarque que lorsque le nombre d'erreur est impair, il est impossible de corriger les erreurs tandis que lorsque ce nombre est pair, il est possible de le corriger.
+4) Le message corrigé, si il l'est, est rarement correct.
+
+Exercice 2 : Parité longitudinale et transversale
+1) Le message de dimension (N,M) est de longueur N*M généré aléatoirement. la matrice générée est de dimension (N+1,M+1). La matrice (N,M) contenue dans la matrice (N+1,M+1) est le message à transmettre. Le bit ajouté à chaque colonne et à chaque ligne permet d'avoir une parité paire. Le message codé est constitué des lignes de la matrices concaténées.
+2) Pour le message à transmettre 1 (matrice de dimension (1,1) de valeur ((11),(11))
+Une erreur est détectée et est corrigé afin d'avoir la bon message.
+
+3) Si il y a un nombre pair d'erreur, il n'est pas possible de corriger l'erreur. C'est possible dans le cas où on a un nombre
+d'erreur impair
+Pour le message 0, avec 2 erreurs, le code reçu est 1001, il y a une erreur sur chaque ligne et colonne.
+Pour le message 0, avec 3 erreurs, le code reçu est 1111 il y a une erreur ligne 1 et colonne 2, ce qui renvoie 1 comme message.
+
+4) Lorsque les messages sont corrigés, plus il y a eu d'erreurs, moins le message corrigé correspond à celui envoyé.
+
+Exercice 3 : Code de Hamming
+
+1) Le rendement augmente avec le nombre de dimension.
+
+3) Pour le message 0100, il y a 3 bits de redondance placé aux positions 1, 2 et 4 comme il y a 4 bits dans le message à transmettre.
+On a 1001100 comme message codé, on a 3 bits de parité qui sont 1, 0 et 1. Le premier bit de parité vaut 1 car les 3 bits en 
+position 1,2 et 4 du message sont 010. Donc il faut rajouter 1 pour avoir une parité paire.
+De même, le bit de parité en deuxième position vaut 0 car il regarde les bits 000 (en position 1,3 et 4 du message).
+Et le bit de parité en troisième position vaut 1 car il ragarde les bits 100 (les 3 derniers bits du message).
+
+4) L'erreur est détectée et corrigée. Le message codé 000 et on introduit une erreur ce qui le transforme en 001.
+Pour avoir une paritée paire, il faut avoir 2 ou 0 fois des bits à 1. Le message est donc corrigé en 000.
+C'est le message qui est finance.
+
+5) Pour le message 000, introduire 2 erreurs donne 101, le bit à la position 2 ne donne pas une parité paire.
+Le code est corrigé en 111, et le message reçu est 1.
+Avec 3 erreurs, le code reçu est 100, le bit à la position 1 ne donne pas une parité paire.
+Le code est corrigé en 000 et le message reçu est 0.
+
+4) Pour le message 1101, une erreur est détectée et est corrigée afin d'avoir le bon message.
+
+5) Si il y a plusieurs erreurs, elles sont toujours détectée mais et sont corrigés.
+
+6) Le message décodé est le bon s'il n'y a qu'une erreur. Pour le cas où il y en a plus, c'est rarement le cas.
+
+Exercice 4 : Délimitation des trames
+
+2) Pour construire le message, chaque trame est encadrée par 01111110.
+Le message envoyé est reçu sous forme de trames qui sont les mêmes que celles envoyés.
+
+3) Le message envoyé ne correspond plus aux trames envoyés car des bits parasites ce sont ajoutés.
+Le message reçu correspond aux trames envoyés.
+
+4) Le message envoyé ne correspond plus aux trames envoyés car des bits parasites ce sont ajoutés.
+Le message reçu correspond aux trames envoyés.
+
+5) Le message envoyé ne correspond plus aux trames envoyés car des bits parasites ce sont ajoutés.
+Le message reçu correspond aux trames envoyés.
+
+6) Sans les bits de transparence, le message est correctement construit si on a 4 ou 5 bits a 1 d'affilé, mais pas pour 6.
+Les trames ne correspondent plus aux trames envoyés avec 6 bits a 1 d'affilé, mais marche pour le reste.
+
+7) Les bits de transparences permettent de mieux acheminer les messages mais le message envoyé est modifié. ne correspondent plus aux trames envoyés avec 6 bits a 1 d'affilé, mais marche pour le reste.
+
+7) Les bits de transparences permettent de mieux acheminer les messages mais le message envoyé est modifié.
