@@ -1,0 +1,32 @@
+Accès au serveur mongo2
+    ssh nom_login@mongo2
+Connexion BDD
+    mongo -u nom_login -p nom_login -authenticationDatabase nom_login -host mongo2.iem
+puis
+    use nom_login
+
+TP:
+
+Exercice1:
+    1) Création (si la collection n'existe pas) et instertion des données
+        db.vente.insert({ données })
+    2) Affichage de toutes le connexions disponibles
+        show collections
+    3) affichage joli :
+        db.nom_collection.find().pretty()
+    4) Pour afficher les info pour une vente donnée par son isbn
+        db.vente.find({isbn: "val"})
+        db.vente.find({auteur: {"Nom":"Dupré"}})
+    5) Pour afficher les info pour un auteur donné par son identifiants puis par son nom
+        db.vente.find({"livre.isbn": "12341234123"
+        db.vente.find({"livre.auteur.nom": "Dupré"})
+
+Exercice 2:
+    1) Voir etudiants.json
+    2) db.etudiants.find()
+    3) db.etudiants.update({nom: "Marcel Campion"}, {$set: {nom: "Marcelito Campion"}})
+    4) db.etudiants.deleteOne({"id_vente": "12"})
+
+Exercice 3:
+    1) Voir ex3.js
+    2) db.etudiantsPr.find()
