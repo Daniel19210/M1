@@ -7,7 +7,10 @@ import numpy as np
 # Prend le paquet en argument et le renvoi
 def reculJokerNoir(p):
     i = np.where(p == 53)[0][0]
-    i = p[[i, i+1]] = p[[i+1, i]]
+    if (i == 53):
+        p[[i, 1]] = p[[1, i]]
+    else:
+        p[[i, i+1]] = p[[i+1, i]]
     return p
 
 
