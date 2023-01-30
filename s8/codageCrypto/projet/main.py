@@ -6,6 +6,20 @@ from jokerRouge import reculJokerRouge
 # Les jokers sont 53 et 54, noir étant 53
 
 
+def testMano(paquet):
+    print(f"{paquet=}")
+    paquetNoir = reculJokerNoir(paquet)
+    print(f"{paquetNoir=}")
+    paquetRouge = reculJokerRouge(paquet)
+    print(f"{paquetRouge=}")
+    paquetCoupe = coupeDouble(paquet)
+    print(f"{paquetCoupe=}")
+    paquetCoupeSimple = coupeSimple(paquet)
+    print(f"{paquetCoupeSimple=}")
+    # lettre = lecturePseudoAleatoire(paquet)
+    # print(f"{alphabet[lettre]=}")
+
+
 def coupeDouble(p):
     iNoir = np.where(p == 53)[0][0]
     iRouge = np.where(p == 54)[0][0]
@@ -39,36 +53,19 @@ def lecturePseudoAleatoire(p):
     return m
 
 
-def testMano(paquet):
-    print(f"{paquet=}")
-    paquetNoir = reculJokerNoir(paquet)
-    print(f"{paquetNoir=}")
-    paquetRouge = reculJokerRouge(paquet)
-    print(f"{paquetRouge=}")
-    paquetCoupe = coupeDouble(paquet)
-    print(f"{paquetCoupe=}")
-    paquetCoupeSimple = coupeSimple(paquet)
-    print(f"{paquetCoupeSimple=}")
-    # lettre = lecturePseudoAleatoire(paquet)
-    # print(f"{alphabet[lettre]=}")
-
-
 # Prend le paquet en argument et le renvoi
 def main():
     rdn.seed(1)
 
-    alphabet = dict()
-    for i in range(0, 26):
-        alphabet[i+1] = chr(65 + i)
+    # Création d'un paquet mélangé
     paquet = np.array(rdn.sample(range(1, 55), 54))
 
-    tabCleEncodage = []
+    cleEncodage = ''
     for i in range(26):
         paquet = melange(paquet)
-        tabCleEncodage.append(alphabet[lecturePseudoAleatoire(paquet)])
-    cleEncodage = ''.join(tabCleEncodage)
+        carte = lecturePseudoAleatoire(paquet)
+        cleEncodage += chr(carte + 64)
     print(f"{cleEncodage=}")
-
 
 
 if __name__ == "__main__":
