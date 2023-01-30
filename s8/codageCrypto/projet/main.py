@@ -29,6 +29,7 @@ def coupeDouble(p):
 
 
 def coupeSimple(p):
+    # Il faut convertir le joker rouge en 53
     carte = p[53] if p[53] != 54 else 53
     cartesABouger, reste = p[:carte], p[carte:53]
     return np.concatenate((reste, cartesABouger, [carte]))
@@ -43,6 +44,7 @@ def melange(p):
 
 
 def lecturePseudoAleatoire(p):
+    # Il faut convertir le joker rouge en 53
     n = p[0] if p[0] != 54 else 53
     m = p[n]
     if (m >= 53):
@@ -59,13 +61,19 @@ def main():
 
     # Création d'un paquet mélangé
     paquet = np.array(rdn.sample(range(1, 55), 54))
-
+    # Voir si il faut prendre un fichier en input
+    messageACoder = input("Entrer le message à coder:\n")
     cleEncodage = ''
-    for i in range(26):
+    res = ""
+    longeurMessage = len(messageACoder)
+    for i in range(longeurMessage):
         paquet = melange(paquet)
         carte = lecturePseudoAleatoire(paquet)
-        cleEncodage += chr(carte + 64)
-    print(f"{cleEncodage=}")
+        cleEncodage += chr(carte + 64)  # Nouvelle lettre de la clé
+        test = (ord(cleEncodage[i]) + ord(messageACoder[i])) % 26 + 65
+        res += chr(test)  # Nouvelle lettre du message chiffré
+    # print(f"{cleEncodage=}")
+    print(f"Le message chiffré est: '{res}'")
 
 
 if __name__ == "__main__":
