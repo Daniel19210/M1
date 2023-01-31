@@ -1,9 +1,25 @@
 import random as rdn
 import numpy as np
-from jokerNoir import reculJokerNoir
-from jokerRouge import reculJokerRouge
 
-# Les jokers sont 53 et 54, noir étant 53
+
+def reculJokerRouge(p):
+    i = np.where(p == 54)[0][0]
+    if i == 53:
+        p[[i, 2]] = p[[2, i]]
+    elif i == 52:
+        p[[i, 1]] = p[[1, i]]
+    else:
+        p[[i, i+2]] = p[[i+2, i]]
+    return p
+
+
+def reculJokerNoir(p):
+    i = np.where(p == 53)[0][0]
+    if (i == 53):
+        p[[i, 1]] = p[[1, i]]
+    else:
+        p[[i, i+1]] = p[[i+1, i]]
+    return p
 
 
 def testMano(paquet):
@@ -55,6 +71,7 @@ def lecturePseudoAleatoire(p):
     return m
 
 
+# Les jokers sont 53 et 54, noir étant 53
 # Prend le paquet en argument et le renvoi
 def main():
     rdn.seed(1)
