@@ -1,5 +1,6 @@
 import random as rdn
 import numpy as np
+import re
 
 
 def reculJokerRouge(p):
@@ -71,26 +72,49 @@ def lecturePseudoAleatoire(p):
     return m
 
 
+def lectureFichier(file):
+    # Lecture du fichier à encoder
+    text = ""
+    with open(file, "r") as txt_file:
+        lines = txt_file.readlines()
+        text = "\n".join(lines).rstrip()
+
+    # Suppression des accents
+    accents = {"é": "e", "è": "e", "à": "a", "ù": "u",
+               "ô": "o", "û": "u", "â": "a", "ï": "i", "î": "i"}
+    authorizedChar = "[a-zA-Z]"
+    for acc, correction in accents.items():
+        text = text.replace(acc, correction)
+
+    return ''.join(re.findall(authorizedChar, text))
+
+
+def chiffrage(p, message):
+    cleEncodage = ""
+    messageChiffre = ""
+    for (i, lettre) in enumerate(message):
+        paquet = melange(p)
+        carte = lecturePseudoAleatoire(paquet)
+        cleEncodage += chr(carte + 64)  # Nouvelle lettre de la clé
+        test = (ord(cleEncodage[i]) + ord(lettre.upper())) % 26 + 65
+        messageChiffre += chr(test)  # Nouvelle lettre du message chiffré
+    return messageChiffre
+
+
 # Les jokers sont 53 et 54, noir étant 53
 # Prend le paquet en argument et le renvoi
 def main():
-    rdn.seed(1)
-
+    rdn.seed(1)  # Fixe le RNG
     # Création d'un paquet mélangé
     paquet = np.array(rdn.sample(range(1, 55), 54))
-    # Voir si il faut prendre un fichier en input
-    messageACoder = input("Entrer le message à coder:\n")
-    cleEncodage = ''
-    res = ""
-    longeurMessage = len(messageACoder)
-    for i in range(longeurMessage):
-        paquet = melange(paquet)
-        carte = lecturePseudoAleatoire(paquet)
-        cleEncodage += chr(carte + 64)  # Nouvelle lettre de la clé
-        test = (ord(cleEncodage[i]) + ord(messageACoder[i])) % 26 + 65
-        res += chr(test)  # Nouvelle lettre du message chiffré
-    # print(f"{cleEncodage=}")
-    print(f"Le message chiffré est: '{res}'")
+
+    # messageBrut = lectureFichier("lorem.txt")
+    # messageBrut = "test"
+    # messageBrut = "TEST"
+    # messageBrut = "test avec des caractères spéciaux."
+    messageBrut = input("Entrer le message à coder:\n")
+    messageChiffre = chiffrage(paquet, messageBrut)
+    print(f"Le message chiffré est: '{messageChiffre}'")
 
 
 if __name__ == "__main__":
