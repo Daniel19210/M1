@@ -2,28 +2,13 @@ import random as rdn
 import numpy as np
 import re
 
-
-def reculJokerRouge(p):
-    i = np.where(p == 54)[0][0]
-    if i == 53:
-        p[[i, 2]] = p[[2, i]]
-    elif i == 52:
-        p[[i, 1]] = p[[1, i]]
-    else:
-        p[[i, i+2]] = p[[i+2, i]]
-    return p
+CONST_JOKER_NOIR = 53
+CONST_JOKER_ROUGE = 54
+CONST_ALPHABET_NUM = 26
+CONST_ASCII_MAJ = 65
 
 
-def reculJokerNoir(p):
-    i = np.where(p == 53)[0][0]
-    if (i == 53):
-        p[[i, 1]] = p[[1, i]]
-    else:
-        p[[i, i+1]] = p[[i+1, i]]
-    return p
-
-
-def testMano(paquet):
+def testManipulationPaquet(paquet):
     print(f"{paquet=}")
     paquetNoir = reculJokerNoir(paquet)
     print(f"{paquetNoir=}")
@@ -37,17 +22,42 @@ def testMano(paquet):
     # print(f"{alphabet[lettre]=}")
 
 
+def reculJokerRouge(p):
+    indiceJokerRouge = np.where(p == CONST_JOKER_ROUGE)[0][0]
+    # Cas où le joker est dans les dernières positions du paquet
+    if indiceJokerRouge == 53:
+        p[[indiceJokerRouge, 2]] = p[[2, indiceJokerRouge]]
+    elif indiceJokerRouge == 52:
+        p[[indiceJokerRouge, 1]] = p[[1, indiceJokerRouge]]
+    else:
+        p[[indiceJokerRouge, indiceJokerRouge+2]] = p[[indiceJokerRouge+2,
+                                                       indiceJokerRouge]]
+    return p
+
+
+def reculJokerNoir(p):
+    indiceJokerNoir = np.where(p == CONST_JOKER_NOIR)[0][0]
+    # Cas où le joker est dans la dernière position du paquet
+    if (indiceJokerNoir == 53):
+        p[[indiceJokerNoir, 1]] = p[[1, indiceJokerNoir]]
+    else:
+        p[[indiceJokerNoir, indiceJokerNoir+1]] = p[[indiceJokerNoir+1,
+                                                     indiceJokerNoir]]
+    return p
+
+
 def coupeDouble(p):
-    iNoir = np.where(p == 53)[0][0]
-    iRouge = np.where(p == 54)[0][0]
-    p1, p2, p3 = p[:min(iNoir, iRouge)], p[min(iNoir, iRouge):max(
-        iNoir, iRouge)+1], p[max(iNoir, iRouge)+1:]
+    indiceJokerNoir = np.where(p == CONST_JOKER_NOIR)[0][0]
+    indiceJokerRouge = np.where(p == CONST_JOKER_ROUGE)[0][0]
+    p1 = p[:min(indiceJokerNoir, indiceJokerRouge)]
+    p2 = p[min(indiceJokerNoir, indiceJokerRouge):max(indiceJokerNoir, indiceJokerRouge)+1]
+    p3 = p[max(indiceJokerNoir, indiceJokerRouge)+1:]
     return np.concatenate((p3, p2, p1))
 
 
 def coupeSimple(p):
-    # Il faut convertir le joker rouge en 53
-    carte = p[53] if p[53] != 54 else 53
+    # On tire la 53-ème carte du paquet (la première face cachée)
+    carte = p[53] if p[53] != CONST_JOKER_ROUGE else 53
     cartesABouger, reste = p[:carte], p[carte:53]
     return np.concatenate((reste, cartesABouger, [carte]))
 
@@ -62,24 +72,25 @@ def melange(p):
 
 def lecturePseudoAleatoire(p):
     # Il faut convertir le joker rouge en 53
-    n = p[0] if p[0] != 54 else 53
-    m = p[n]
-    if (m >= 53):
+    premiereCarte = p[0] if p[0] != CONST_JOKER_ROUGE else 53
+    # On tire la premièreCarte-ième carte du paquet
+    carteTiree = p[premiereCarte]
+    if (carteTiree == CONST_JOKER_NOIR or carteTiree == CONST_JOKER_ROUGE):
         p = melange(p)
         return lecturePseudoAleatoire(p)
-    elif (m > 26):
-        m = m - 26
-    return m
+    elif (carteTiree > CONST_ALPHABET_NUM):
+        carteTiree = carteTiree - CONST_ALPHABET_NUM
+    return carteTiree
 
 
 def lectureFichier(file):
     # Lecture du fichier à encoder
-    text = ""
     with open(file, "r") as txt_file:
         lines = txt_file.readlines()
+        # On converti en une unique string
         text = "\n".join(lines).rstrip()
+        return formattageMessage(text)
 
-    return formattageMessage(text)
 
 def ecritureMessage(file, message):
     with open(file, "w") as txt_file:
@@ -90,38 +101,38 @@ def formattageMessage(message):
     # Suppression des accents
     accents = {"é": "e", "è": "e", "à": "a", "ù": "u",
                "ô": "o", "û": "u", "â": "a", "ï": "i", "î": "i"}
-    authorizedChar = "[a-zA-Z]"
     for acc, correction in accents.items():
         message = message.replace(acc, correction)
-
-    return ''.join(re.findall(authorizedChar, message))
+    # On ne garde que les lettres dans le message
+    return ''.join(re.findall("[a-zA-Z]", message))
 
 
 def chiffrage(p, message, cle):
     messageChiffre = ""
     for (i, lettre) in enumerate(message):
-        test = (ord(cle[i]) + ord(lettre.upper())) % 26 + 65
-        messageChiffre += chr(test)  # Nouvelle lettre du message chiffré
+        messageChiffre += chr((ord(cle[i]) + ord(lettre.upper())) %
+                              CONST_ALPHABET_NUM + CONST_ASCII_MAJ)
     return messageChiffre
+
 
 def genererCleEncodage(p, message):
     cleEncodage = ""
     for (i, lettre) in enumerate(message):
         paquet = melange(p)
         carte = lecturePseudoAleatoire(paquet)
-        cleEncodage += chr(carte + 64)  # Nouvelle lettre de la clé
+        cleEncodage += chr(carte + CONST_ASCII_MAJ - 1)
     return cleEncodage
+
 
 def dechiffrage(cle, message):
     messageDechiffre = ""
-    
-    for (i, lettre) in enumerate(message): 
-        messageDechiffre += chr((ord(lettre) - ord(cle[i]))%26 + 65)
-
+    for (i, lettre) in enumerate(message):
+        messageDechiffre += chr((ord(lettre) -
+                                ord(cle[i])) % CONST_ALPHABET_NUM
+                                + CONST_ASCII_MAJ)
     return messageDechiffre
 
-# Les jokers sont 53 et 54, noir étant 53
-# Prend le paquet en argument et le renvoi
+
 def main():
     rdn.seed(1)  # Fixe le RNG
     # Création d'un paquet mélangé
@@ -131,14 +142,15 @@ def main():
     # messageBrut = "test"
     # messageBrut = "TEST"
     # messageBrut = "test avec des caractères spéciaux."
-    #messageBrut = formattageMessage(input("Entrer le message à coder:\n"))
+    # messageBrut = formattageMessage(input("Entrer le message à coder:\n"))
+
     cleEncodage = genererCleEncodage(paquet, messageBrut)
     messageChiffre = chiffrage(paquet, messageBrut, cleEncodage)
-    print(f"Le message chiffré est: '{messageChiffre}'")
+    # print(f"Le message chiffré est: '{messageChiffre}'")
     messageDechiffre = dechiffrage(cleEncodage, messageChiffre)
-    print(f"Le message dechiffré est: '{messageDechiffre}'")
-    ecritureMessage("crpyton.txt", messageChiffre)
-    ecritureMessage("messDechiff.txt", messageDechiffre)
+    # print(f"Le message dechiffré est: '{messageDechiffre}'")
+    ecritureMessage("crypte.txt", messageChiffre)
+    ecritureMessage("messDechiffre.txt", messageDechiffre)
 
 
 if __name__ == "__main__":
