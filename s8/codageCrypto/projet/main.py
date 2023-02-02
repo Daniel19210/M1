@@ -66,7 +66,7 @@ def lecturePseudoAleatoire(p):
     m = p[n]
     if (m >= 53):
         p = melange(p)
-        lecturePseudoAleatoire(p)
+        return lecturePseudoAleatoire(p)
     elif (m > 26):
         m = m - 26
     return m
@@ -79,27 +79,46 @@ def lectureFichier(file):
         lines = txt_file.readlines()
         text = "\n".join(lines).rstrip()
 
+    return formattageMessage(text)
+
+def ecritureMessage(file, message):
+    with open(file, "w") as txt_file:
+        txt_file.write(message)
+
+
+def formattageMessage(message):
     # Suppression des accents
     accents = {"é": "e", "è": "e", "à": "a", "ù": "u",
                "ô": "o", "û": "u", "â": "a", "ï": "i", "î": "i"}
     authorizedChar = "[a-zA-Z]"
     for acc, correction in accents.items():
-        text = text.replace(acc, correction)
+        message = message.replace(acc, correction)
 
-    return ''.join(re.findall(authorizedChar, text))
+    return ''.join(re.findall(authorizedChar, message))
 
 
-def chiffrage(p, message):
-    cleEncodage = ""
+def chiffrage(p, message, cle):
     messageChiffre = ""
+    for (i, lettre) in enumerate(message):
+        test = (ord(cle[i]) + ord(lettre.upper())) % 26 + 65
+        messageChiffre += chr(test)  # Nouvelle lettre du message chiffré
+    return messageChiffre
+
+def genererCleEncodage(p, message):
+    cleEncodage = ""
     for (i, lettre) in enumerate(message):
         paquet = melange(p)
         carte = lecturePseudoAleatoire(paquet)
         cleEncodage += chr(carte + 64)  # Nouvelle lettre de la clé
-        test = (ord(cleEncodage[i]) + ord(lettre.upper())) % 26 + 65
-        messageChiffre += chr(test)  # Nouvelle lettre du message chiffré
-    return messageChiffre
+    return cleEncodage
 
+def dechiffrage(cle, message):
+    messageDechiffre = ""
+    
+    for (i, lettre) in enumerate(message): 
+        messageDechiffre += chr((ord(lettre) - ord(cle[i]))%26 + 65)
+
+    return messageDechiffre
 
 # Les jokers sont 53 et 54, noir étant 53
 # Prend le paquet en argument et le renvoi
@@ -108,13 +127,18 @@ def main():
     # Création d'un paquet mélangé
     paquet = np.array(rdn.sample(range(1, 55), 54))
 
-    # messageBrut = lectureFichier("lorem.txt")
+    messageBrut = lectureFichier("lorem.txt")
     # messageBrut = "test"
     # messageBrut = "TEST"
     # messageBrut = "test avec des caractères spéciaux."
-    messageBrut = input("Entrer le message à coder:\n")
-    messageChiffre = chiffrage(paquet, messageBrut)
+    #messageBrut = formattageMessage(input("Entrer le message à coder:\n"))
+    cleEncodage = genererCleEncodage(paquet, messageBrut)
+    messageChiffre = chiffrage(paquet, messageBrut, cleEncodage)
     print(f"Le message chiffré est: '{messageChiffre}'")
+    messageDechiffre = dechiffrage(cleEncodage, messageChiffre)
+    print(f"Le message dechiffré est: '{messageDechiffre}'")
+    ecritureMessage("crpyton.txt", messageChiffre)
+    ecritureMessage("messDechiff.txt", messageDechiffre)
 
 
 if __name__ == "__main__":
