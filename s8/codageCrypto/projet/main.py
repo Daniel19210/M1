@@ -11,7 +11,7 @@ CONST_ASCII_MAJ = 65
 def testManipulationPaquet(paquet):
     print(f"{paquet=}")
     paquetNoir = reculJokerNoir(paquet)
-    print(f"{paquetNoir=}")
+    rint(f"{paquetNoir=}")
     paquetRouge = reculJokerRouge(paquet)
     print(f"{paquetRouge=}")
     paquetCoupe = coupeDouble(paquet)
@@ -138,7 +138,7 @@ def main():
     # Création d'un paquet mélangé
     paquet = np.array(rdn.sample(range(1, 55), 54))
 
-    messageBrut = lectureFichier("lorem.txt")
+    messageBrut = lectureFichier("texteBrut/lorem.txt")
     # messageBrut = "test"
     # messageBrut = "TEST"
     # messageBrut = "test avec des caractères spéciaux."
@@ -149,8 +149,9 @@ def main():
     # print(f"Le message chiffré est: '{messageChiffre}'")
     messageDechiffre = dechiffrage(cleEncodage, messageChiffre)
     # print(f"Le message dechiffré est: '{messageDechiffre}'")
-    ecritureMessage("crypte.txt", messageChiffre)
-    ecritureMessage("messDechiffre.txt", messageDechiffre)
+    ecritureMessage("texteChiffre/crypte.txt", messageChiffre)
+    ecritureMessage("texteDechiffre/messDechiffre.txt", messageDechiffre)
+    ecritureMessage("cle/cle.txt", cleEncodage)
 
 
 if __name__ == "__main__":
