@@ -19,7 +19,7 @@ for i = 1:m
     end
 end
 
-imshow(I);
+plot = imshow(I);
+waitfor(plot)
 
 end
-
