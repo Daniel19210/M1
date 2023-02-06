@@ -47,11 +47,27 @@ def reculJokerNoir(p):
 
 
 def coupeDouble(p):
-    indiceJokerNoir = np.where(p == CONST_JOKER_NOIR)[0][0]
-    indiceJokerRouge = np.where(p == CONST_JOKER_ROUGE)[0][0]
-    p1 = p[:min(indiceJokerNoir, indiceJokerRouge)]
-    p2 = p[min(indiceJokerNoir, indiceJokerRouge):max(indiceJokerNoir, indiceJokerRouge)+1]
-    p3 = p[max(indiceJokerNoir, indiceJokerRouge)+1:]
+    #indiceJokerNoir = np.where(p == CONST_JOKER_NOIR)[0][0]
+    #indiceJokerRouge = np.where(p == CONST_JOKER_ROUGE)[0][0]
+    #p1 = p[:min(indiceJokerNoir, indiceJokerRouge)]
+    #p2 = p[min(indiceJokerNoir, indiceJokerRouge):max(indiceJokerNoir, indiceJokerRouge)+1]
+    #p3 = p[max(indiceJokerNoir, indiceJokerRouge)+1:]
+
+    p1 = []
+    p2 = []
+    p3 = []
+    entreJoker = False
+
+    for i in range(len(p)):
+        if p[i] == CONST_JOKER_NOIR or p[i] == CONST_JOKER_ROUGE:
+            if entreJoker:
+                p2 = p[len(p1):i+1]
+                p3 = p[i+1:]
+                break
+            else:
+                p1 = p[:i]
+                entreJoker = True
+
     return np.concatenate((p3, p2, p1))
 
 
