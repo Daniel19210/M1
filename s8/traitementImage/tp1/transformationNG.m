@@ -1,9 +1,9 @@
 function imageOutput = transformationNG()
 %TRANSFORMATIONNG Summary of this function goes here
 %   Detailed explanation goes here
-I = imread('../NG/lena256.png');
+I = imread('../TP/NG/lena256.png');
 
-[m, n, can] = size(I);
+[m, n] = size(I);
 
 for i = 1:m
     for j = 1:n
