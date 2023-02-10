@@ -1,3 +1,4 @@
+open Printf
 (*====================================================================================*)
 (* Code mis à disposition pour le TP1 d'Algorithmique et Complexite. *)
 (*====================================================================================*)
@@ -100,17 +101,23 @@ let rec tri_fusion liste fct_comparaison =
         let a, b = coupe_en_2 liste in
           fusionne (tri_fusion a fct_comparaison) (tri_fusion b fct_comparaison) fct_comparaison;;
 
-
-tri_fusion liste_a_trier cmp_croissant ;;
+let liste_triee_fusion = tri_fusion liste_a_trier cmp_croissant ;;
 tri_fusion liste_a_trier cmp_decroissant ;;
 tri_fusion liste_coo_a_trier cmp_coo_croissant ;;
+
+print_string "Liste non triée : ";;
+let () = List.iter (printf "%d ") liste_a_trier;;
+print_string "\nListe triée avec un tri fusion : ";;
+let () = List.iter (printf "%d ") liste_triee_fusion;;
+
+(* ----- Tri quicksort *)
 
 (* ----- Definition du type arbre et fonction principale du tri par arbre. *)
 (*
 
 type 't arbre = Vide | Noeud of 't arbre * 't * 't arbre ;;
 
-let tri_arbre liste fct_comparaison = 
+let tri_arbre liste fct_comparaison =
     let arbre_binaire = List.fold_left (inserer fct_comparaison) Vide liste in
     lire_prefixe arbre_binaire [] ;;
 
