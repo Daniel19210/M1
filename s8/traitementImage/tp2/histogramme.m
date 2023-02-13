@@ -10,11 +10,12 @@ else
     imageNG = image;
 end
 
-for i = 1:n
-    for j = 1:m
+for i = 1:m
+    for j = 1:n
         H(1,imageNG(i, j)+1) = H(1,imageNG(i, j)+1) + 1;
     end
 end
+
 histoImg = H;
 end
 
