@@ -1,63 +1,13 @@
-I = imread('../TP/faible_contraste/lena_fc.png');Iref = imread('../TP/NG/lena256.png');
-I2 = etirement(I);
-I3 = egalisation(I);
-I4 = specification(I, Iref);
+afficheRendu = "";
 
-subplot(4,4,1);
-imshow(I);
-title("Image originale");
-
-subplot(4,4,2);
-bar(histogramme(I));
-title("Histogramme image originale");
-
-%subplot(4,4,3);
-%bar(hcn(I));
-%title("Histogramme cumulé normé de l'image originale");
-
-subplot(4,4,5);
-imshow(I2);
-title("Image étirée");
-
-subplot(4,4,6);
-bar(histogramme(I2));
-title("Histogramme image étirée");
-
-%subplot(4,4,7);
-%bar(hcn(I2));
-%title("Histogramme cumulé normé image étirée");
-
-subplot(4,4,7);
-traceLUT(I);
-title("LUT etirement");
-
-subplot(4,4,9);
-imshow(I3);
-title("Image égalisée");
-
-subplot(4,4,10);
-histI3 = histogramme(I3);
-bar(histI3);
-title("Histogramme image égalisée");
-
-subplot(4,4,11);
-bar(hcn(I3))
-title("Histogramme cumulé normé de l'image égalisée");
-
-subplot(4,4,13);
-imshow(I4);
-title("Image spécifiée");
-
-subplot(4,4,14);
-bar( histogramme(I4) );
-title("Histogramme image spécifiée")
-
-subplot(4,4,15);
-bar(hcn(I4));
-title("Histogramme cumulé normé de l'image spécifiée")
-
-subplot(4,4,16);
-imshow(Iref);
-title("Image de référence pour la spécification");
+%afficheRendu = "Etirement"; % Commenter ou décommenter cette ligne pour afficher les figures concernant l'étirement
+if (afficheRendu == "Etirement")
+    renduEtirement(imread('../TP/faible_contraste/fce5.png'), 1, "Image sombre");
+    %renduEtirement(imread('../TP/faible_contraste/soi1.png'), 1, "Image sombre");
+    renduEtirement(imread('../TP/faible_contraste/meca.png'), 2, "NG centré");
+    renduEtirement(imread('../TP/faible_contraste/lune.png'), 3, "NG distribué");
+    renduEtirement(imread('../TP/faible_contraste/sap1.png'), 4, "Image trop resserée");
+    renduEtirement(imread('../TP/faible_contraste/lena_fc.png'), 5, "Image claire");
+end
 
 waitfor(gcf) % Pour que les graphiques ne se ferment pas automatiquement sur octave
