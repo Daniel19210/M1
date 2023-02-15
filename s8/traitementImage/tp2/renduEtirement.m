@@ -1,4 +1,4 @@
-function res = renduEtirement(I, nbFenetre, nom)
+function res = renduEtirement(I, nom, nbFenetre)
     IE = etirement(I);
 
     figure(nbFenetre, "Name", nom);
@@ -24,11 +24,10 @@ function res = renduEtirement(I, nbFenetre, nom)
             ylabel("Nombre d'occurence");
             axis([0,256]);
 
-        subplot(3,2,6);
+        subplot(3,2,5);
             [coefDir, Ord] = traceLUT(I);
             title(strcat("LUT etirement\n coefficiant directeur =\t", num2str(coefDir), " ordonnée à l'origine =\t", num2str(Ord)));
             xlabel("NG entrée");
             ylabel("NG sortie");
             axis([0,256, -5,260]);
 end
-
