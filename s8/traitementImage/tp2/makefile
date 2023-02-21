@@ -3,11 +3,11 @@ SRC=main.m
 all:
 	octave $(SRC) Etirement
 
-et:
+etirement:
 	octave $(SRC) Etirement
 
-eg:
+egalisation:
 	octave $(SRC) Egalisation
 
-s:
+specification:
 	octave $(SRC) Specification

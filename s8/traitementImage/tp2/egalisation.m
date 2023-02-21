@@ -7,8 +7,8 @@ function imageEgalise = egalisation(I)
         I = rgb2gray(I);
     end
     I=double(I);
-    aMin = double(min(min(I)));
-    aMax = double(max(max(I)));
+    aMin = double(min(I(:)));
+    aMax = double(max(I(:)));
     H = histogramme(I);
     HC = cumsum(H);
     HCN = HC / (m*n);

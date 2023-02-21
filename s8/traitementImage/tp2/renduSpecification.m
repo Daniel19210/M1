@@ -8,7 +8,7 @@ function a = renduSpecification(Ix, Iz, nom, nbFenetre)
 
         subplot(4,2,2);
             imshow(Iz);
-            title(strcat("Image de référence\n min=", num2str(double(min(Ix(:)))), ", max=", num2str(double(max(Ix(:))))));
+            title(strcat("Image de référence\n min=", num2str(double(min(Iz(:)))), ", max=", num2str(double(max(Iz(:))))));
 
         subplot(4,2,3);
             bar(histogramme(Ix));
@@ -25,22 +25,22 @@ function a = renduSpecification(Ix, Iz, nom, nbFenetre)
             axis([0,256]);
 
         subplot(4,2,5);
-            bar(hcn(Ix));
-            title("Histogramme cumulé normalisé image originale");
+            bar(cumsum(histogramme(Ix)));
+            title("Histogramme cumulé image originale");
             xlabel("NG");
             ylabel("Probabilité d'apparition");
             axis([0,256]);
 
         subplot(4,2,6);
-            bar(hcn(Iz));
-            title("Histogramme cumulé normalisé de l'image de référence");
+            bar(cumsum(histogramme(Iz)));
+            title("Histogramme cumulé de l'image de référence");
             xlabel("NG");
             ylabel("Probabilité d'apparition");
             axis([0,256]);
 
         subplot(4,2,7)
             imshow(IS);
-            title(strcat("Image originale\n min=", num2str(double(min(Ix(:)))), ", max=", num2str(double(max((Ix(:)))))));
+            title(strcat("Image spécifiée\n min=", num2str(double(min(IS(:)))), ", max=", num2str(double(max((IS(:)))))));
 
         subplot(4,2,8);
             bar(histogramme(IS));
