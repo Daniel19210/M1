@@ -1,6 +1,7 @@
 import random as rdn
 import numpy as np
 import re
+import sys
 
 CONST_JOKER_NOIR = 53
 CONST_JOKER_ROUGE = 54
@@ -11,7 +12,7 @@ CONST_ASCII_MAJ = 65
 def testManipulationPaquet(paquet):
     print(f"{paquet=}")
     paquetNoir = reculJokerNoir(paquet)
-    rint(f"{paquetNoir=}")
+    print(f"{paquetNoir=}")
     paquetRouge = reculJokerRouge(paquet)
     print(f"{paquetRouge=}")
     paquetCoupe = coupeDouble(paquet)
@@ -23,15 +24,16 @@ def testManipulationPaquet(paquet):
 
 
 def reculJokerRouge(p):
-    indiceJokerRouge = np.where(p == CONST_JOKER_ROUGE)[0][0]
+    # On récupère l'indice du joker rouge
+    indJR = np.where(p == CONST_JOKER_ROUGE)[0][0]
+
     # Cas où le joker est dans les dernières positions du paquet
-    if indiceJokerRouge == 53:
-        p[[indiceJokerRouge, 2]] = p[[2, indiceJokerRouge]]
-    elif indiceJokerRouge == 52:
-        p[[indiceJokerRouge, 1]] = p[[1, indiceJokerRouge]]
+    if indJR == 53:
+        p[[indJR, 2]] = p[[2, indJR]]
+    elif indJR == 52:
+        p[[indJR, 1]] = p[[1, indJR]]
     else:
-        p[[indiceJokerRouge, indiceJokerRouge+2]] = p[[indiceJokerRouge+2,
-                                                       indiceJokerRouge]]
+        p[[indJR, indJR+1, indJR+2]] = p[[indJR+1, indJR+2, indJR]]
     return p
 
 
@@ -47,11 +49,12 @@ def reculJokerNoir(p):
 
 
 def coupeDouble(p):
-    #indiceJokerNoir = np.where(p == CONST_JOKER_NOIR)[0][0]
-    #indiceJokerRouge = np.where(p == CONST_JOKER_ROUGE)[0][0]
-    #p1 = p[:min(indiceJokerNoir, indiceJokerRouge)]
-    #p2 = p[min(indiceJokerNoir, indiceJokerRouge):max(indiceJokerNoir, indiceJokerRouge)+1]
-    #p3 = p[max(indiceJokerNoir, indiceJokerRouge)+1:]
+    # indiceJokerNoir = np.where(p == CONST_JOKER_NOIR)[0][0]
+    # indiceJokerRouge = np.where(p == CONST_JOKER_ROUGE)[0][0]
+    # p1 = p[:min(indiceJokerNoir, indiceJokerRouge)]
+    # p2 = p[min(indiceJokerNoir, indiceJokerRouge):max(indiceJokerNoir,
+    # indiceJokerRouge)+1]
+    # p3 = p[max(indiceJokerNoir, indiceJokerRouge)+1:]
 
     p1 = []
     p2 = []
@@ -154,20 +157,20 @@ def main():
     # Création d'un paquet mélangé
     paquet = np.array(rdn.sample(range(1, 55), 54))
 
-    messageBrut = lectureFichier("texteBrut/lorem.txt")
     # messageBrut = "test"
     # messageBrut = "TEST"
     # messageBrut = "test avec des caractères spéciaux."
-    # messageBrut = formattageMessage(input("Entrer le message à coder:\n"))
+    messageBrut = formattageMessage(input("Entrer le message à coder:\n"))
+    # messageBrut = lectureFichier("texteBrut/lorem.txt")
 
     cleEncodage = genererCleEncodage(paquet, messageBrut)
     messageChiffre = chiffrage(paquet, messageBrut, cleEncodage)
-    # print(f"Le message chiffré est: '{messageChiffre}'")
     messageDechiffre = dechiffrage(cleEncodage, messageChiffre)
-    # print(f"Le message dechiffré est: '{messageDechiffre}'")
-    ecritureMessage("texteChiffre/crypte.txt", messageChiffre)
-    ecritureMessage("texteDechiffre/messDechiffre.txt", messageDechiffre)
-    ecritureMessage("cle/cle.txt", cleEncodage)
+    print(f"Le message chiffré est: '{messageChiffre}'")
+    print(f"Le message dechiffré est: '{messageDechiffre}'")
+    ecritureMessage("crypte.txt", messageChiffre)
+    ecritureMessage("messDechiffre.txt", messageDechiffre)
+    ecritureMessage("cle.txt", cleEncodage)
 
 
 if __name__ == "__main__":
