@@ -14,8 +14,7 @@ function res = renduEtirement(I, nom, nbFenetre)
             bar(histogramme(I));
             title("Histogramme image originale");
             xlabel("NG");
-            ylabel("Nombre d'occurence");
-            axis([0,256]);
+            ylabel("Nombre d'occurence"):w          axis([0,256]);
 
         subplot(3,2,4);
             bar(histogramme(IE));
