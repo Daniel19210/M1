@@ -163,7 +163,8 @@ def main(inputtxt, outputtxt):
     # messageBrut = "test avec des caractères spéciaux."
     # messageBrut = formattageMessage(input("Entrer le message à coder:\n"))
     # messageBrut = lectureFichier("texteBrut/lorem.txt")
-    messageBrut = inputtxt.get("1.0", "end-1c")
+    messageBrut = inputtxt.get("1.0", "end-1c").replace(" ","").replace("\n","")
+    print(messageBrut)
 
     cleEncodage = genererCleEncodage(paquet, messageBrut)
     messageChiffre = chiffrage(paquet, messageBrut, cleEncodage)
