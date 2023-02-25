@@ -1,5 +1,5 @@
 all:
-	python3 test.py
+	python3 testfenetre.py
 
 prog:
 	python3 main.py
