@@ -9,18 +9,15 @@ CONST_ALPHABET_NUM = 26
 CONST_ASCII_MAJ = 65
 
 
-def testManipulationPaquet(paquet):
-    print(f"{paquet=}")
-    paquetNoir = reculJokerNoir(paquet)
-    print(f"{paquetNoir=}")
-    paquetRouge = reculJokerRouge(paquet)
-    print(f"{paquetRouge=}")
-    paquetCoupe = coupeDouble(paquet)
-    print(f"{paquetCoupe=}")
-    paquetCoupeSimple = coupeSimple(paquet)
-    print(f"{paquetCoupeSimple=}")
-    # lettre = lecturePseudoAleatoire(paquet)
-    # print(f"{alphabet[lettre]=}")
+def reculJokerNoir(p):
+    indiceJokerNoir = np.where(p == CONST_JOKER_NOIR)[0][0]
+    # Cas où le joker est dans la dernière position du paquet
+    if (indiceJokerNoir == 53):
+        p[[indiceJokerNoir, 0]] = p[[0, indiceJokerNoir]]
+    else:
+        p[[indiceJokerNoir, indiceJokerNoir+1]] = p[[indiceJokerNoir+1,
+                                                     indiceJokerNoir]]
+    return p
 
 
 def reculJokerRouge(p):
@@ -34,17 +31,6 @@ def reculJokerRouge(p):
         p[[indJR, 53, 0]] = p[[53, 0, indJR]]
     else:
         p[[indJR, indJR+1, indJR+2]] = p[[indJR+1, indJR+2, indJR]]
-    return p
-
-
-def reculJokerNoir(p):
-    indiceJokerNoir = np.where(p == CONST_JOKER_NOIR)[0][0]
-    # Cas où le joker est dans la dernière position du paquet
-    if (indiceJokerNoir == 53):
-        p[[indiceJokerNoir, 0]] = p[[0, indiceJokerNoir]]
-    else:
-        p[[indiceJokerNoir, indiceJokerNoir+1]] = p[[indiceJokerNoir+1,
-                                                     indiceJokerNoir]]
     return p
 
 
