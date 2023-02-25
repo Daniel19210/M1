@@ -2,6 +2,7 @@ import random as rdn
 import numpy as np
 import re
 import sys
+from tkinter import *
 
 CONST_JOKER_NOIR = 53
 CONST_JOKER_ROUGE = 54
@@ -138,7 +139,7 @@ def dechiffrage(cle, message):
     return messageDechiffre
 
 
-def main():
+def main(inputtxt, outputtxt):
     rdn.seed(1)  # Fixe le RNG
     # Création d'un paquet mélangé
     paquet = np.array(rdn.sample(range(1, 55), 54))
@@ -146,19 +147,49 @@ def main():
     # messageBrut = "test"
     # messageBrut = "TEST"
     # messageBrut = "test avec des caractères spéciaux."
-    messageBrut = formattageMessage(input("Entrer le message à coder:\n"))
+    # messageBrut = formattageMessage(input("Entrer le message à coder:\n"))
     # messageBrut = lectureFichier("texteBrut/lorem.txt")
+    messageBrut = inputtxt.get("1.0", "end-1c").replace(" ","").replace("\n","")
+    print(messageBrut)
 
     cleEncodage = genererCleEncodage(paquet, messageBrut)
     messageChiffre = chiffrage(paquet, messageBrut, cleEncodage)
     messageDechiffre = dechiffrage(cleEncodage, messageChiffre)
     print(f"Le message chiffré est: '{messageChiffre}'")
     print(f"Le message dechiffré est: '{messageDechiffre}'")
-    ecritureMessage("crypte.txt", messageChiffre)
-    ecritureMessage("messDechiffre.txt", messageDechiffre)
-    ecritureMessage("cle.txt", cleEncodage)
+    # ecritureMessage("crypte.txt", messageChiffre)
+    # ecritureMessage("messDechiffre.txt", messageDechiffre)
+    # ecritureMessage("cle.txt", cleEncodage)
+    
+    outputtxt.delete("1.0", END)
+    outputtxt.insert(END, messageChiffre)
 
+
+def initializeFenetre():
+    fenetre = Tk()
+
+    fenetre.geometry("500x500")
+    fenetre.title("Codage & Crypto")
+
+    label1 = Label(fenetre, text = "Message à coder")
+    label2 = Label(fenetre, text = "Message Codé")
+
+    inputtxt = Text(fenetre, height = 10, width = 30)
+    outputtxt = Text(fenetre, height = 10, width = 30)
+
+    cryptButton = Button(fenetre, text = "Crypter Message", command = lambda:main(inputtxt, outputtxt))
+
+    inputtxt.grid_propagate(False)
+    outputtxt.grid_propagate(False)
+
+    label1.grid(row = 0, column = 0, padx = 10, pady = 10, sticky = "ns")
+    label2.grid(row = 0, column = 1, padx = 10, pady = 10, sticky = "ns")
+    inputtxt.grid(row = 1, column = 0, padx = 10, pady = 10, sticky = "ns")
+    outputtxt.grid(row = 1, column = 1, padx = 10, pady = 10, sticky = "ns")
+    cryptButton.grid(row = 2, column = 0, padx = 10, pady = 10, sticky = "ns")
+
+    fenetre.mainloop()
 
 if __name__ == "__main__":
-    main()
+    initializeFenetre()
     pass
