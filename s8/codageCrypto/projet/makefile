@@ -1,9 +1,10 @@
-all:
-<<<<<<< HEAD
-	@ python3 -B test.py
-=======
-	python3 testfenetre.py
->>>>>>> graphicPython
+CC=python3
 
-prog:
-	python3 main.py
+all:
+	$(CC) igUser.py
+
+test:
+	$(CC) -B test.py
+
+simp:
+	$(CC) user.py

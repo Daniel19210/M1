@@ -1,8 +1,6 @@
-import random as rdn
 import numpy as np
 import re
 import sys
-from tkinter import *
 
 CONST_JOKER_NOIR = 53
 CONST_JOKER_ROUGE = 54
@@ -93,9 +91,7 @@ def lectureFichier(file):
     # Lecture du fichier à encoder
     with open(file, "r") as txt_file:
         lines = txt_file.readlines()
-        # On converti en une unique string
-        text = "\n".join(lines).rstrip()
-        return formattageMessage(text)
+        return formattageMessage(lines)
 
 
 def ecritureMessage(file, message):
@@ -104,6 +100,7 @@ def ecritureMessage(file, message):
 
 
 def formattageMessage(message):
+    message = "\n".join(message).rstrip()
     # Suppression des accents
     accents = {"é": "e", "è": "e", "à": "a", "ù": "u",
                "ô": "o", "û": "u", "â": "a", "ï": "i", "î": "i"}
@@ -113,7 +110,7 @@ def formattageMessage(message):
     return ''.join(re.findall("[a-zA-Z]", message))
 
 
-def chiffrage(p, message, cle):
+def chiffrage(message, cle):
     messageChiffre = ""
     for (i, lettre) in enumerate(message):
         messageChiffre += chr((ord(cle[i]) + ord(lettre.upper())) %
@@ -127,7 +124,7 @@ def genererCleEncodage(p, message):
         paquet = melange(p)
         carte = lecturePseudoAleatoire(paquet)
         cleEncodage += chr(carte + CONST_ASCII_MAJ - 1)
-    return cleEncodage
+    ecritureMessage("cle.txt", cleEncodage)
 
 
 def dechiffrage(cle, message):
@@ -137,59 +134,3 @@ def dechiffrage(cle, message):
                                 ord(cle[i])) % CONST_ALPHABET_NUM
                                 + CONST_ASCII_MAJ)
     return messageDechiffre
-
-
-def main(inputtxt, outputtxt):
-    rdn.seed(1)  # Fixe le RNG
-    # Création d'un paquet mélangé
-    paquet = np.array(rdn.sample(range(1, 55), 54))
-
-    # messageBrut = "test"
-    # messageBrut = "TEST"
-    # messageBrut = "test avec des caractères spéciaux."
-    # messageBrut = formattageMessage(input("Entrer le message à coder:\n"))
-    # messageBrut = lectureFichier("texteBrut/lorem.txt")
-    messageBrut = inputtxt.get("1.0", "end-1c").replace(" ","").replace("\n","")
-    print(messageBrut)
-
-    cleEncodage = genererCleEncodage(paquet, messageBrut)
-    messageChiffre = chiffrage(paquet, messageBrut, cleEncodage)
-    messageDechiffre = dechiffrage(cleEncodage, messageChiffre)
-    print(f"Le message chiffré est: '{messageChiffre}'")
-    print(f"Le message dechiffré est: '{messageDechiffre}'")
-    # ecritureMessage("crypte.txt", messageChiffre)
-    # ecritureMessage("messDechiffre.txt", messageDechiffre)
-    # ecritureMessage("cle.txt", cleEncodage)
-    
-    outputtxt.delete("1.0", END)
-    outputtxt.insert(END, messageChiffre)
-
-
-def initializeFenetre():
-    fenetre = Tk()
-
-    fenetre.geometry("500x500")
-    fenetre.title("Codage & Crypto")
-
-    label1 = Label(fenetre, text = "Message à coder")
-    label2 = Label(fenetre, text = "Message Codé")
-
-    inputtxt = Text(fenetre, height = 10, width = 30)
-    outputtxt = Text(fenetre, height = 10, width = 30)
-
-    cryptButton = Button(fenetre, text = "Crypter Message", command = lambda:main(inputtxt, outputtxt))
-
-    inputtxt.grid_propagate(False)
-    outputtxt.grid_propagate(False)
-
-    label1.grid(row = 0, column = 0, padx = 10, pady = 10, sticky = "ns")
-    label2.grid(row = 0, column = 1, padx = 10, pady = 10, sticky = "ns")
-    inputtxt.grid(row = 1, column = 0, padx = 10, pady = 10, sticky = "ns")
-    outputtxt.grid(row = 1, column = 1, padx = 10, pady = 10, sticky = "ns")
-    cryptButton.grid(row = 2, column = 0, padx = 10, pady = 10, sticky = "ns")
-
-    fenetre.mainloop()
-
-if __name__ == "__main__":
-    initializeFenetre()
-    pass

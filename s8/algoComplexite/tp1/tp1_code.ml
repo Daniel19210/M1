@@ -71,7 +71,7 @@ tri_insertion liste_coo_a_trier cmp_coo_croissant ;;
 
 (* ----- Fonction coupe_en_2 du tri fusion. *)
 (* A completer bien sur sinon ca marche beaucoup moins bien. *)
-
+(*
 let rec coupe_en_2 liste = 
   match liste with 
     | [] -> [], []
@@ -109,7 +109,7 @@ print_string "Liste non triée : ";;
 let () = List.iter (printf "%d ") liste_a_trier;;
 print_string "\nListe triée avec un tri fusion : ";;
 let () = List.iter (printf "%d ") liste_triee_fusion;;
-
+*)
 (* ----- Tri quicksort *)
 
 (* ----- Definition du type arbre et fonction principale du tri par arbre. *)
