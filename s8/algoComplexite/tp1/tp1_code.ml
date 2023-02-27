@@ -114,6 +114,22 @@ let () = List.iter (printf "%d ") liste_triee_fusion;;
 printf("\n");;
 (* ----- Tri quicksort *)
 
+let rec tri_rapide liste fct=
+  let rec partition liste pivot petits egaux grands=
+    match liste with
+    | [] -> List.concat[tri_rapide petits fct; egaux ; tri_rapide grands fct]
+    | elt1::reste ->
+        if(fct elt1 pivot)
+        then partition reste pivot (elt1::petits) egaux grands
+        else if(fct pivot elt1)
+        then partition reste pivot petits egaux (elt1::grands)
+        else partition reste pivot petits (elt1::egaux) grands
+    in
+    match liste with
+    |[] -> liste
+    |[_] -> liste
+    | pivot::reste -> partition liste pivot [] [] [];;
+
 (* ----- Definition du type arbre et fonction principale du tri par arbre. *)
 (*
 
