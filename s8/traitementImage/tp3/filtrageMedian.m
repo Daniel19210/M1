@@ -11,8 +11,10 @@ function IFiltre = filtrageMedian(I, sizeFiltre)
     IFiltre = zeros(n-2,m-2);
     for ligne = decalage+1:n-decalage
         for colonne = decalage+1:m-decalage
-            Fen(1:sizeFiltre, 1:sizeFiltre) = I(ligne-decalage:ligne+decalage, colonne-decalage:colonne+decalage)
-            Fen = sort(reshape(Fen,1,sizeFiltre * sizeFiltre));
-            IFiltre(ligne-decalage,colonne-decalage) = floor(Fen(size(Fen))+1);
+            Fen(1:sizeFiltre, 1:sizeFiltre) = I(ligne-decalage:ligne+decalage, colonne-decalage:colonne+decalage);
+            array = sort(reshape(Fen,1,sizeFiltre * sizeFiltre));
+            %IFiltre(ligne-decalage,colonne-decalage)
+            %Fen(size(Fen)(2))
+            IFiltre(ligne-decalage,colonne-decalage) = floor(Fen(size(array)(2))+1);
     end
 end

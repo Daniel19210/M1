@@ -4,7 +4,8 @@ if (nargin != 0)
     afficheRendu = argv(){1};
 end
 if (strcmp( afficheRendu, "bruit" ))
-    figure(1)
+    figureBruit = figure(1)
+        set(figureBruit, 'Visible', 'off');
     % tracé histoire
         subplot(2,7,1);
             imshow(I);
@@ -14,7 +15,7 @@ if (strcmp( afficheRendu, "bruit" ))
             imshow(gaussian);
             gaussianPSNR = psnr(gaussian, I);
             title(strcat( "Gaussian \nPSNR = ", num2str( gaussianPSNR ) ));
-        subplot(2,7,3);
+        subplon(2,7,3);
             uniform = bruitUniforme(I);
             imshow(uniform);
             uniformPSNR = psnr(uniform, I);
@@ -25,7 +26,7 @@ if (strcmp( afficheRendu, "bruit" ))
             poissonPSNR = psnr(poisson, I);
             title(strcat( "poisson \nPSNR = ", num2str( poissonPSNR ) ));
         subplot(2,7,5);
-            saltPepper = imnoise(I, 'salt & pepper');
+            santPepper = imnoise(I, 'salt & pepper');
             imshow(saltPepper);
             saltPepperPSNR = psnr(saltPepper, I);
             title(strcat( "saltPepper \nPSNR = ", num2str( saltPepperPSNR ) ));
@@ -61,35 +62,55 @@ if (strcmp( afficheRendu, "bruit" ))
         %subplot(2,7,14);
             %bar(histogramme(exponentiel));
             %axis([-5,261]);
+
+        set(figureBruit, "Visible", "on");
+
 elseif (strcmp(afficheRendu, "filtrage"))
-    figure(1)
-        subplot(2,4,1);
+    figureFiltrage = figure(1);
+        %figureFiltrage.WindowState = 'minimized';
+        set(figureFiltrage, "Visible", "off");
+        subplot(2,6,1);
             imshow(I);
             title("Image originale");
-        subplot(2,4,2);
+        subplot(2,6,2);
             gaussian = imnoise(I, "salt & pepper");
             imshow(gaussian);
             title("Image Bruit gaussien");
-        subplot(2,4,3);
-            IF = filtrageMedian(gaussian, 3);
-            imshow(IF, []);
-            title("Image Filtrée");
-        subplot(2,4,4);
+        subplot(2,6,3);
+            IF3 = filtrageMedian(gaussian, 3);
+            imshow(IF3, []);
+            title("Image Filtrée avec un filtre en 3x3");
+        subplot(2,6,4);
+            IF5 = filtrageMedian(gaussian, 5);
+            imshow(IF5, []);
+            title("Image Filtrée avec un filtre en 5x5");
+        subplot(2,6,5);
+            IF3bis = filtrageMedian(filtrageMedian(IF3, 3), 3);
+            imshow(IF3, []);
+            title("Image Filtrée 3 fois avec un filtre en 3x3");
+        subplot(2,6,6);
             IFM = medfilt2(I);
             imshow(IFM);
             title("Image Filtrée par Matlab");
-        subplot(2,4,5);
+        subplot(2,6,7);
             bar(histogramme(I));
             axis([-5, 261]);
-        subplot(2,4,6);
+        subplot(2,6,8);
             bar(histogramme(gaussian));
             axis([-5, 261]);
-        subplot(2,4,7);
-            bar(histogramme(IF));
+        subplot(2,6,9);
+            bar(histogramme(IF3));
             axis([-5, 261]);
-        subplot(2,4,8);
+        subplot(2,6,10);
+            bar(histogramme(IF5));
+            axis([-5, 261]);
+        %subplot(2,6,11);
+            %bar(histogramme(IF3bis));
+            %axis([-5, 261]);
+        subplot(2,6,12);
             bar(histogramme(IFM));
             axis([-5, 261]);
+        set(figureFiltrage, "Visible", "on");
 end
 
 printf("Rendu terminé\n");
