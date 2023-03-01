@@ -1,6 +1,6 @@
 import numpy as np
 import inspect
-from main import reculJokerNoir, reculJokerRouge
+from chiffrement import reculJokerNoir, reculJokerRouge
 
 
 def testReculJokerNoirPaquetNeuf():

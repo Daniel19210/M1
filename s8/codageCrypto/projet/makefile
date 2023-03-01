@@ -6,5 +6,5 @@ all:
 test:
 	$(CC) -B test.py
 
-simp:
+terminal:
 	$(CC) user.py
