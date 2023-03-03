@@ -15,7 +15,7 @@ db.etudiants.insertMany([
         "UE": [
             {"id": "info2a", "titre": "Programmation orientée objet", "note": "17"},
             {"id": "info2b", "titre": "Interfaces visuaelles", "note": "06"},
-            {"id": "ifo1b", "titre": "Web", "note": "12"}
+            {"id": "info1b", "titre": "Web", "note": "12"}
         ]
     }
 ])
