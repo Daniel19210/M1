@@ -90,8 +90,8 @@ def lecturePseudoAleatoire(p):
 def lectureFichier(file):
     # Lecture du fichier à encoder
     with open(file, "r") as txt_file:
-        lines = txt_file.readlines()
-        return formattageMessage(lines)
+        lines = txt_file.read()
+        return np.fromstring(lines[1:len(lines)], dtype=int, sep="\n")
 
 
 def ecritureMessage(file, message):
@@ -110,8 +110,9 @@ def formattageMessage(message):
     return ''.join(re.findall("[a-zA-Z]", message))
 
 
-def chiffrage(message, cle):
+def chiffrage(message, p):
     messageChiffre = ""
+    cle = genererCleEncodage(p, message)
     for (i, lettre) in enumerate(message):
         messageChiffre += chr((ord(cle[i]) + ord(lettre.upper())) %
                               CONST_ALPHABET_NUM + CONST_ASCII_MAJ)
@@ -124,11 +125,12 @@ def genererCleEncodage(p, message):
         paquet = melange(p)
         carte = lecturePseudoAleatoire(paquet)
         cleEncodage += chr(carte + CONST_ASCII_MAJ - 1)
-    ecritureMessage("cle.txt", cleEncodage)
+    return cleEncodage
 
 
-def dechiffrage(cle, message):
+def dechiffrage(paquet, message):
     messageDechiffre = ""
+    cle = genererCleEncodage(paquet, message)
     for (i, lettre) in enumerate(message):
         messageDechiffre += chr((ord(lettre) -
                                 ord(cle[i])) % CONST_ALPHABET_NUM
