@@ -8,6 +8,7 @@ CONST_ALPHABET_NUM = 26
 CONST_ASCII_MAJ = 65
 
 
+# Première étape
 def reculJokerNoir(p):
     indiceJokerNoir = np.where(p == CONST_JOKER_NOIR)[0][0]
     # Cas où le joker est dans la dernière position du paquet
@@ -19,6 +20,7 @@ def reculJokerNoir(p):
     return p
 
 
+# Seconde étape
 def reculJokerRouge(p):
     # On récupère l'indice du joker rouge
     indJR = np.where(p == CONST_JOKER_ROUGE)[0][0]
@@ -33,19 +35,10 @@ def reculJokerRouge(p):
     return p
 
 
+# Troisième étape
 def coupeDouble(p):
-    # indiceJokerNoir = np.where(p == CONST_JOKER_NOIR)[0][0]
-    # indiceJokerRouge = np.where(p == CONST_JOKER_ROUGE)[0][0]
-    # p1 = p[:min(indiceJokerNoir, indiceJokerRouge)]
-    # p2 = p[min(indiceJokerNoir, indiceJokerRouge):max(indiceJokerNoir,
-    # indiceJokerRouge)+1]
-    # p3 = p[max(indiceJokerNoir, indiceJokerRouge)+1:]
-
-    p1 = []
-    p2 = []
-    p3 = []
+    p1, p2, p3 = [], [], []
     entreJoker = False
-
     for i in range(len(p)):
         if p[i] == CONST_JOKER_NOIR or p[i] == CONST_JOKER_ROUGE:
             if entreJoker:
@@ -55,10 +48,10 @@ def coupeDouble(p):
             else:
                 p1 = p[:i]
                 entreJoker = True
-
     return np.concatenate((p3, p2, p1))
 
 
+# Quatrième étape
 def coupeSimple(p):
     # On tire la 53-ème carte du paquet (la première face cachée)
     carte = p[53] if p[53] != CONST_JOKER_ROUGE else 53
@@ -66,6 +59,7 @@ def coupeSimple(p):
     return np.concatenate((reste, cartesABouger, [carte]))
 
 
+# Utilisation de toutes les étapes pour faire un "mélange"
 def melange(p):
     p = reculJokerNoir(p)
     p = reculJokerRouge(p)
@@ -74,6 +68,7 @@ def melange(p):
     return p
 
 
+# Cinquième étape
 def lecturePseudoAleatoire(p):
     # Il faut convertir le joker rouge en 53
     premiereCarte = p[0] if p[0] != CONST_JOKER_ROUGE else 53
@@ -85,6 +80,18 @@ def lecturePseudoAleatoire(p):
     elif (carteTiree > CONST_ALPHABET_NUM):
         carteTiree = carteTiree - CONST_ALPHABET_NUM
     return carteTiree
+
+
+def verificationPaquet(paquet):
+    temoin = np.array([x for x in range(1, 55)])
+    if (paquet.size != temoin.size):
+        return "Le paquet ne contient pas le bon nombre de carte "
+        + "ou comporte autre chose que des cartes"
+    if (np.unique(paquet).size != temoin.size):
+        return "Le paquet comporte un doublon"
+    if ((np.sort(paquet.copy()) < temoin).any()):
+        return "Le paquet comporte autre chose que des cartes"
+    return ""
 
 
 def lectureFichier(file):

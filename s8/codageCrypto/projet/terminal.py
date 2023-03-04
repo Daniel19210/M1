@@ -13,11 +13,10 @@ def lancementTerminal():
     messageChiffre = m.chiffrage(messageBrut, paquet)
     paquet2 = m.lectureFichier("paquet.txt")
     messageDechiffre = m.dechiffrage(paquet2, messageChiffre)
+
     print(f"Le message chiffré est: '{messageChiffre}'")
     print(f"Le message dechiffré est: '{messageDechiffre}'")
     print(f"La position du paquet initial est: '{paquet2}'")
-    m.ecritureMessage("crypte.txt", messageChiffre)
-    m.ecritureMessage("messDechiffre.txt", messageDechiffre)
 
 
 lancementTerminal()
