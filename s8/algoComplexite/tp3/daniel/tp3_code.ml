@@ -36,28 +36,29 @@ let grapheComplet = { sommets = [|"A"; "B"; "C"; "D"; "E"; "F"; "G"; "H"; "I"; "
 
 (*Printf.printf "%s\n" grapheComplet.sommets.(2) ;;*)
 
-(*let rec dijkstra graphe indice_depart =*)
-    (*let n = Array.length graphe.sommets in*)
-    (*let tabDistance = Array.make infinity n in (* [| infinity; infinity; infinity; infinity; infinity; infinity; infinity; infinity; infinity|] in *)*)
-    (*let tabPredecesseurs = [| -1; -1; -1; -1; -1; -1; -1; -1; -1; -1 |] in*)
-        (*tabDistance.(indice_depart) <- 0.;*)
-        (*tabPredecesseurs.(indice_depart) <- indice_depart ;*)
-        (*(*{tabD = tabDistance; tabP = tabPredecesseurs};;*)*)
-        (*(tabDistance, tabPredecesseurs);;*)
+(* 
+let rec dijkstra graphe indice_depart =
+    let n = Array.length graphe.sommets in
+    let tabDistance = Array.make infinity n in (* [| infinity; infinity; infinity; infinity; infinity; infinity; infinity; infinity; infinity|] in *)
+    let tabPredecesseurs = [| -1; -1; -1; -1; -1; -1; -1; -1; -1; -1 |] in
+        tabDistance.(indice_depart) <- 0.;
+        tabPredecesseurs.(indice_depart) <- indice_depart ;
+        (*{tabD = tabDistance; tabP = tabPredecesseurs};;*)
+        (tabDistance, tabPredecesseurs);;
 
-(*let res = dijkstra grapheComplet 3 ;;*)
-(*print_string("tableau des distance = ") ;;*)
-(*match res with*)
-  (*| (a, _) -> List.iter (printf "%f ") a;;*)
-(*print_string("\n");;*)
-(*(*print_string("l3Pair = ") ;; let () = List.iter (printf "%d ") l3Pair ;; print_string("\n") ;;*)*)
-(*print_string("tableau des prédécesseurs = ") ;;*)
-(*match res with*)
-  (*| (_, b) -> b;;*)
-(*print_string("\n");;*)
+let res = dijkstra grapheComplet 3 ;;
+print_string("tableau des distance = ") ;;
+match res with
+  | (a, _) -> List.iter (printf "%f ") a;;
+print_string("\n");;
+(*print_string("l3Pair = ") ;; let () = List.iter (printf "%d ") l3Pair ;; print_string("\n") ;;*)
+print_string("tableau des prédécesseurs = ") ;;
+match res with
+  | (_, b) -> b;;
+print_string("\n");;
+ *)
 
-
-let rec getMinFunc liste elemMin indiceMin nbRec =
+let rec getMinFunc liste elemMin indiceMin nbRec = 
     match liste with
     | [] -> indiceMin
     | t::q -> if t < elemMin then
@@ -65,11 +66,12 @@ let rec getMinFunc liste elemMin indiceMin nbRec =
               else 
                 getMinFunc q elemMin indiceMin (nbRec+1);;
 
-let getMin liste =
-    getMinFunc liste 100 -1 0 ;;
+let rec getMin liste =
+    getMinFunc liste infinity (-1) 0 ;;
 
-L = [0; 3; 2; 4]
-getMin L;;
+let l = [5.; 8.; 7.; 4.] ;;
+let a = getMin l ;;
+Printf.printf "%d" a;
 
 (*@u-bourgogne.fr *)
 (*
