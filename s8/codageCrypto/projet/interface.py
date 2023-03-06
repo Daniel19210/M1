@@ -87,7 +87,7 @@ def copieCle():
 def initializeFenetre():
     fenetre = Tk()
 
-    fenetre.geometry("1000x400")
+    fenetre.geometry("1080x400")
     fenetre.title("Codage & Cryptographie")
 
     label1 = Label(fenetre, text="Message à coder")

@@ -1,6 +1,5 @@
 import numpy as np
 import re
-import sys
 
 CONST_JOKER_NOIR = 53
 CONST_JOKER_ROUGE = 54
@@ -13,7 +12,8 @@ def reculJokerNoir(p):
     indiceJokerNoir = np.where(p == CONST_JOKER_NOIR)[0][0]
     # Cas où le joker est dans la dernière position du paquet
     if (indiceJokerNoir == 53):
-        p[[indiceJokerNoir, 0]] = p[[0, indiceJokerNoir]]
+        p = np.delete(p, indiceJokerNoir)
+        p = np.insert(p, 1, CONST_JOKER_NOIR)
     else:
         p[[indiceJokerNoir, indiceJokerNoir+1]] = p[[indiceJokerNoir+1,
                                                      indiceJokerNoir]]
@@ -27,9 +27,11 @@ def reculJokerRouge(p):
 
     # Cas où le joker est dans les dernières positions du paquet
     if indJR == 53:
-        p[[indJR, 0, 1]] = p[[0, 1, indJR]]
+        p = np.delete(p, indJR)
+        p = np.insert(p, 2, CONST_JOKER_ROUGE)
     elif indJR == 52:
-        p[[indJR, 53, 0]] = p[[53, 0, indJR]]
+        p = np.delete(p, indJR)
+        p = np.insert(p, 1, CONST_JOKER_ROUGE)
     else:
         p[[indJR, indJR+1, indJR+2]] = p[[indJR+1, indJR+2, indJR]]
     return p
