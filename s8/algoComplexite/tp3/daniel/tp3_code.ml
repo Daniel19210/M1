@@ -15,6 +15,38 @@ PS: Bien sur il faut changer nom_du_fichier par le vrai nom de votre fichier ...
 open List;;
 open Printf;;
 
+let isPositive elem =
+    elem > 0;;
+
+let rec getMinFuncArray array elemMin indiceMin nbRec =
+    if Array.length array == 0 then
+        indiceMin 
+    else
+        if array.(0) < elemMin then
+            getMinFuncArray (Array.sub array 1 ((Array.length array)-2)) array.(0) nbRec (nbRec+1)
+        else
+            getMinFuncArray (Array.sub array 1 ((Array.length array)-1)) elemMin indiceMin (nbRec+1);;
+
+let rec getMinFuncList liste elemMin indiceMin nbRec =
+    match liste with
+    | [] -> indiceMin
+    | t::q -> if t < elemMin then
+                getMinFunc q t nbRec (nbRec+1)
+              else 
+                getMinFunc q elemMin indiceMin (nbRec+1);;
+
+let rec getMinArray array =
+    getMinFuncArray array infinity (-1) 0 ;;
+
+let rec getMinList list =
+    getMinFuncList list infinity (-1) 0 ;;
+
+(*
+ *let a = [| 5.; 8.; 7.; (-1.); 3.; -11.; 3.; 2.; 64.; 2. |] ;;
+ *let minA = getMinArray a ;;
+ *Printf.printf "%d" minA;
+ *)
+
 type 'a graphe = { 
     sommets: 'a array; 
     aretes: ((int * float) list) array (*Liste d'adjascence*)
@@ -34,44 +66,35 @@ let grapheComplet = { sommets = [|"A"; "B"; "C"; "D"; "E"; "F"; "G"; "H"; "I"; "
                             |]
             };;
 
-(*Printf.printf "%s\n" grapheComplet.sommets.(2) ;;*)
 
-(* 
-let rec dijkstra graphe indice_depart =
-    let n = Array.length graphe.sommets in
-    let tabDistance = Array.make infinity n in (* [| infinity; infinity; infinity; infinity; infinity; infinity; infinity; infinity; infinity|] in *)
-    let tabPredecesseurs = [| -1; -1; -1; -1; -1; -1; -1; -1; -1; -1 |] in
-        tabDistance.(indice_depart) <- 0.;
-        tabPredecesseurs.(indice_depart) <- indice_depart ;
-        (*{tabD = tabDistance; tabP = tabPredecesseurs};;*)
-        (tabDistance, tabPredecesseurs);;
 
-let res = dijkstra grapheComplet 3 ;;
-print_string("tableau des distance = ") ;;
-match res with
-  | (a, _) -> List.iter (printf "%f ") a;;
-print_string("\n");;
-(*print_string("l3Pair = ") ;; let () = List.iter (printf "%d ") l3Pair ;; print_string("\n") ;;*)
-print_string("tableau des prédécesseurs = ") ;;
-match res with
-  | (_, b) -> b;;
-print_string("\n");;
+(*
+ *let dressageListe graphe tabDistance tabPredecesseurs =
+ *    if (Array.for_all isPositive tabPredecesseurs)  then
+ *        (tabDistance, tabPredecesseurs) ;;
+ *    else
+ *        let indiceMin = getMin tabDistance in
  *)
 
-let rec getMinFunc liste elemMin indiceMin nbRec = 
-    match liste with
-    | [] -> indiceMin
-    | t::q -> if t < elemMin then
-                getMinFunc q t nbRec (nbRec+1)
-              else 
-                getMinFunc q elemMin indiceMin (nbRec+1);;
 
-let rec getMin liste =
-    getMinFunc liste infinity (-1) 0 ;;
 
-let l = [5.; 8.; 7.; 4.] ;;
-let a = getMin l ;;
-Printf.printf "%d" a;
+(*
+ *let rec dijkstra graphe indice_depart =
+ *    let n = Array.length graphe.sommets in
+ *    let tabDistance = Array.make n infinity in
+ *    let tabPredecesseurs = [| -1; -1; -1; -1; -1; -1; -1; -1; -1; -1 |] in
+ *    tabDistance.(indice_depart) <- 0. ;
+ *    tabPredecesseurs.(indice_depart) <- indice_depart ;
+ *    (tabDistance, tabPredecesseurs);;
+ *)
+    (*dressageListe graphe tabDistance tabPredecesseurs ;;*)
+
+(*
+ *let res = dijkstra grapheComplet 3 ;;
+ *print_string("tableau des distance = [") ;; match res with | (a, _) -> Array.iter (printf "%f ") a;; print_string("]\n");;
+ *print_string("tableau des prédécesseurs = [") ;; match res with | (_, b) -> Array.iter (printf "%d ") b;; print_string("]\n");;
+ *)
+
 
 (*@u-bourgogne.fr *)
 (*
