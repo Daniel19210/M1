@@ -1,0 +1,7 @@
+1) On va seuiller la norme du gradient
+    Sur une image en niveau de gris (si possible peu bruitée)
+    valeurs des pixels de l'image dans [0, l'infini]
+2) On a besoin de la norme du gradient, des seuils en entrée et du type de connexitée
+3) On stocke les résultats dans une matrice binaire
+4) La pile peut être représentée par un tableau à 1 dimension de longeur N*N
+    contenant les coordonées de chaque pixels de chaque pixel
