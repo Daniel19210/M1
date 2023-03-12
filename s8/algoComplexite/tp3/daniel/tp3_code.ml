@@ -12,93 +12,81 @@ PS: Bien sur il faut changer nom_du_fichier par le vrai nom de votre fichier ...
 (* Pour quitter la session interactive : #quit ;; *)
 
 (* ----- Definition du type graphe. *)
-open List;;
 open Printf;;
-
-let isPositive elem =
-    elem > 0;;
-
-let rec getMinFuncArray array elemMin indiceMin nbRec =
-    if Array.length array == 0 then
-        indiceMin 
-    else
-        if array.(0) < elemMin then
-            getMinFuncArray (Array.sub array 1 ((Array.length array)-2)) array.(0) nbRec (nbRec+1)
-        else
-            getMinFuncArray (Array.sub array 1 ((Array.length array)-1)) elemMin indiceMin (nbRec+1);;
-
-let rec getMinFuncList liste elemMin indiceMin nbRec =
-    match liste with
-    | [] -> indiceMin
-    | t::q -> if t < elemMin then
-                getMinFunc q t nbRec (nbRec+1)
-              else 
-                getMinFunc q elemMin indiceMin (nbRec+1);;
-
-let rec getMinArray array =
-    getMinFuncArray array infinity (-1) 0 ;;
-
-let rec getMinList list =
-    getMinFuncList list infinity (-1) 0 ;;
-
-(*
- *let a = [| 5.; 8.; 7.; (-1.); 3.; -11.; 3.; 2.; 64.; 2. |] ;;
- *let minA = getMinArray a ;;
- *Printf.printf "%d" minA;
- *)
 
 type 'a graphe = { 
     sommets: 'a array; 
     aretes: ((int * float) list) array (*Liste d'adjascence*)
 } ;;
-let grapheComplet = { sommets = [|"A"; "B"; "C"; "D"; "E"; "F"; "G"; "H"; "I"; "J"|];
-                            aretes = [|
-                                [(1, 85.); (3, 217.); (5, 173.)];      (* A *)
-                                [(1, 85.); (6, 80.)];                 (* B *)
-                                [(1, 217.); (7, 186.); (8, 103.)];      (* C *)
-                                [(8, 183.)];                          (* D *)
-                                [(1, 173.); (10, 502.)];               (* E *)
-                                [(2, 80.); (9, 250.)];                 (* F *)
-                                [(3, 186.)];                          (* G *)
-                                [(3, 103.); (4, 183.); (10, 167.)];     (* H *)
-                                [(6, 250.); (10, 84.)];                (* I *)
-                                [(5, 502.); (8, 167.); (9, 84.)];       (* J *)
+
+let grapheComplet = {
+                        sommets = [|"A"; "B"; "C"; "D"; "E"; "F"; "G"; "H"; "I"; "J"|];
+                        aretes = [|
+                            [(1, 85.); (2, 217.); (4, 173.)];    (* 0, A *)
+                            [(0, 85.); (5, 80.)];                (* 1, B *)
+                            [(0, 217.); (6, 186.); (7, 103.)];   (* 2, C *)
+                            [(7, 183.)];                         (* 3, D *)
+                            [(0, 173.); (9, 502.)];              (* 4, E *)
+                            [(1, 80.); (8, 250.)];               (* 5, F *)
+                            [(2, 186.)];                         (* 6, G *)
+                            [(2, 103.); (3, 183.); (9, 167.)];   (* 7, H *)
+                            [(5, 250.); (9, 84.)];               (* 8, I *)
+                            [(4, 502.); (7, 167.); (8, 84.)];    (* 9, J *)
                             |]
-            };;
+                    };;
 
+let rec get_indice_min_array_rec array sommet_marque elemMin indiceMin nbRec =
+    if Array.length array == 0 then
+        indiceMin
+    else
+        if ( array.(0) >= elemMin || Array.exists (fun a -> a == nbRec) sommet_marque ) then
+            get_indice_min_array_rec (Array.sub array 1 ((Array.length array)-1)) sommet_marque elemMin indiceMin (nbRec+1)
+        else
+            get_indice_min_array_rec (Array.sub array 1 ((Array.length array)-1)) sommet_marque array.(0) nbRec (nbRec+1);;
 
+let rec get_indice_min_array_init array sommet_marque =
+    get_indice_min_array_rec array sommet_marque infinity (-1) 0 ;;
+
+let rec traitement_liste_voisin listeVoisin indice_sommet_min tab_d tab_p =
+    match listeVoisin with
+    | [] -> tab_d, tab_p
+    | tuple_voisin::voisin_restant -> let dist_voisin =
+            if (tab_d.(indice_sommet_min) == infinity) then
+                snd tuple_voisin
+            else
+                tab_d.(indice_sommet_min) +. snd tuple_voisin
+        in
+        if dist_voisin < tab_d.(fst tuple_voisin) then (
+            tab_d.(fst tuple_voisin) <- dist_voisin ;
+            tab_p.(fst tuple_voisin) <- indice_sommet_min ;
+        );
+        traitement_liste_voisin voisin_restant indice_sommet_min tab_d tab_p ;;
+
+let rec traitement_point graphe tab_d tab_p tab_m =
+    if (Array.length tab_m == Array.length tab_d)  then
+        (tab_d, tab_p)
+    else (
+        let indice_sommet_min = get_indice_min_array_init tab_d tab_m in
+        let liste_voisin_min = graphe.aretes.(indice_sommet_min) in
+        let tab_d, tab_p = traitement_liste_voisin liste_voisin_min indice_sommet_min tab_d tab_p in
+        let tab_m = Array.append tab_m [| indice_sommet_min |] in
+        traitement_point graphe tab_d tab_p tab_m;
+    );;
+
+let dijkstra graphe indice_depart =
+    let n = Array.length graphe.sommets in
+    let tab_d = Array.make n infinity in
+    let tab_p = [| -1; -1; -1; -1; -1; -1; -1; -1; -1; -1 |] in
+    let tab_m = [| |] in
+    tab_d.(indice_depart) <- 0. ;
+    tab_p.(indice_depart) <- indice_depart ;
+    traitement_point graphe tab_d tab_p tab_m;;
+
+let arrayD, arrayP = dijkstra grapheComplet 0 ;;
+print_string("tableau des distance = [") ;; Array.iter (printf "%f ") arrayD;; print_string("]\n");;
+print_string("tableau des prédécesseurs = [") ;; Array.iter (printf "%d ") arrayP;; print_string("]\n");;
 
 (*
- *let dressageListe graphe tabDistance tabPredecesseurs =
- *    if (Array.for_all isPositive tabPredecesseurs)  then
- *        (tabDistance, tabPredecesseurs) ;;
- *    else
- *        let indiceMin = getMin tabDistance in
- *)
-
-
-
-(*
- *let rec dijkstra graphe indice_depart =
- *    let n = Array.length graphe.sommets in
- *    let tabDistance = Array.make n infinity in
- *    let tabPredecesseurs = [| -1; -1; -1; -1; -1; -1; -1; -1; -1; -1 |] in
- *    tabDistance.(indice_depart) <- 0. ;
- *    tabPredecesseurs.(indice_depart) <- indice_depart ;
- *    (tabDistance, tabPredecesseurs);;
- *)
-    (*dressageListe graphe tabDistance tabPredecesseurs ;;*)
-
-(*
- *let res = dijkstra grapheComplet 3 ;;
- *print_string("tableau des distance = [") ;; match res with | (a, _) -> Array.iter (printf "%f ") a;; print_string("]\n");;
- *print_string("tableau des prédécesseurs = [") ;; match res with | (_, b) -> Array.iter (printf "%d ") b;; print_string("]\n");;
- *)
-
-
-(*@u-bourgogne.fr *)
-(*
-
 (* ----- Definition du type tas. *)
 
 type 't tas = Vide | Noeud of 't tas * 't * 't tas ;;
