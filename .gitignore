@@ -9,3 +9,5 @@ main
 s7/systemeDistribue/yann_daniel/rabbitMQ/*
 s8/traitementImage/TP/*
 s8/algoComplexite/*/_build
+s8/algoComplexite/*/daniel/*.cm*
+s8/algoComplexite/*/*.cm*
