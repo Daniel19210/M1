@@ -86,6 +86,7 @@ let arrayD, arrayP = dijkstra grapheComplet 0 ;;
 print_string("tableau des distance = [") ;; Array.iter (printf "%.0f. ") arrayD;; print_string("]\n");;
 print_string("tableau des prédécesseurs = [") ;; Array.iter (printf "%d ") arrayP;; print_string("]\n");;
 
+(*
 (* ----- Definition du type tas. *)
 
 type 't tas = Vide | Noeud of 't tas * 't * 't tas ;;
@@ -122,9 +123,10 @@ let creer_tas liste_elements = ajouter_plusieurs liste_elements Vide ;;
 
 
 
+*)
 (* ----- Chargement du module pour faire du graphique. *)
 
-open Graphics ;;
+(*open Graphics ;;*)
 
 (*
 (* ----- Genere un ensemble de sommets sur l'interface graphique en evitant les coordonnees situees dans les trous. *)
