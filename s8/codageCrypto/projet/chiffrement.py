@@ -56,9 +56,11 @@ def coupeDouble(p):
 # Quatrième étape
 def coupeSimple(p):
     # On tire la 53-ème carte du paquet (la première face cachée)
-    carte = p[53] if p[53] != CONST_JOKER_ROUGE else 53
+    carte = p[53] if p[53] != CONST_JOKER_ROUGE else CONST_JOKER_NOIR
+    isJokerRouge = False if p[53] != CONST_JOKER_ROUGE else True
     cartesABouger, reste = p[:carte], p[carte:53]
-    return np.concatenate((reste, cartesABouger, [carte]))
+    return np.concatenate((reste, cartesABouger,
+                           [carte if not isJokerRouge else CONST_JOKER_ROUGE]))
 
 
 # Utilisation de toutes les étapes pour faire un "mélange"

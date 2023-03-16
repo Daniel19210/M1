@@ -1,6 +1,8 @@
 CC=python3
 
-all:
+all: test
+
+interface:
 	$(CC) -B interface.py
 
 test:
