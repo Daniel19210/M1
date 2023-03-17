@@ -1,30 +1,33 @@
 from tkinter import Text, Tk, Label, Button
 from tkinter.filedialog import END, askopenfilename
 import numpy as np
-import random as rdn
-import chiffrement as m
+import chiffrement as chif
 import pyperclip as pp
+
+paquetGlobal = np.zeros(55)
 
 
 # Créée le paquet utilisé pour chiffrer le message et l'écrit dans un fichier
 def creationPaquet(champPaquet, annonce):
-    # rdn.seed(1)  # Fixe le RNG
+    global paquetGlobal
     # Création d'un paquet mélangé
-    paquet = np.array(rdn.sample(range(1, 55), 54))
-    m.ecritureMessage("paquet.txt", np.array2string(paquet))
+    paquet = np.array([x for x in range(1, 55)])
+    np.random.shuffle(paquet)
+    paquetGlobal = paquet
     champPaquet.delete("1.0", END)
     annonce.config(text="Génération d'un nouveau paquet")
     champPaquet.insert(END, paquet)
 
 
-#  Chiffrage du message dans le champ de texte
+# Chiffrage du message dans le champ de texte
 def chiffrageMessage(champMessBrut, champMessChiffre,
                      champMessDechiffre, champPaquet, annonce):
+    global paquetGlobal
     champMessChiffre.delete("1.0", END)
     champMessDechiffre.delete("1.0", END)
     annonce.config(text="")
 
-    messageBrut = m.formattageMessage(champMessBrut.get("1.0", 'end-1c'))
+    messageBrut = chif.formattageMessage(champMessBrut.get("1.0", 'end-1c'))
     if (messageBrut == ''):
         annonce.config(text="Aucun message à chiffrer")
         return
@@ -32,27 +35,35 @@ def chiffrageMessage(champMessBrut, champMessChiffre,
     if (champPaquet.get("1.0", 'end-1c') == ''):  # Pas de paquet défini
         creationPaquet(champPaquet, annonce)
     else:
-        m.ecritureMessage("paquet.txt", champPaquet.get("1.0", "end-1c"))
+        paquetString = champPaquet.get("1.0", "end-1c")[1:len(
+            champPaquet.get("1.0", "end-1c"))-1]
+        paquetGlobal = np.fromstring(paquetString, dtype=int, sep=" ")
 
-    paquet = m.lectureFichier("paquet.txt")
-    messageVerification = m.verificationPaquet(paquet)
+    paquet = paquetGlobal
+    messageVerification = chif.verificationPaquet(paquet)
     if (messageVerification != ""):
         annonce.config(text=messageVerification)
         return
-    messageChiffre = m.chiffrage(messageBrut, paquet)
+
+    messageChiffre = chif.chiffrage(messageBrut, paquet)
     champMessChiffre.insert(END, messageChiffre)
 
 
+# Déchiffrage du message dans le champ de texte
 def dechiffrageMessage(champMessChiffre, champMessDechiffre,
                        champPaquet, annonce):
+    global paquetGlobal
     champMessDechiffre.delete("1.0", END)
     annonce.config(text="")
+
     if (champPaquet.get("1.0", 'end-1c') != ''):  # Pas de paquet défini
-        m.ecritureMessage("paquet.txt", champPaquet.get("1.0", "end-1c"))
+        paquetString = champPaquet.get("1.0", "end-1c")[1:len(
+            champPaquet.get("1.0", "end-1c"))-1]
+        paquetGlobal = np.fromstring(paquetString, dtype=int, sep=" ")
         messageChiffre = champMessChiffre.get("1.0", 'end-1c')
+
         if (messageChiffre != ''):  # Pas de message à déchiffrer
-            messageDechiffre = m.dechiffrage(
-                m.lectureFichier("paquet.txt"), messageChiffre)
+            messageDechiffre = chif.dechiffrage(paquetGlobal, messageChiffre)
             champMessDechiffre.insert(END, messageDechiffre)
         else:
             annonce.config(text="Aucun message à déchiffrer")
@@ -66,21 +77,22 @@ def ouvrirFichier(fichierInput):
                                ('txt files', '.txt'), ('all files', '.*')])
     with open(filename, "r") as fichier:
         fichierInput.delete("1.0", END)
-        fichierInput.insert(END, fichier.read())
+        fichierInput.insert(END, fichier.read().strip())
 
 
-def ouvrirPaquet(afficheCle):
+def ouvrirPaquet(champPaquet):
+    global paquetGlobal
     filename = askopenfilename(title="Ouvrir votre document", filetypes=[
                                ('txt files', '.txt'), ('all files', '.*')])
     with open(filename, "r") as fichier:
-        m.ecritureMessage("paquet.txt", fichier.read())
-    with open("paquet.txt", "r") as fichier:
-        afficheCle.delete("1.0", END)
-        afficheCle.insert(END, fichier.read())
+        paquetGlobal = fichier.read()
+
+    champPaquet.delete("1.0", END)
+    champPaquet.insert(END, paquetGlobal)
 
 
 def copieCle():
-    with open("paquet.txt", "r") as fichier:
+    with open("bufferPaquet.txt", "r") as fichier:
         pp.copy(fichier.read())
 
 

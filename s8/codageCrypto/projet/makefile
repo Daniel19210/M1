@@ -1,12 +1,12 @@
 CC=python3
 
-all: test
+all: interface
 
 interface:
-	$(CC) -B interface.py
+	$(CC) -B src/interface.py
 
 test:
-	$(CC) -B test.py
+	$(CC) -B src/test.py
 
 terminal:
-	$(CC) -B terminal.py
+	$(CC) -B src/terminal.py
