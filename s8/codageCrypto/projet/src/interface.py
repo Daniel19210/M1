@@ -60,7 +60,8 @@ def dechiffrageMessage(champMessChiffre, champMessDechiffre,
         paquetString = champPaquet.get("1.0", "end-1c")[1:len(
             champPaquet.get("1.0", "end-1c"))-1]
         paquetGlobal = np.fromstring(paquetString, dtype=int, sep=" ")
-        messageChiffre = champMessChiffre.get("1.0", 'end-1c')
+        messageChiffre = chif.formattageMessage(
+            champMessChiffre.get("1.0", 'end-1c'))
 
         if (messageChiffre != ''):  # Pas de message à déchiffrer
             messageDechiffre = chif.dechiffrage(paquetGlobal, messageChiffre)
