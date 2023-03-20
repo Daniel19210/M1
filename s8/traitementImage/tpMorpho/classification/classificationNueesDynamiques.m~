@@ -1,0 +1,36 @@
+function classificationNueesDynamiques(nombre_classes)
+    % charger l'ensemble es images du dossier img
+    rep = 'img';
+    ext = '*.jpg';
+    chemin = fullfile(rep,ext);
+    list = dir(chemin);
+
+    for n = 1:numel(list)
+        name=fullfile(rep, list(n).name);
+        Image = imread(name); % chargement de chaque image l'une après l'autre
+
+        descripteur = descripteurTexture(Image);
+       % descripteur = descripteurCouleur(Image,2);
+
+        % la variable donnees contient les descripteur pour toutes les images
+        if n==1
+            [w tailleDescripteur]= size(descripteur) ;
+            donnees = zeros(numel(list),tailleDescripteur);
+        end
+        donnees(n,:)=descripteur(1,:);
+    end
+
+    % répartition par nuées dynamiques 
+    idx = kmeans(donnees,nombre_classes,'Replicates',5) ;
+
+    % affichage des clusters
+     for c=1:nombre_classes
+         disp(['Cluster '  num2str(c)])
+         for n = 1:numel(list)
+             if idx(n)==c
+                 disp(['    ' sprintf('%18s',list(n).name) '     ->     '  num2str(donnees(n,:))])
+             end
+         end
+     end
+end
+
