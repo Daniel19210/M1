@@ -1,32 +1,25 @@
 function resImage = dilatation(Image, filtre)
 %DILATATION Summary of this function goes here
 %   Detailed explanation goes here[n, m] = size(Image);
-[n, m] = size(Image);
-resImage = zeros(n, m);
-
-tuple = zeros(sum(filtre(:)==1), 2);
-k = 1;
-
-for i = -1:1
-    for j = -1:1
-        if filtre(i+2,j+2) == 1
-            tuple(k, 1) = i;
-            tuple(k, 2) = j;
-            k = k+1;
-        end
-    end
-end
-[s, p] = size(tuple);
-
-for i = 2:n-1
-    for j = 2:m-1
-        if Image(i,j) == 1
-            for k = 1:s
-                resImage(i+tuple(k, 1),j+tuple(k, 2)) = 1;
+[longImage, largImage] = size(Image);
+[longFiltre, largFiltre] = size(filtre);
+resImage = zeros(longImage, largImage);
+for ligne = 1:longImage
+    for colonne = 1:largImage
+        maxVal = Image(ligne, colonne);
+        for i = 1:longFiltre
+            for j = 1:largFiltre
+                lig = ligne - (i-1) + floor(longFiltre / 2);
+                col = colonne - (j-1) + floor(largFiltre / 2);
+                if((lig >= 1) && (lig < longImage) && (col >= 1) && (col < largImage))
+                    if((filtre(i, j) == 1) && (maxVal < Image(lig, col)))
+                        maxVal = Image(lig, col);
+                    end
+                end
             end
         end
+        resImage(ligne, colonne) = maxVal;
     end
 end
 end
-
 
