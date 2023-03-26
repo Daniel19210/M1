@@ -96,7 +96,7 @@ def verificationPaquet(paquet):
     temoin = np.array([x for x in range(1, 55)])
     if (paquet.size != temoin.size):
         return ("Le paquet ne contient pas le bon nombre de carte"
-            + " ou comporte autre chose que des cartes")
+                + " ou comporte autre chose que des cartes")
     if (np.unique(paquet).size != temoin.size):
         return "Le paquet comporte un doublon"
     return ""
@@ -120,8 +120,9 @@ def ecritureMessage(file, message):
 def formattageMessage(message):
     message = "\n".join(message).rstrip()
     # Suppression des accents
-    accents = {"é": "e", "è": "e", "à": "a", "ù": "u", "û": "u", "ü": "u",
-               "ô": "o", "ç": "c", "â": "a", "ï": "i", "î": "i"}
+    accents = {"à": "a", "â": "a", "é": "e", "è": "e", "ê": "e", "ë": "e",
+               "î": "i", "ï": "i", "ô": "o", "ù": "u", "û": "u", "ü": "u",
+               "ÿ": "y", "ç": "c", "æ": "ae", "œ": "oe"}
     for acc, correction in accents.items():
         message = message.replace(acc, correction)
     # On ne garde que les lettres dans le message
