@@ -1,15 +1,29 @@
-!create Roger : Personne -- Création d’une instance de la classe Personne
+!create Roger : Homme -- Création d’une instance de la classe Personne
+!set Roger.pere := false
+!set Roger.grandPere := false
 !set Roger.nom := 'Roger'
 !set Roger.age := 22
 !set Roger.sexe := #Homme
-!create Simone : Personne -- Création d’une instance de la classe Personne
+!create Simone : Femme -- Création d’une instance de la classe Personne
+!set Simone.mere := false
+!set Simone.grandMere := false
+!set Simone.mereFilles := false
 !set Simone.nom := 'Simone'
 !set Simone.age := 45
 !set Simone.sexe := #Femme
-!create Linda : Personne -- Création d’une instance de la classe Personne
+!create Joseph : Homme -- Création d'une instance de la classe Homme
+!set Joseph.pere := false
+!set Joseph.grandPere := false
+!set Joseph.nom := 'Joseph'
+!set Joseph.age := 12
+!set Joseph.sexe := #Homme
+!create Linda : Femme -- création d'une instance de la classe Femme
+!set Linda.mere := false
+!set Linda.grandMere := false
+!set Linda.mereFilles := false
 !set Linda.nom := 'Linda'
 !set Linda.age := 15
-!set Linda.sexe := #Femme
+!set Linda.sexe = #Femme
 !create CompteRoger : Compte -- Création d’une instance de la classe Compte
 !set CompteRoger.solde := 1500
 !create CompteSimone : Compte -- Création d’une instance de la classe Compte
@@ -30,3 +44,8 @@
 !insert (CompteRoger,Banque) into Paie
 !insert (CompteSimone,Banque) into Paie
 !insert (Linda,Universite) into Emploi
+
+!insert (Linda, Linda) into ParentsEnfants
+
+!insert (Linda, Joseph) into Frere
+!insert (Linda, Linda) into Soeur

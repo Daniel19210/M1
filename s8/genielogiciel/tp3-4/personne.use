@@ -34,8 +34,8 @@ getSolde() : Integer
 end -- Fin de la class Compte
 -- Description des associations
 association ParentsEnfants between
-Personne[0..2] role parents
-Personne[*] role enfants
+    Personne[0..2] role parents
+    Personne[*] role enfants
 end
 association Mariage between
 Personne[0..1] role mari
@@ -53,19 +53,42 @@ association Paie between
 Compte[*] role comptes
 Entreprise[0..1] role employeur
 end
+class Homme < Personne
+attributes
+pere : Boolean
+grandPere : Boolean
+end
+
+class Femme < Personne
+attributes
+    mere : Boolean
+    grandMere : Boolean
+    mereFilles : Boolean
+end
+association Soeur between
+    Personne[*] role frereSoeur
+    Femme[*] role soeur
+end
+association Frere between
+    Personne[*] role frereSoeur
+    Homme[*] role frere
+end
 -- Description des contraintes OCL
 constraints
 context Personne inv pasSonEnfant:
-enfants -> excludes(self)
+    enfants -> excludes(self)
 context Personne inv pasSonParent:
-parents -> excludes(self)
+    parents -> excludes(self)
 context Personne inv ageMariage:
-self.estMarie() implies self.age >= 18
+    self.estMarie() implies self.age >= 18
 context Personne::anniversaire()
-post plusVieux: self.age = self.age@pre + 1
+    post plusVieux: self.age = self.age@pre + 1
 context Compte::debiter(somme : Integer)
     pre sommePositive : somme > 0
     post debiterCorrect : self.solde = self.solde@pre-somme
-
 context Compte::getSolde() : Integer
     post soldeCorrect : result = solde
+context Homme inv pasSonFrere:
+    frere -> excludes(self)
+context Femme inv pasSaSoeur:
+    frereSoeur -> excludes(self)
