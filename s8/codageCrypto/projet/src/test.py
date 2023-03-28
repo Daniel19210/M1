@@ -55,7 +55,7 @@ def testCoupeDouble():
     p2 = np.concatenate(([54], np.array([x for x in range(8, 42)]), [53]))
     p3 = np.array([x for x in range(1, 8)])
     temoin = np.concatenate((p1, p2, p3))
-    print("Passed :", inspect.getframeinfo(inspect.currentframe()).function) if np.array_equal(paquet, temoin) else print(
+    print("Valide :", inspect.getframeinfo(inspect.currentframe()).function) if np.array_equal(paquet, temoin) else print(
         "Failed :", inspect.getframeinfo(inspect.currentframe()).function, f"\n\t{paquet=}\n\t{temoin=}")
 
 

@@ -7,6 +7,3 @@ interface:
 
 test:
 	$(CC) -B src/test.py
-
-terminal:
-	$(CC) -B src/terminal.py
