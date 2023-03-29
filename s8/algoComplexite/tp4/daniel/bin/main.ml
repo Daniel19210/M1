@@ -15,18 +15,33 @@ open Printf;;
 
 (* ----- Fonction qui remplit le tableau dynamique pour le probleme des sous-sequences communes. *)
 
+
+let rec print_2D_array array i =
+    if (i == (Array.length array)-1) then(
+        Array.iter (printf "%d ") array.(i); print_newline ()
+    )
+    else(
+        Array.iter (printf "%d ") array.(i); print_newline ();
+        print_2D_array array (i+1)
+    );;
+
+
 let tab_sous_sequence s1 s2 =
     let taille_s1 = Array.length s1 in
     let taille_s2 = Array.length s2 in
     let tab_dynamique = Array.init (taille_s1 + 1) (function i -> Array.make (taille_s2 + 1) 0) in
-
     let rec tab_sous_sequence_aux i j =
-        if s1.(i) == s2.(i) then
-            tab_dynamique.(i).(j) <- tab_dynamique.(i-1).(j-1) + 1
+        if j <= taille_s2 then (
+            tab_dynamique.(i).(j) <- if s1.(i-1) == s2.(j-1)
+                                        then tab_dynamique.(i-1).(j-1) + 1
+                                        else max tab_dynamique.(i-1).(j) tab_dynamique.(i).(j-1);
+            tab_sous_sequence_aux i (j+1)
+        )
+        else if (i < taille_s1) then
+            (tab_sous_sequence_aux (i+1) 1)
         else
-            tab_dynamique.(i).(j) <- max tab_dynamique.(i-1).(j) tab_dynamique.(i).(j-1)
-    in tab_sous_sequence_aux 1 1 ;
-    tab_dynamique ;;
+            tab_dynamique
+    in tab_sous_sequence_aux 1 1 ;;
 
 (* ----- Fonction qui transforme un string en tableau de caracteres. *)
 
@@ -54,14 +69,12 @@ let sous_sequence sequence_1 sequence_2 =
 
 let array_Algo = string_to_array "algo" in
 let array_Facile = string_to_array "facile" in
-(*let (res, parcours, tabD) =*)
 match sous_sequence array_Algo array_Facile with
 | (res, parcours, tabD) ->
-    print_string("\nTableau dynamique = [ ") ; Array.iter (Array.iter(printf "%d ")) tabD; print_string("]\n");
-    print_string("Sous-sequence entre algo et facile = [ ") ; print_string(parcours); print_string("]\n");
+    print_string("\nTableau dynamique = \n") ; print_2D_array tabD 0;
+    print_string("Sous-sequence entre algo et facile = \"") ; print_string(parcours); print_string("\"\n");
     print_string("Longueur de la plus longue sous-séquence = ");print_int(res);print_string("\n");;
 
-(*
 
 (* ----- Fonction qui identifie les objets a prendre en fonction du contenu du tableau dynamique (sac). *)
 
@@ -80,6 +93,8 @@ let sac_a_dos umax tab_poids =
         parcourir_tableau nb_objets capacite []) ;;
 
 
+(*
+(*
 
 (* ----- Fonction generique pour memoiser une fonction. *)
 

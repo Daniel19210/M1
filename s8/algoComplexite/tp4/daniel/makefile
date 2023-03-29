@@ -10,7 +10,7 @@ format:
 	ocp-indent -i bin/$(SRC).ml
 
 clean:
-	rm main *.cmi *.cmo
+	rm main bin/*.cmi bin/*.cmo
 
 dune:
 	@ dune build bin/$(SRC).exe
