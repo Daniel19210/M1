@@ -71,7 +71,7 @@ let array_Algo = string_to_array "algo" in
 let array_Facile = string_to_array "facile" in
 match sous_sequence array_Algo array_Facile with
 | (res, parcours, tabD) ->
-    print_string("\nTableau dynamique = \n") ; print_2D_array tabD 0;
+    print_string("Tableau dynamique = \n") ; print_2D_array tabD 0;
     print_string("Sous-sequence entre algo et facile = \"") ; print_string(parcours); print_string("\"\n");
     print_string("Longueur de la plus longue sous-séquence = ");print_int(res);print_string("\n");;
 
@@ -92,53 +92,52 @@ let sac_a_dos umax tab_poids =
     in (umax.(nb_objets).(capacite),
         parcourir_tableau nb_objets capacite []) ;;
 
-
-(*
-(*
-
 (* ----- Fonction generique pour memoiser une fonction. *)
 
 let memoiser fonction =
 	let hashtable = Hashtbl.create 123 in
 	let rec fonction_aux x param =
 		try Hashtbl.find hashtable x 
-		with Not_found -> 
+		with Not_found ->
             let resultat = fonction fonction_aux x param
-            in Hashtbl.add hashtable x resultat ; 
+            in Hashtbl.add hashtable x resultat ;
             resultat
-        in (fonction_aux, hashtable) ;;      
+    in (fonction_aux, hashtable) ;;
 
 (* ----- Fonction de fibonacci qui peut etre memoisee avec la fonction precedente. *)
+
+let rec fibo_aux a b =
+    match a with
+    | 0 -> 0
+    | 1 | 2 -> 1
+    | _ -> fibo_aux (a-1) () + fibo_aux(a-2) ();;
 
 let rec fibo fibo_aux x _ =
 	if x < 2 then x 
 	else (fibo_aux (x-1) ()) + (fibo_aux (x-2) ()) ;;
 
-
+match memoiser fibo with
+| f, b -> printf "res = %d\n" (f 6 ()); Hashtbl.iter (fun x y -> printf "%d: %d\n" x y) b;;
 
 (* ----- Modelisation du diagramme de Pert de l'exemple. *)
-
 let sommets = [| 'A'; 'B'; 'C'; 'D'; 'E'; 'F' |] ;;
 let arcs = [| ('A', 'B', 100); ('A', 'C', 200); ('B', 'D', 50); ('B', 'E', 60); ('C', 'D', 70);
 ('C', 'E', 80); ('D', 'F', 10); ('E', 'F', 20) |] ;;
 let source = 'A' ;;
 let terminal = 'F' ;;
-
 (* ----- Fonction qui calcule les dates au plus tot et qui peut etre memoisee. *)
-
+(*
 let rec plus_tot plus_tot_aux sommet (arcs, arcs_restants, sommet_source, duree_defaut, duree_max) =
-    if sommet = sommet_source then (*A completer*)
-    else ( match arcs_restants with 
-            | [] -> (*A completer*)
+    if sommet = sommet_source then plus_tot plus_tot_aux (snd arcs_restants.(0)) (arcs, (Array.sub arcs_restants 1 (Array.length arcs_restants)-1), sommet_source, duree_defaut, duree_max)
+    else ( match arcs_restants with
+            | [] -> sommet
             | (source, destination, duree)::reste ->
                 if destination <> sommet
-                then (*A completer*) sommet (arcs, (*A completer*), sommet_source, duree_defaut, (*A completer*)) 
+                then  sommet (arcs, (*A completer*), sommet_source, duree_defaut, (*A completer*)) 
                 else (*A completer*) sommet (arcs, (*A completer*), sommet_source, duree_defaut,
                     (max duree_max (((*A completer*) source (arcs, (*A completer*), sommet_source, duree_defaut, duree_defaut)) (*A completer*) (*A completer*))))) ;;
-
-
 au_plus_tot arcs source terminal ;;
-
+*)
 (* ----- Fonction qui affiche le contenu des hashtables de l'exercice sur Pert. *)
 
-let print_ht_pert ht = Hashtbl.iter (fun x y -> Printf.printf "%c -> %d\n" x y) ht ;;*)
+(*let print_ht_pert ht = Hashtbl.iter (fun x y -> Printf.printf "%c -> %d\n" x y) ht ;;*)
