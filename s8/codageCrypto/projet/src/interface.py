@@ -2,7 +2,6 @@ from tkinter import Text, Tk, Label, Button
 from tkinter.filedialog import END, askopenfilename
 import numpy as np
 import chiffrement as chif
-import pyperclip as pp
 
 paquetGlobal = np.zeros(55)
 
@@ -17,7 +16,6 @@ def creationPaquet(champPaquet, annonce):
     champPaquet.delete("1.0", END)
     annonce.config(text="Génération d'un nouveau paquet")
     champPaquet.insert(END, paquet)
-
 
 
 # Chiffrage du message dans le champ de texte
@@ -93,10 +91,6 @@ def ouvrirPaquet(champPaquet):
     champPaquet.insert(END, paquetGlobal)
 
 
-#def copieCle():
-#        pp.copy(np.array2string(paquetGlobal))
-
-
 def initializeFenetre():
     fenetre = Tk()
 
@@ -132,9 +126,6 @@ def initializeFenetre():
     openFileADecoderButton = Button(
         fenetre, text="Insérer message a déchiffrer",
         command=lambda: ouvrirFichier(champMessChiffre))
-    #copyPressePapierButton = Button(
-    #    fenetre, text="Copier le paquet dans le presse-papier",
-    #    command=lambda: copieCle())
     generationPaquet = Button(
         fenetre, text="Générer un nouveau paquet",
         command=lambda: creationPaquet(champPaquet, annonce)
@@ -163,7 +154,6 @@ def initializeFenetre():
     setCleDechiffButton.grid(row=2, column=3, padx=10, pady=10, sticky="ns")
     openFileACoderButton.grid(row=3, column=0, padx=10, pady=10, sticky="ns")
     openFileADecoderButton.grid(row=3, column=1, padx=10, pady=10, sticky="ns")
-    #copyPressePapierButton.grid(row=4, column=3, padx=10, pady=10, sticky="ns")
     generationPaquet.grid(row=3, column=3, padx=10, pady=10, sticky="ns")
 
     fenetre.mainloop()
