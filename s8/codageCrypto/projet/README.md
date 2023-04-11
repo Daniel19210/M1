@@ -8,6 +8,4 @@ Participants:
 
 Pour lancer ce programme, écrire dans la ligne de commande ```make```
 
-Il est possible d'utiliser le programme avec le terminal seulement, il est accessible en écrivant ```make terminal```
-
 Pour lancer les tests que nous avons effectués sur le programme, il faut écrire ```make test```
