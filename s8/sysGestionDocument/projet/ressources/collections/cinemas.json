@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "nom": "Olympia",
+    "afficheCinema": "./ressources/afficheCinema/Olympia.png",
+    "Adresse": {
+      "num": 16,
+      "rue": "avenue du Marechal Foch",
+      "code_Postal": 21000,
+      "Ville": "Dijon"
+    },
+    "film_et_Entrees": [
+      {
+        "idFilm": 1,
+        "nbEntrees": 10
+      },
+      {
+        "idFilm": 2,
+        "nbEntrees": 3600
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "nom": "Le Darcy",
+    "afficheCinema": "./ressources/afficheCinema/Le_Darcy.png",
+    "Adresse": {
+      "num": 8,
+      "rue": "place Darcy",
+      "code_Postal": 21000,
+      "Ville": "Dijon"
+    },
+    "film_et_Entrees": [
+      {
+        "idFilm": 1,
+        "nbEntrees": 10
+      },
+      {
+        "idFilm": 2,
+        "nbEntrees": 3600
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "nom": "Eldorado",
+    "afficheCinema": "./ressources/afficheCinema/Eldorado.png",
+    "Adresse": {
+      "num": 21,
+      "rue": "rue Alfred-de-Musset",
+      "code_Postal": 21000,
+      "Ville": "Dijon"
+    },
+    "film_et_Entrees": [
+      {
+        "idFilm": 1,
+        "nbEntrees": 10
+      },
+      {
+        "idFilm": 2,
+        "nbEntrees": 3600
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "nom": "Pathé Dijon",
+    "afficheCinema": "./ressources/afficheCinema/Pathe_Dijon.png",
+    "Adresse": {
+      "num": 12,
+      "rue": "Parvis de l'UNESCO",
+      "code_Postal": 21000,
+      "Ville": "Dijon"
+    },
+    "film_et_Entrees": [
+      {
+        "idFilm": 1,
+        "nbEntrees": 10
+      },
+      {
+        "idFilm": 2,
+        "nbEntrees": 3600
+      }
+    ]
+  }
+]

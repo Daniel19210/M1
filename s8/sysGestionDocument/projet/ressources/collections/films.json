@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "Titre": "Le seigneur des anneaux",
+    "Affiche": "~/Documents/master1/M1/s8/sysGestionDocument/projet/affiche/seigneur_anneau.jpg",
+    "duree": 135,
+    "realisateur": "Cédric Digory",
+    "Acteurs": [
+      "Jhonny Depp",
+      "Tom Holland",
+      "Daniel Radcliff",
+      "Emma Watson"
+    ],
+    "categorie": [
+      "SF",
+      "Romance",
+      "Horreur"
+    ],
+    "Note_Moyenne": 3.5,
+    "Note_et_Commentaires": [
+      {
+        "note": 2,
+        "commentaire": "Cela fait fort longtemps que je n'ai pas vus un film aussi naze... #boomer"
+      },
+      {
+        "note": 5,
+        "commentaire": "Juste Parfait, la direction est incroyable et la distribution est très bien choisie."
+      }
+    ],
+    "nbEntreeTotal": 10,
+    "salles_de_diffusion": [
+      1
+    ]
+  },
+  {
+    "id": 2,
+    "Titre": "Le bitume des agneaux",
+    "Affiche": "~/Documents/master1/M1/s8/sysGestionDocument/projet/affiche/seigneur_anneau.jpg",
+    "duree": 135,
+    "realisateur": "Cédric Digory",
+    "Acteurs": [
+      "Jhonny Depp",
+      "Tom Holland",
+      "Daniel Radcliff",
+      "Emma Watson"
+    ],
+    "categorie": [
+      "SF",
+      "Romance",
+      "Horreur"
+    ],
+    "Note_Moyenne": 3.5,
+    "Note_et_Commentaires": [
+      {
+        "note": 2,
+        "commentaire": "Cela fait fort longtemps que je n'ai pas vus un film aussi naze... #boomer"
+      },
+      {
+        "note": 5,
+        "commentaire": "Juste Parfait, la direction est incroyable et la distribution est très bien choisie."
+      }
+    ],
+    "nbEntreeTotal": 10,
+    "salles_de_diffusion": [
+      1
+    ]
+  }
+]
