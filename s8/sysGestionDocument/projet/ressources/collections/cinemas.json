@@ -12,11 +12,11 @@
     "film_et_Entrees": [
       {
         "idFilm": 1,
-        "nbEntrees": 10
+        "nbEntrees": 2000000
       },
       {
-        "idFilm": 2,
-        "nbEntrees": 3600
+        "idFilm": 3,
+        "nbEntrees": 7000000
       }
     ]
   },
@@ -33,11 +33,15 @@
     "film_et_Entrees": [
       {
         "idFilm": 1,
-        "nbEntrees": 10
+        "nbEntrees": 1000000
       },
       {
         "idFilm": 2,
-        "nbEntrees": 3600
+        "nbEntrees": 7
+      },
+      {
+        "idFilm": 3,
+        "nbEntrees": 6000000
       }
     ]
   },
@@ -54,11 +58,15 @@
     "film_et_Entrees": [
       {
         "idFilm": 1,
-        "nbEntrees": 10
+        "nbEntrees": 9490
       },
       {
-        "idFilm": 2,
-        "nbEntrees": 3600
+        "idFilm": 3,
+        "nbEntrees": 3245509
+      },
+      {
+        "idFilm": 5,
+        "nbEntrees": 449000
       }
     ]
   },
@@ -75,11 +83,11 @@
     "film_et_Entrees": [
       {
         "idFilm": 1,
-        "nbEntrees": 10
+        "nbEntrees": 4
       },
       {
         "idFilm": 2,
-        "nbEntrees": 3600
+        "nbEntrees": 3
       }
     ]
   }
