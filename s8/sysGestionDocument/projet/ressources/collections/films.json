@@ -1,192 +1,194 @@
 [
-    {
-        "id": 1,
-        "Titre": "Le Loup de Wall Street",
-        "Affiche": "ressources/afficheFilms/seigneur_anneau.jpg",
-        "duree": 179,
-        "realisateur": "Martin Scorsece",
-        "Acteurs": [
-            "Leonardo DiCaprio",
-            "Jonah Hill",
-            "Margot Robbie",
-            "Kyle Chandler",
-            "Rob Reiner"
-        ],
-        "categorie": [
-            "Drame",
-            "Action",
-            "Comédie",
-            "Biographie"
-        ],
-        "Note_Moyenne": 4,
-        "Note_et_Commentaires": [
-            {
-                "note": 4,
-                "commentaire": "'Le Loup de Wall Street' est un film fascinant qui nous plonge dans le monde sans scrupules de la finance. Les performances de Leonardo DiCaprio et de Jonah Hill sont remarquables, et leur chimie à l'écran est palpable. Martin Scorsese a réalisé un film captivant qui dépeint les excès et les dangers de la culture de Wall Street avec une précision choquante."
-            },
-            {
-                "note": 4.5,
-                "commentaire": "Le film 'Le Loup de Wall Street' est un véritable tour de force de la part de Martin Scorsese et de son équipe. La narration est intelligente et captivante, avec des moments d'humour noir qui maintiennent l'attention du public tout au long de ses trois heures. La performance de DiCaprio est particulièrement impressionnante, car il incarne parfaitement le personnage sombre et complexe de Jordan Belfort."
-            },
-            {
-                "note": 3.5,
-                "commentaire": "'Le Loup de Wall Street' est un film viscéral et troublant qui révèle la face sombre de l'avidité et de l'ambition. Les scènes de sexe et de drogue sont nombreuses, mais elles sont présentées de manière réaliste et ne sont jamais utilisées pour choquer inutilement le public. Le film est un rappel frappant de la corruption et de la cupidité qui peuvent exister dans les plus hautes sphères de la finance."
-            }
-        ],
-        "nbEntreeTotal": 3009494,
-        "salles_de_diffusion": [
-            1,
-            2,
-            3,
-            4
-        ]
-    },
-    {
-        "id": 2,
-        "Titre": "Le seigneur des anneaux",
-        "Affiche": "ressources/afficheFilms/Le_seigneur_des_anneaux.jpg",
-        "duree": 135,
-        "realisateur": "Cédric Digory",
-        "Acteurs": [
-            "Jhonny Depp",
-            "Tom Holland",
-            "Daniel Radcliff",
-            "Emma Watson"
-        ],
-        "categorie": [
-            "SF",
-            "Romance",
-            "Horreur"
-        ],
-        "Note_Moyenne": 3.5,
-        "Note_et_Commentaires": [
-            {
-                "note": 2,
-                "commentaire": "Cela fait fort longtemps que je n'ai pas vus un film aussi naze... #boomer"
-            },
-            {
-                "note": 5,
-                "commentaire": "Juste Parfait, la direction est incroyable et la distribution est très bien choisie."
-            }
-        ],
-        "nbEntreeTotal": 10,
-        "salles_de_diffusion": [
-            2,
-            4
-        ]
-    },
-    {
-        "id": 3,
-        "Titre": "Le diner de cons",
-        "Affiche": "ressources/afficheFilms/Le_diner_de_cons.jpg",
-        "duree": 80,
-        "realisateur": "Francis Veber",
-        "Acteurs": [
-            "Jacques Villeret",
-            "Thierry Lhermitte",
-            "Francis Huster",
-            "Daniel Prévost"
-        ],
-        "categorie": [
-            "Comédie"
-        ],
-        "Note_Moyenne": 4.5,
-        "Note_et_Commentaires": [
-            {
-                "note": 5,
-                "commentaire": "'Le Dîner de cons' est une comédie française culte qui met en scène des personnages hilarants dans des situations absurdes. Les performances des acteurs sont excellentes, en particulier celle de Jacques Villeret dans le rôle principal. Le film est bien écrit et offre un rythme soutenu qui maintient l'attention du public jusqu'à la fin. C'est une comédie intelligente et amusante qui mérite sa place dans le panthéon de la comédie française."
-            },
-            {
-                "note": 4,
-                "commentaire": "'Le Dîner de cons' est une comédie française qui tourne autour d'un concept simple mais efficace. Le film est bien joué et quelques scènes sont vraiment drôles. Cependant, il y a des moments où l'humour tombe à plat et où le film traîne un peu en longueur. Malgré cela, 'Le Dîner de cons' est une comédie sympathique qui vaut la peine d'être vue."
-            }
-        ],
-        "nbEntreeTotal": 9245509,
-        "salles_de_diffusion": [
-            1, 3
-        ]
-    },
-    {
-        "id": 4,
-        "Titre": "Mission Impossible 3",
-        "Affiche": "ressources/afficheFilms/Mission_impossible_3.jpg",
-        "duree": 126,
-        "realisateur": "J. J. Abrams",
-        "Acteurs": [
-            "Tom Cruise",
-            "Philip Seymour Hoffman",
-            "Ving Rhames",
-            "Michelle Monaghan",
-            "Jonathan Rhys Meyers"
-        ],
-        "categorie": [
-            "Action",
-            "Thriller",
-            "Espionnage"
-        ],
-        "Note_Moyenne": 3.6,
-        "Note_et_Commentaires": [
-            {
-                "note": 4,
-                "commentaire": "Tom Cruise est à son meilleur dans ce thriller d'espionnage bourré d'action. Le scénario est bien construit et les rebondissements sont nombreux. Les scènes d'action sont impressionnantes et l'intrigue est captivante du début à la fin. C'est un film à suspense passionnant qui ne décevra pas les fans de films d'espionnage."
-            },
-            {
-                "note": 4,
-                "commentaire": "Le casting de 'Mission Impossible' est excellent, avec des performances solides de tous les acteurs impliqués. Le film est un mélange de scènes d'action incroyables et de moments tendus qui font monter la pression. Le scénario est bien pensé et les personnages sont bien développés. C'est un film d'espionnage solide qui plaira aux fans du genre."
-            },
-            {
-                "note": 3,
-                "commentaire": "Ce film d'espionnage de Brian De Palma est rempli d'intrigues et de rebondissements passionnants. Tom Cruise joue un agent secret déterminé qui doit sauver le monde d'une catastrophe imminente. Les scènes d'action sont spectaculaires et les effets spéciaux sont étonnants. C'est un film d'espionnage classique qui ne vieillit jamais."
-            },
-            {
-                "note": 4,
-                "commentaire": "'Mission Impossible' est un film d'espionnage palpitant qui ne déçoit jamais. Les performances des acteurs sont excellentes, en particulier Tom Cruise qui livre une performance passionnée et convaincante. Les scènes d'action sont étonnantes et l'intrigue est bien développée. C'est un film à suspense captivant qui mérite sa place dans le panthéon des films d'espionnage."
-            },
-            {
-                "note": 3,
-                "commentaire": "Le film 'Mission Impossible' est rempli de scènes d'action incroyables et d'intrigues passionnantes. Les acteurs font du bon travail, en particulier Tom Cruise dans le rôle principal. Cependant, le scénario est un peu complexe et pourrait être difficile à suivre pour certains spectateurs. Malgré cela, c'est un film d'espionnage solide qui offre un divertissement garanti pour les amateurs du genre."
-            }
-        ],
-        "nbEntreeTotal": 9245509,
-        "salles_de_diffusion": [
-            3
-        ]
-    },
-    {
-        "id": 5,
-        "Titre": "Star Wars IV",
-        "Affiche": "ressources/afficheFilms/Star_wars_4.jpg",
-        "duree": 121,
-        "realisateur": "George Lucas",
-        "Acteurs": [
-            "Mark Hamill",
-            "Carrie Fisher",
-            "Harrison Ford",
-            "Peter Cushing",
-            "Alec Guinness"
-        ],
-        "categorie": [
-            "Action",
-            "Science-fiction"
-        ],
-        "Note_Moyenne": 4.33,
-        "Note_et_Commentaires": [
-            {
-                "note": 5,
-                "commentaire": "'Star Wars: Episode IV - Un nouvel espoir' est un classique du cinéma de science-fiction. Le film est rempli d'action, d'aventure et de personnages mémorables. La scène d'ouverture est emblématique, et la musique de John Williams est devenue l'une des bandes sonores les plus célèbres de l'histoire du cinéma. C'est un film qui a résisté à l'épreuve du temps et qui continue d'inspirer les générations de fans."
-            },
-            {
-                "note": 4,
-                "commentaire": "'Star Wars: Episode IV - Un nouvel espoir' est un film culte qui a lancé l'une des franchises les plus populaires de tous les temps. Le scénario est bien construit, les effets spéciaux sont impressionnants et les personnages sont mémorables. Bien que le film soit daté à certains égards, il reste un incontournable pour tout fan de science-fiction."
-            },
-            {
-                "note": 4,
-                "commentaire": "'Star Wars: Episode IV - Un nouvel espoir' est un film légendaire qui a défini un genre. Les personnages sont mémorables et l'histoire est captivante. La direction artistique est incroyable, avec des designs de vaisseaux spatiaux et de créatures qui sont devenus iconiques. Ce film a lancé une franchise qui continue d'inspirer les fans du monde entier."
-            }
-        ],
-        "nbEntreeTotal": 6449000,
-        "salles_de_diffusion": [
-            2, 3
-        ]
-    }
+  {
+    "_id": 1,
+    "Titre": "Le Loup de Wall Street",
+    "Affiche": "ressources/afficheFilms/seigneur_anneau.jpg",
+    "duree": 179,
+    "realisateur": "Martin Scorsece",
+    "Acteurs": [
+      "Leonardo DiCaprio",
+      "Jonah Hill",
+      "Margot Robbie",
+      "Kyle Chandler",
+      "Rob Reiner"
+    ],
+    "categorie": [
+      "Drame",
+      "Action",
+      "Comédie",
+      "Biographie"
+    ],
+    "Note_Moyenne": 4,
+    "Note_et_Commentaires": [
+      {
+        "note": 4,
+        "commentaire": "'Le Loup de Wall Street' est un film fascinant qui nous plonge dans le monde sans scrupules de la finance. Les performances de Leonardo DiCaprio et de Jonah Hill sont remarquables, et leur chimie à l'écran est palpable. Martin Scorsese a réalisé un film captivant qui dépeint les excès et les dangers de la culture de Wall Street avec une précision choquante."
+      },
+      {
+        "note": 4.5,
+        "commentaire": "Le film 'Le Loup de Wall Street' est un véritable tour de force de la part de Martin Scorsese et de son équipe. La narration est intelligente et captivante, avec des moments d'humour noir qui maintiennent l'attention du public tout au long de ses trois heures. La performance de DiCaprio est particulièrement impressionnante, car il incarne parfaitement le personnage sombre et complexe de Jordan Belfort."
+      },
+      {
+        "note": 3.5,
+        "commentaire": "'Le Loup de Wall Street' est un film viscéral et troublant qui révèle la face sombre de l'avidité et de l'ambition. Les scènes de sexe et de drogue sont nombreuses, mais elles sont présentées de manière réaliste et ne sont jamais utilisées pour choquer inutilement le public. Le film est un rappel frappant de la corruption et de la cupidité qui peuvent exister dans les plus hautes sphères de la finance."
+      }
+    ],
+    "nbEntreeTotal": 3009494,
+    "salles_de_diffusion": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  {
+    "_id": 2,
+    "Titre": "Le seigneur des anneaux",
+    "Affiche": "ressources/afficheFilms/Le_seigneur_des_anneaux.jpg",
+    "duree": 135,
+    "realisateur": "Cédric Digory",
+    "Acteurs": [
+      "Jhonny Depp",
+      "Tom Holland",
+      "Daniel Radcliff",
+      "Emma Watson"
+    ],
+    "categorie": [
+      "SF",
+      "Romance",
+      "Horreur"
+    ],
+    "Note_Moyenne": 3.5,
+    "Note_et_Commentaires": [
+      {
+        "note": 2,
+        "commentaire": "Cela fait fort longtemps que je n'ai pas vus un film aussi naze... #boomer"
+      },
+      {
+        "note": 5,
+        "commentaire": "Juste Parfait, la direction est incroyable et la distribution est très bien choisie."
+      }
+    ],
+    "nbEntreeTotal": 10,
+    "salles_de_diffusion": [
+      2,
+      4
+    ]
+  },
+  {
+    "_id": 3,
+    "Titre": "Le diner de cons",
+    "Affiche": "ressources/afficheFilms/Le_diner_de_cons.jpg",
+    "duree": 80,
+    "realisateur": "Francis Veber",
+    "Acteurs": [
+      "Jacques Villeret",
+      "Thierry Lhermitte",
+      "Francis Huster",
+      "Daniel Prévost"
+    ],
+    "categorie": [
+      "Comédie"
+    ],
+    "Note_Moyenne": 4.5,
+    "Note_et_Commentaires": [
+      {
+        "note": 5,
+        "commentaire": "'Le Dîner de cons' est une comédie française culte qui met en scène des personnages hilarants dans des situations absurdes. Les performances des acteurs sont excellentes, en particulier celle de Jacques Villeret dans le rôle principal. Le film est bien écrit et offre un rythme soutenu qui maintient l'attention du public jusqu'à la fin. C'est une comédie intelligente et amusante qui mérite sa place dans le panthéon de la comédie française."
+      },
+      {
+        "note": 4,
+        "commentaire": "'Le Dîner de cons' est une comédie française qui tourne autour d'un concept simple mais efficace. Le film est bien joué et quelques scènes sont vraiment drôles. Cependant, il y a des moments où l'humour tombe à plat et où le film traîne un peu en longueur. Malgré cela, 'Le Dîner de cons' est une comédie sympathique qui vaut la peine d'être vue."
+      }
+    ],
+    "nbEntreeTotal": 9245509,
+    "salles_de_diffusion": [
+      1,
+      3
+    ]
+  },
+  {
+    "_id": 4,
+    "Titre": "Mission Impossible 3",
+    "Affiche": "ressources/afficheFilms/Mission_impossible_3.jpg",
+    "duree": 126,
+    "realisateur": "J. J. Abrams",
+    "Acteurs": [
+      "Tom Cruise",
+      "Philip Seymour Hoffman",
+      "Ving Rhames",
+      "Michelle Monaghan",
+      "Jonathan Rhys Meyers"
+    ],
+    "categorie": [
+      "Action",
+      "Thriller",
+      "Espionnage"
+    ],
+    "Note_Moyenne": 3.6,
+    "Note_et_Commentaires": [
+      {
+        "note": 4,
+        "commentaire": "Tom Cruise est à son meilleur dans ce thriller d'espionnage bourré d'action. Le scénario est bien construit et les rebondissements sont nombreux. Les scènes d'action sont impressionnantes et l'intrigue est captivante du début à la fin. C'est un film à suspense passionnant qui ne décevra pas les fans de films d'espionnage."
+      },
+      {
+        "note": 4,
+        "commentaire": "Le casting de 'Mission Impossible' est excellent, avec des performances solides de tous les acteurs impliqués. Le film est un mélange de scènes d'action incroyables et de moments tendus qui font monter la pression. Le scénario est bien pensé et les personnages sont bien développés. C'est un film d'espionnage solide qui plaira aux fans du genre."
+      },
+      {
+        "note": 3,
+        "commentaire": "Ce film d'espionnage de Brian De Palma est rempli d'intrigues et de rebondissements passionnants. Tom Cruise joue un agent secret déterminé qui doit sauver le monde d'une catastrophe imminente. Les scènes d'action sont spectaculaires et les effets spéciaux sont étonnants. C'est un film d'espionnage classique qui ne vieillit jamais."
+      },
+      {
+        "note": 4,
+        "commentaire": "'Mission Impossible' est un film d'espionnage palpitant qui ne déçoit jamais. Les performances des acteurs sont excellentes, en particulier Tom Cruise qui livre une performance passionnée et convaincante. Les scènes d'action sont étonnantes et l'intrigue est bien développée. C'est un film à suspense captivant qui mérite sa place dans le panthéon des films d'espionnage."
+      },
+      {
+        "note": 3,
+        "commentaire": "Le film 'Mission Impossible' est rempli de scènes d'action incroyables et d'intrigues passionnantes. Les acteurs font du bon travail, en particulier Tom Cruise dans le rôle principal. Cependant, le scénario est un peu complexe et pourrait être difficile à suivre pour certains spectateurs. Malgré cela, c'est un film d'espionnage solide qui offre un divertissement garanti pour les amateurs du genre."
+      }
+    ],
+    "nbEntreeTotal": 9245509,
+    "salles_de_diffusion": [
+      3
+    ]
+  },
+  {
+    "_id": 5,
+    "Titre": "Star Wars IV",
+    "Affiche": "ressources/afficheFilms/Star_wars_4.jpg",
+    "duree": 121,
+    "realisateur": "George Lucas",
+    "Acteurs": [
+      "Mark Hamill",
+      "Carrie Fisher",
+      "Harrison Ford",
+      "Peter Cushing",
+      "Alec Guinness"
+    ],
+    "categorie": [
+      "Action",
+      "Science-fiction"
+    ],
+    "Note_Moyenne": 4.33,
+    "Note_et_Commentaires": [
+      {
+        "note": 5,
+        "commentaire": "'Star Wars: Episode IV - Un nouvel espoir' est un classique du cinéma de science-fiction. Le film est rempli d'action, d'aventure et de personnages mémorables. La scène d'ouverture est emblématique, et la musique de John Williams est devenue l'une des bandes sonores les plus célèbres de l'histoire du cinéma. C'est un film qui a résisté à l'épreuve du temps et qui continue d'inspirer les générations de fans."
+      },
+      {
+        "note": 4,
+        "commentaire": "'Star Wars: Episode IV - Un nouvel espoir' est un film culte qui a lancé l'une des franchises les plus populaires de tous les temps. Le scénario est bien construit, les effets spéciaux sont impressionnants et les personnages sont mémorables. Bien que le film soit daté à certains égards, il reste un incontournable pour tout fan de science-fiction."
+      },
+      {
+        "note": 4,
+        "commentaire": "'Star Wars: Episode IV - Un nouvel espoir' est un film légendaire qui a défini un genre. Les personnages sont mémorables et l'histoire est captivante. La direction artistique est incroyable, avec des designs de vaisseaux spatiaux et de créatures qui sont devenus iconiques. Ce film a lancé une franchise qui continue d'inspirer les fans du monde entier."
+      }
+    ],
+    "nbEntreeTotal": 6449000,
+    "salles_de_diffusion": [
+      2,
+      3
+    ]
+  }
 ]

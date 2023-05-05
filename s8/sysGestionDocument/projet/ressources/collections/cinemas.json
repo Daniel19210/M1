@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "_id": 1,
     "nom": "Olympia",
     "afficheCinema": "./ressources/afficheCinema/Olympia.png",
     "Adresse": {
@@ -21,7 +21,7 @@
     ]
   },
   {
-    "id": 2,
+    "_id": 2,
     "nom": "Le Darcy",
     "afficheCinema": "./ressources/afficheCinema/Le_Darcy.png",
     "Adresse": {
@@ -46,7 +46,7 @@
     ]
   },
   {
-    "id": 3,
+    "_id": 3,
     "nom": "Eldorado",
     "afficheCinema": "./ressources/afficheCinema/Eldorado.png",
     "Adresse": {
@@ -71,7 +71,7 @@
     ]
   },
   {
-    "id": 4,
+    "_id": 4,
     "nom": "Pathé Dijon",
     "afficheCinema": "./ressources/afficheCinema/Pathe_Dijon.png",
     "Adresse": {
