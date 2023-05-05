@@ -21,7 +21,8 @@ def getAllNameFilm():
 
 
 def get_films_from_cinema(nom_cinoch):
-    return db.cinemas.aggregate(
+    return 
+    db.cinemas.aggregate(
         [
             {
                 '$match': {
@@ -62,10 +63,25 @@ def get_commentaires_film(nom_film):
     return db.films.find({"Titre": nom_film},
                          {"_id": 0, "Note_et_Commentaires.commentaire": 1})
 
+
 """
-var map = function(){emit(this.nom, this.id);}
-var reduce = function(nomCinema, nbEntrees){
-    return Array.sum(nbEntrees);
+var map = function(){emit(this.nom, this.film_et_Entrees);}
+var reduce = function(nomCinema, filmEntrees){
+    var somme = 0;
+    for (let i = 0; i < filmEntrees[0].length; i++) {
+        somme += filmEntrees[0][i].nbEntrees;
+    }
+    return somme;
+}
+db.cinemas.mapReduce(map, reduce, {out: {inline: 1}})
+
+var map = function(){emit(this.nom, this.film_et_Entrees);}
+var reduce = function(nomCinema, filmEntrees){
+    var somme = 0;
+    for (let i = 0; i < filmEntrees[0].length; i++) {
+        somme += filmEntrees[0][i].nbEntrees;
+    }
+    return somme/filmEntrees[0].length;
 }
 db.cinemas.mapReduce(map, reduce, {out: {inline: 1}})
 """
@@ -75,10 +91,25 @@ db.cinemas.mapReduce(map, reduce, {out: {inline: 1}})
 pprint(list(get_films_from_cinema("Olympia")))
 # pprint(list(get_commentaires_film("Le seigneur des anneaux")[0]))
 
-# En mongoDB
-# tous les commentaires avec la note d'un film
-# Le nombre d'entrée total d'un cinéma pour chaque cinema avec un map reduce
-# La moyenne des entrées d'un cinéma pour chaque cinema avec un map reduce
+# En mongoDB (Exemple, pas besoin de tout faire)
+# Tous les commentaires avec la note d'un film
+# La note moyenne d'un cinéma pour chaque cinema
+# Tout les films de moins de 2h
+# Les films réalisés par X
+# Les films de X catégorie
+# Les X films les mieux notés
+
+# Ajout d'un film
+# Modifications des horaires d'ouverture du cinéma
+# Modifier le nombre d'entrées
 
 # En Pymongo
-# La note moyenne d'un film (demander quel film)
+# Les cinémas qui sont ouverts à cette heure-ci
+# Nombre d'avis positifs / négatifs d'un films (avec les notes)
+# Création d'un commentaire
+
+# Fait
+# Les films qui sont diffusés dans au moins 2 cinémas (pour donner une idée de sa popularitée)
+# Le nombre d'entrée total d'un cinéma pour chaque cinema avec un map reduce
+
+# Cinémas ouverts 7/7J avec toujours les mêmes horaires
