@@ -84,6 +84,63 @@ var reduce = function(nomCinema, filmEntrees){
     return somme/filmEntrees[0].length;
 }
 db.cinemas.mapReduce(map, reduce, {out: {inline: 1}})
+
+db.films.insertOne({
+    "_id": 6,
+    "titre": "Bambi",
+    "duree": 149,
+    "realisateur": "Mickey",
+    "acteurs": [
+        "Arnold Schwarzeneger",
+        "Bambi"
+    ],
+    "categorie": [
+        "Action",
+        "Tragédie"
+    ],
+    "noteMoyenne": 5,
+    "avis": [
+        {
+            "note": 5,
+            "commentaire": "Bambi est l'un des meilleurs films que j'ai jamais vu"
+        },
+        {
+            "note": 5,
+            "commentaire": "Arnold était parfait dans son rôle <3"
+        }
+    ],
+    "nbEntreeTotal": 9000000000,
+    "salleDiffusion": [
+        1,
+        2,
+        3,
+        4
+    ]
+})
+
+db.cinemas.updateOne({
+    "nom": "Olympia"
+},
+{
+    $set: {
+        "heureOuverture": {
+            "heure": 9,
+            "minutes": 0
+        },
+        "heureFermeture": {
+            "heure": 0,
+            "minutes": 0
+        }
+    }
+})
+db.films.updateOne({
+    "titre": "Le Loup de Wall Street",
+},
+{
+    $set: {
+        "nbEntreeTotal": 3000000
+    }
+})
 """
 
 # print(f'{getAllNameFilm() =}')
@@ -91,8 +148,15 @@ db.cinemas.mapReduce(map, reduce, {out: {inline: 1}})
 pprint(list(get_films_from_cinema("Olympia")))
 # pprint(list(get_commentaires_film("Le seigneur des anneaux")[0]))
 
-# En mongoDB (Exemple, pas besoin de tout faire)
-# Tous les commentaires avec la note d'un film
+# En Pymongo
+# Les cinémas qui sont ouverts à cette heure-ci
+# Nombre d'avis positifs / négatifs d'un films (avec les notes)
+# Création d'un commentaire
+
+# Fait
+# Les films qui sont diffusés dans au moins 2 cinémas (pour donner une idée de sa popularitée)
+# Le nombre d'entrée total d'un cinéma pour chaque cinema avec un map reduce
+# Tous les avis d'un film
 # La note moyenne d'un cinéma pour chaque cinema
 # Tout les films de moins de 2h
 # Les films réalisés par X
@@ -103,13 +167,5 @@ pprint(list(get_films_from_cinema("Olympia")))
 # Modifications des horaires d'ouverture du cinéma
 # Modifier le nombre d'entrées
 
-# En Pymongo
-# Les cinémas qui sont ouverts à cette heure-ci
-# Nombre d'avis positifs / négatifs d'un films (avec les notes)
-# Création d'un commentaire
-
-# Fait
-# Les films qui sont diffusés dans au moins 2 cinémas (pour donner une idée de sa popularitée)
-# Le nombre d'entrée total d'un cinéma pour chaque cinema avec un map reduce
 
 # Cinémas ouverts 7/7J avec toujours les mêmes horaires
