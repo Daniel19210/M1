@@ -148,20 +148,28 @@ db.films.updateOne({
 pprint(list(get_films_from_cinema("Olympia")))
 # pprint(list(get_commentaires_film("Le seigneur des anneaux")[0]))
 
+#A faire
+
+# Mongo
+
 # En Pymongo
 
 # Fait
-# Création d'un commentaire
-# Nombre d'avis positifs / négatifs d'un films (avec les notes)
-# Les cinémas qui sont ouverts à cette heure-ci 
+
+# Mongo
 # Les films qui sont diffusés dans au moins 2 cinémas (pour donner une idée de sa popularitée)
 # Le nombre d'entrée total d'un cinéma pour chaque cinema avec un map reduce
 # Tous les avis d'un film
-# La note moyenne d'un cinéma pour chaque cinema
 # Tout les films de moins de 2h
 # Les films réalisés par X
 # Les films de X catégorie
 # Les X films les mieux notés
+
+# En Pymongo
+# Création d'un commentaire
+# Nombre d'avis positifs / négatifs d'un films (avec les notes)
+# Les cinémas qui sont ouverts à cette heure-ci 
+# La note moyenne d'un cinéma pour chaque cinema
 
 # Ajout d'un film
 # Modifications des horaires d'ouverture du cinéma
