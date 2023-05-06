@@ -1,114 +1,114 @@
 [
-    {
-        "_id": 1,
-        "nom": "Olympia",
-        "adresse": {
-            "num": 16,
-            "rue": "avenue du Marechal Foch"
-        },
-        "heureOuverture": {
-            "heure": 8,
-            "minutes": 0
-        },
-        "heureFermeture": {
-            "heure": 23,
-            "minutes": 0
-        },
-        "filmEntrees": [
-            {
-                "idFilm": 1,
-                "nbEntrees": 2000000
-            },
-            {
-                "idFilm": 3,
-                "nbEntrees": 7000000
-            }
-        ]
+  {
+    "_id": 1,
+    "nom": "Olympia",
+    "adresse": {
+      "num": 16,
+      "rue": "avenue du Marechal Foch"
     },
-    {
-        "_id": 2,
-        "nom": "Le Darcy",
-        "adresse": {
-            "num": 8,
-            "rue": "place Darcy"
-        },
-        "heureOuverture": {
-            "heure": 9,
-            "minutes": 0
-        },
-        "heureFermeture": {
-            "heure": 24,
-            "minutes": 0
-        },
-        "filmEntrees": [
-            {
-                "idFilm": 1,
-                "nbEntrees": 1000000
-            },
-            {
-                "idFilm": 2,
-                "nbEntrees": 0
-            },
-            {
-                "idFilm": 3,
-                "nbEntrees": 6000000
-            }
-        ]
+    "heureOuverture": {
+      "heure": 8,
+      "minutes": 0
     },
-    {
-        "_id": 3,
-        "nom": "Eldorado",
-        "adresse": {
-            "num": 21,
-            "rue": "rue Alfred-de-Musset"
-        },
-        "heureOuverture": {
-            "heure": 14,
-            "minutes": 0
-        },
-        "heureFermeture": {
-            "heure": 2,
-            "minutes": 0
-        },
-        "filmEntrees": [
-            {
-                "idFilm": 1,
-                "nbEntrees": 9490
-            },
-            {
-                "idFilm": 3,
-                "nbEntrees": 3245510
-            },
-            {
-                "idFilm": 5,
-                "nbEntrees": 449000
-            }
-        ]
+    "heureFermeture": {
+      "heure": 23,
+      "minutes": 0
     },
-    {
-        "_id": 4,
-        "nom": "Pathé Dijon",
-        "adresse": {
-            "num": 12,
-            "rue": "Parvis de l'UNESCO"
-        },
-        "heureOuverture": {
-            "heure": 7,
-            "minutes": 0
-        },
-        "heureFermeture": {
-            "heure": 12,
-            "minutes": 0
-        },
-        "filmEntrees": [
-            {
-                "idFilm": 1,
-                "nbEntrees": 4
-            },
-            {
-                "idFilm": 2,
-                "nbEntrees": 3
-            }
-        ]
-    }
+    "filmEntrees": [
+      {
+        "idFilm": 1,
+        "nbEntrees": 2000000
+      },
+      {
+        "idFilm": 3,
+        "nbEntrees": 7000000
+      }
+    ]
+  },
+  {
+    "_id": 2,
+    "nom": "Le Darcy",
+    "adresse": {
+      "num": 8,
+      "rue": "place Darcy"
+    },
+    "heureOuverture": {
+      "heure": 9,
+      "minutes": 0
+    },
+    "heureFermeture": {
+      "heure": 23,
+      "minutes": 59
+    },
+    "filmEntrees": [
+      {
+        "idFilm": 1,
+        "nbEntrees": 1000000
+      },
+      {
+        "idFilm": 2,
+        "nbEntrees": 0
+      },
+      {
+        "idFilm": 3,
+        "nbEntrees": 6000000
+      }
+    ]
+  },
+  {
+    "_id": 3,
+    "nom": "Eldorado",
+    "adresse": {
+      "num": 21,
+      "rue": "rue Alfred-de-Musset"
+    },
+    "heureOuverture": {
+      "heure": 14,
+      "minutes": 0
+    },
+    "heureFermeture": {
+      "heure": 2,
+      "minutes": 0
+    },
+    "filmEntrees": [
+      {
+        "idFilm": 1,
+        "nbEntrees": 9490
+      },
+      {
+        "idFilm": 3,
+        "nbEntrees": 3245510
+      },
+      {
+        "idFilm": 5,
+        "nbEntrees": 449000
+      }
+    ]
+  },
+  {
+    "_id": 4,
+    "nom": "Pathé Dijon",
+    "adresse": {
+      "num": 12,
+      "rue": "Parvis de l'UNESCO"
+    },
+    "heureOuverture": {
+      "heure": 7,
+      "minutes": 0
+    },
+    "heureFermeture": {
+      "heure": 12,
+      "minutes": 0
+    },
+    "filmEntrees": [
+      {
+        "idFilm": 1,
+        "nbEntrees": 4
+      },
+      {
+        "idFilm": 2,
+        "nbEntrees": 3
+      }
+    ]
+  }
 ]

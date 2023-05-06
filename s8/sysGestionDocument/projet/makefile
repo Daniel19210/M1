@@ -1,5 +1,5 @@
 all:
-	python3 recupInfo.py
+	python3 partiePython.py
 
 setDatabase:
 	python3 operation_Database.py

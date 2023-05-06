@@ -149,11 +149,11 @@ pprint(list(get_films_from_cinema("Olympia")))
 # pprint(list(get_commentaires_film("Le seigneur des anneaux")[0]))
 
 # En Pymongo
-# Les cinémas qui sont ouverts à cette heure-ci
-# Nombre d'avis positifs / négatifs d'un films (avec les notes)
-# Création d'un commentaire
 
 # Fait
+# Création d'un commentaire
+# Nombre d'avis positifs / négatifs d'un films (avec les notes)
+# Les cinémas qui sont ouverts à cette heure-ci 
 # Les films qui sont diffusés dans au moins 2 cinémas (pour donner une idée de sa popularitée)
 # Le nombre d'entrée total d'un cinéma pour chaque cinema avec un map reduce
 # Tous les avis d'un film
