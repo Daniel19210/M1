@@ -65,7 +65,7 @@ def get_commentaires_film(nom_film):
 
 
 """
-var map = function(){emit(this.nom, this.film_et_Entrees);}
+var map = function(){emit(this.nom, this.filmEntrees);}
 var reduce = function(nomCinema, filmEntrees){
     var somme = 0;
     for (let i = 0; i < filmEntrees[0].length; i++) {
@@ -174,6 +174,7 @@ pprint(list(get_films_from_cinema("Olympia")))
 # Ajout d'un film
 # Modifications des horaires d'ouverture du cinéma
 # Modifier le nombre d'entrées
+
 
 
 # Cinémas ouverts 7/7J avec toujours les mêmes horaires
