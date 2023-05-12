@@ -1,0 +1,142 @@
+# 1. Les films qui sont diffusés dans au moins 2 cinémas (pour donner une idée de sa popularitée)
+db.films.aggregate([
+    {
+        '$lookup': {
+            'from': 'cinemas', 
+            'localField': '_id', 
+            'foreignField': 'filmEntrees.idFilm', 
+            'as': 'cinemas'
+        }
+    }, {
+        '$project': {
+            'titre': 1, 
+            'somme': {
+                '$size': '$cinemas'
+            }
+        }
+    }, {
+        '$match': {
+            'somme': {
+                '$gt': 2
+            }
+        }
+    }, {
+        '$project': {
+            'titre': 1
+        }
+    }
+])
+
+# 2. Le nombre d'entrée total d'un cinéma pour chaque cinema avec un map reduce
+var map = function(){emit(this.nom, this.filmEntrees);}
+var reduce = function(nomCinema, filmEntrees){
+    var somme = 0;
+    for (let i = 0; i < filmEntrees[0].length; i++) {
+        somme += filmEntrees[0][i].nbEntrees;
+    }
+    return somme;
+}
+db.cinemas.mapReduce(map, reduce, {out: {inline: 1}})
+
+# 3. Tous les avis d'un film
+db.films.aggregate([
+    {
+        '$match': {
+            'titre': 'Le Loup de Wall Street'
+        }
+    }, {
+        '$project': {
+            'avis': 1
+        }
+    }, {
+        '$unwind': {
+            'path': '$avis'
+        }
+    }
+])
+
+# 4. Tout les films de moins de 2h
+db.films.aggregate([
+    {
+        '$match': {
+            'duree': {
+                '$lte': 120
+            }
+        }
+    }
+])
+
+# 5. Les films réalisés par George Lucas
+db.films.find({"realisateur": "George Lucas"})
+
+# 6. Les films d'action
+db.films.find({"categorie": "Action"})
+
+# 7. Les 2 films les mieux notés
+db.films.aggregate([
+    {
+        '$sort': {
+            'noteMoyenne': -1
+        }
+    }, {
+        '$limit': 2
+    }
+])
+# ou encore avec un find
+db.films.find().sort({"noteMoyenne": -1}).limit(2)
+
+# 8 Ajout d'un film supplémentaire
+db.films.insertOne({
+    "_id": 6,
+    "titre": "Bambi",
+    "duree": 149,
+    "realisateur": "Mickey",
+    "acteurs": [
+        "Arnold Schwarzeneger",
+        "Bambi"
+    ],
+    "categorie": [
+        "Action",
+        "Tragédie"
+    ],
+    "noteMoyenne": 5,
+    "avis": [
+        {
+            "note": 5,
+            "commentaire": "Bambi est l'un des meilleurs films que j'ai jamais vu"
+        },
+        {
+            "note": 5,
+            "commentaire": "Arnold était parfait dans son rôle <3"
+        }
+    ],
+    "nbEntreeTotal": 9000000000
+})
+
+# Modifications des horaires d'ouverture du cinéma
+db.cinemas.updateOne({
+    "nom": "Olympia"
+},
+{
+    $set: {
+        "heureOuverture": {
+            "heure": 9,
+            "minutes": 0
+        },
+        "heureFermeture": {
+            "heure": 0,
+            "minutes": 0
+        }
+    }
+})
+
+# Modification du nombre d'entrées
+db.films.updateOne({
+    "titre": "Le Loup de Wall Street",
+},
+{
+    $set: {
+        "nbEntreeTotal": 3000000
+    }
+})
+

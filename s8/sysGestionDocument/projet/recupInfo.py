@@ -157,13 +157,6 @@ pprint(list(get_films_from_cinema("Olympia")))
 # Fait
 
 # Mongo
-# Les films qui sont diffusés dans au moins 2 cinémas (pour donner une idée de sa popularitée)
-# Le nombre d'entrée total d'un cinéma pour chaque cinema avec un map reduce
-# Tous les avis d'un film
-# Tout les films de moins de 2h
-# Les films réalisés par X
-# Les films de X catégorie
-# Les X films les mieux notés
 
 # En Pymongo
 # Création d'un commentaire
@@ -174,7 +167,5 @@ pprint(list(get_films_from_cinema("Olympia")))
 # Ajout d'un film
 # Modifications des horaires d'ouverture du cinéma
 # Modifier le nombre d'entrées
-
-
 
 # Cinémas ouverts 7/7J avec toujours les mêmes horaires
