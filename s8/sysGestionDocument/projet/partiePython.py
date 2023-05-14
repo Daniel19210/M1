@@ -4,24 +4,24 @@ import sys
 import datetime
 
 #Connection à la base de donnée
-client = MongoClient("mongo2.iem", port=27017, username=sys.argv[0], password=sys.argv[0], authSource=sys.argv[0], authMechanism="SCRAM-SHA-1")
-db = client.sys.argv[0]
+client = MongoClient("mongo2.iem", port=27017, username=sys.argv[1], password=sys.argv[1], authSource=sys.argv[1], authMechanism="SCRAM-SHA-1")
+db = client[sys.argv[1]]
 
 def note_moyenne_cinemas(nom_cinema):
     les_films = []
     les_notes = []
 
-    for film in list(db.cinemas.find({"nom": nom_cinema}, {"_id": 0, "film_et_Entrees": 1})):
-        for f in film.get("film_et_Entrees"):
+    for film in list(db.cinemas.find({"nom": nom_cinema}, {"_id": 0, "filmEntrees": 1})):
+        for f in film.get("filmEntrees"):
             les_films.append(f.get("idFilm"))
 
 
     for i in les_films:
-        for note_et_commentaire in list(db.films.find({"_id": i}, {"_id": 0, "Note_et_Commentaires": 1})):
-            for note in note_et_commentaire.get("Note_et_Commentaires"):
+        for note_et_commentaire in list(db.films.find({"_id": i}, {"_id": 0, "avis": 1})):
+            for note in note_et_commentaire.get("avis"):
                 les_notes.append(note.get("note"))
     
-    print(sum(les_notes)/len(les_notes))
+    print("la moyenne du cinema ", nom_cinema, "est de : ", sum(les_notes)/len(les_notes))
 
 def cinemas_ouvert_actuellement():
     cinemas_ouvert = []
@@ -35,7 +35,7 @@ def cinemas_ouvert_actuellement():
         if (heureActuel > heureOuvert) and (heureActuel < heureFerme):
             cinemas_ouvert.append(cinema.get('nom'))
 
-    print(cinemas_ouvert)
+    print("Voici la liste des cinema actuellement ouvert : ", cinemas_ouvert)
 
 def nombre_avis_Pos_Neg_Neutre(nom_film):
     avisPos = []
@@ -84,6 +84,7 @@ def creation_Commentaire():
         db.films.update_one({"titre": film}, {"$push": {"avis": {"note": note}}})
         
 
+note_moyenne_cinemas("Le Darcy")
 cinemas_ouvert_actuellement()
 nombre_avis_Pos_Neg_Neutre('Le Loup de Wall Street')
 creation_Commentaire()

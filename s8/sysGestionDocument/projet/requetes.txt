@@ -70,7 +70,7 @@ db.films.aggregate([
 db.films.find({"realisateur": "George Lucas"})
 
 # 6. Les films d'action
-db.films.find({"categorie": "Action"})
+db.films.find({"categorie": "Biographie"})
 
 # 7. Les 2 films les mieux notés
 db.films.aggregate([
