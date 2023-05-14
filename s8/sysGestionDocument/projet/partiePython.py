@@ -1,12 +1,13 @@
 from pymongo import MongoClient
+from pprint import pprint
+import sys
 import datetime
 
 #Connection à la base de donnée
-client = MongoClient('localhost', 27017)
+client = MongoClient("mongo2.iem", port=27017, username=sys.argv[0], password=sys.argv[0], authSource=sys.argv[0], authMechanism="SCRAM-SHA-1")
+db = client.sys.argv[0]
 
-db = client.sgdProject_database
-
-def note_moyenne_cinema(nom_cinema):
+def note_moyenne_cinemas(nom_cinema):
     les_films = []
     les_notes = []
 
@@ -58,18 +59,30 @@ def nombre_avis_Pos_Neg_Neutre(nom_film):
                 nbAvisNeutre += 1
 
     print(f'{nbAvisPos = }')
-    print(f'{avisPos = }')
+    pprint(avisPos)
     print(f'{nbAvisNeg = }')
-    print(f'{avisNeg = }')
+    pprint(avisNeg)
     print(f'{nbAvisNeutre = }')
-    print(f'{avisNeutre = }')
+    pprint(avisNeutre)
 
 def creation_Commentaire():
+    films_dipo = [res['titre'] for res in db.films.find()]
+    print(films_dipo)
     film = input('Pour quel film voulez-vous faire un commentaire ?\t')
-    note = float(input('Note (entre 0 et 5 par tranche de 0.5) : '))
-    commentaire = input('Commentaire : ')
+    while film not in films_dipo:
+        film = input('faites un choix\t')
 
-    db.films.update_one({"titre": film}, {"$push": {"avis": {"note": note, "commentaire": commentaire}}})
+    note_possible = [0., 0.5, 1., 1.5, 2., 2.5, 3., 3.5, 4., 4.5, 5.]
+    note = float(input('Note (entre 0 et 5 par tranche de 0.5) : '))
+    while note not in note_possible:
+        note = float(input('Veuillez entrer une note comprise entre 0 et 5 par tranche de 0.5:\t'))
+    commentaire = input('Commentaire : ')
+    
+    if commentaire != "":
+        db.films.update_one({"titre": film}, {"$push": {"avis": {"note": note, "commentaire": commentaire}}})
+    else:
+        db.films.update_one({"titre": film}, {"$push": {"avis": {"note": note}}})
+        
 
 cinemas_ouvert_actuellement()
 nombre_avis_Pos_Neg_Neutre('Le Loup de Wall Street')

@@ -1,12 +1,12 @@
 from pymongo import MongoClient
+import sys
 import json
 from tkinter.filedialog import askopenfilename
 
 
 #Connection à la base de donnée
-client = MongoClient('localhost', 27017)
-
-db = client.sgdProject_database
+client = MongoClient("mongo2.iem", port=27017, username=sys.argv[0], password=sys.argv[0], authSource=sys.argv[0], authMechanism="SCRAM-SHA-1")
+db = client.sys.argv[0]
 
 print("Destruction des donnees")
 
